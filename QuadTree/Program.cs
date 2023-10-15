@@ -1,7 +1,9 @@
 using QuadTree.QTree;
+using QuadTree.Structures;
+
 namespace QuadTree
 {
-    
+
     internal static class Program
     {
         /// <summary>
@@ -39,6 +41,7 @@ namespace QuadTree
 
 
 
+
            /* quadTree.Insert(A);
             quadTree.Insert(C);
             quadTree.Insert(D);
@@ -47,10 +50,10 @@ namespace QuadTree
             quadTree.Insert(H);*/
 
 
-            quadTree.Insert(P1);
-            quadTree.Insert(P2);
+            quadTree.Insert(A);
+            quadTree.Insert(C);
 
-
+            var point =  quadTree.Find(A);
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             //ApplicationConfiguration.Initialize();

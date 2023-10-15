@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
 using System.Security.Cryptography.Xml;
+using QuadTree.Structures;
 
 namespace QuadTree.QTree
 {
@@ -85,16 +86,16 @@ namespace QuadTree.QTree
                     {
                         //insert the points to the right childQuad
 
-                        var rPoint = reinsertObjects.Dequeue();
-                        Quad? rQuad = spatialObject.FindQuad(current);
+                        var rObject = reinsertObjects.Dequeue();
+                        Quad? rQuad = rObject.FindQuad(current);
 
                         if (rQuad != null)
                         {
-                            rQuad._objects.Add(rPoint);
+                            rQuad._objects.Add(rObject);
                         }
                         else
                         {
-                            current._objects.Add(rPoint);
+                            current._objects.Add(rObject);
                         }
                         pomC = rQuad;
                     }
@@ -104,6 +105,93 @@ namespace QuadTree.QTree
                 break;
             }
         }
+
+
+        /*
+         * Find (vyhľadanie) :
+         * - bodové aj intervalové
+         * - majme zadanú obdĺžniková oblasť S a chceme nájsť všetky záznamy z tejto oblasti
+         * - prehľadávaním stromu od koreňa postupne sprístupňujeme tie oblasti quad stromu, 
+         * ktoré sa s S prelínajú, neprehľadávame teda tie oblasti, kde S nezasahuje
+         * - v každom vrchole prehľadáme zoznam tam uložených záznamov, či patria do S
+         * - na listoch skontrolujeme, či záznamy patria do S
+         * - výsledkom je zoznam všetkých záznamov z oblasti S
+         */
+
+        public ISpatialObject Find(ISpatialObject _object) {
+            Queue<Quad> quads = new Queue<Quad>();
+            quads.Enqueue(_root);
+
+            while (quads.Count > 0) { 
+                Quad quad = quads.Dequeue();
+                if (_object.IsContainedInQuad(quad))
+                {
+                    foreach (var point in quad._objects) {
+                        if (point is MyPoint)
+                        {
+                            if (_object == point)
+                            {
+                                return (MyPoint?)point;
+                            }
+                        }
+                    }
+                    if (quad.getNE() != null)
+                    {
+                        quads.Enqueue(quad.getNE());
+                        quads.Enqueue(quad.getNW());
+                        quads.Enqueue(quad.getSE());
+                        quads.Enqueue(quad.getSW());
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// interval search
+        /// </summary>
+        /// <param name="_object"></param>
+        /// <returns></returns>
+        public List<ISpatialObject> Find(Boundaries _searchArea) {
+            List<ISpatialObject> result = new List<ISpatialObject>();
+            Queue<Quad> queue = new Queue<Quad>();
+
+            // Start the search from the root
+            queue.Enqueue(_root);
+
+            while (queue.Count > 0)
+            {
+                Quad currentQuad = queue.Dequeue();
+
+                // Check if the current quad intersects with the search area
+                if (_searchArea.IsContainedInQuad(currentQuad))
+                {
+                    foreach (var obj in currentQuad._objects)
+                    {
+                        // Check if the object belongs to the search area
+                        if (obj.IsContainedInArea(_searchArea))
+                        {
+                            result.Add(obj);
+                        }
+                    }
+
+                    // Add child quads to the queue for further examination
+                    if (currentQuad.getNW() != null)
+                    {
+                        queue.Enqueue(currentQuad.getNW());
+                        queue.Enqueue(currentQuad.getNE());
+                        queue.Enqueue(currentQuad.getSE());
+                        queue.Enqueue(currentQuad.getSW());
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+
 
         /*public void Insert(MyPoint point)
         {

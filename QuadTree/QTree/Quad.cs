@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using QuadTree.Structures;
 
 namespace QuadTree.QTree
 {

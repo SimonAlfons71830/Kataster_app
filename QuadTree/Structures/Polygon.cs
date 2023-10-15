@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuadTree.QTree;
 
-namespace QuadTree.QTree
+namespace QuadTree.Structures
 {
     internal class Polygon : IEquatable<Polygon>, ISpatialObject
     {
@@ -93,7 +94,7 @@ namespace QuadTree.QTree
             //differetn number of tops
             if (_tops.Count != other._tops.Count)
             {
-                return false; 
+                return false;
             }
 
             //comparing pairs of tops
@@ -101,7 +102,7 @@ namespace QuadTree.QTree
             {
                 if (!_tops[i].Equals(other._tops[i]))
                 {
-                    return false; 
+                    return false;
                 }
             }
 
@@ -129,10 +130,10 @@ namespace QuadTree.QTree
             if (PcenterX < centerX)
             {
                 if (PcenterY < centerY)
-                {   
+                {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInQuad(quad.getSW())) 
+                        if (point.IsContainedInQuad(quad.getSW()))
                         {
                             continue;
                         }
@@ -201,8 +202,8 @@ namespace QuadTree.QTree
             foreach (var t in _tops)
             {
                 // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > quad._boundaries.X && t._x < (quad._boundaries.X + quad._boundaries.Width);
-                bool withinYBounds = t._y > quad._boundaries.Y && t._y < (quad._boundaries.Y + quad._boundaries.Height);
+                bool withinXBounds = t._x > quad._boundaries.X && t._x < quad._boundaries.X + quad._boundaries.Width;
+                bool withinYBounds = t._y > quad._boundaries.Y && t._y < quad._boundaries.Y + quad._boundaries.Height;
 
                 if (!withinXBounds || !withinYBounds)
                 {
@@ -213,5 +214,26 @@ namespace QuadTree.QTree
             // If all vertices are within the quad, the polygon is contained.
             return true;
         }
+
+        public bool IsContainedInArea(Boundaries boundaries) {
+            // Assuming you have a list of vertices in your polygon.
+            foreach (var t in _tops)
+            {
+                // Check if the vertex is within the quad's boundaries.
+                bool withinXBounds = t._x > boundaries.X && t._x < boundaries.X + boundaries.Width;
+                bool withinYBounds = t._y > boundaries.Y && t._y < boundaries.Y + boundaries.Height;
+
+                if (!withinXBounds || !withinYBounds)
+                {
+                    // If any vertex is outside the quad, the polygon is not fully contained.
+                    return false;
+                }
+            }
+            // If all vertices are within the quad, the polygon is contained.
+            return true;
+
+        }
+
+
     }
 }

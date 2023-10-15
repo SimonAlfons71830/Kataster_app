@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using QuadTree.QTree;
 
-namespace QuadTree.QTree
+namespace QuadTree.Structures
 {
     //trieda ktora reprezentuje bod v koreni QStromu
     //ma svoje suradnice x a y ktore reprezentuju presne umiestnenie v ramci korena stromu
@@ -9,10 +10,11 @@ namespace QuadTree.QTree
     {
         public double _x { get; }
         public double _y { get; }
-        public String _name { get; }
+        public string _name { get; }
 
 
-        public MyPoint(double x, double y, String name) { 
+        public MyPoint(double x, double y, string name)
+        {
             _x = x;
             _y = y;
             _name = name;
@@ -25,10 +27,11 @@ namespace QuadTree.QTree
             dynamic x2 = other._x;
             dynamic y2 = other._y;
 
-            return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
 
-        public Quad? FindQuad(Quad quad) {
+        public Quad? FindQuad(Quad quad)
+        {
             //find the center of quad -> from there the boundaries will be determined
             double centerX = (quad._boundaries.X + (quad._boundaries.X + quad._boundaries.Width)) / 2;
             double centerY = (quad._boundaries.Y + (quad._boundaries.Y + quad._boundaries.Height)) / 2;
@@ -75,14 +78,22 @@ namespace QuadTree.QTree
 
         public bool Equals(MyPoint? other)
         {
-            return this._x == other._x && this._y == other._y;
+            return _x == other._x && _y == other._y;
         }
 
         public bool IsContainedInQuad(Quad quad)
         {
             // Check if the point is within the quad's boundaries.
-            bool withinXBounds = _x > quad._boundaries.X &&_x < (quad._boundaries.X + quad._boundaries.Width);
-            bool withinYBounds = _y > quad._boundaries.Y && _y < (quad._boundaries.Y + quad._boundaries.Height);
+            bool withinXBounds = _x > quad._boundaries.X && _x < quad._boundaries.X + quad._boundaries.Width;
+            bool withinYBounds = _y > quad._boundaries.Y && _y < quad._boundaries.Y + quad._boundaries.Height;
+
+            return withinXBounds && withinYBounds;
+        }
+
+        public bool IsContainedInArea(Boundaries boundaries) {
+            // Check if the point is within the quad's boundaries.
+            bool withinXBounds = _x > boundaries.X && _x < boundaries.X + boundaries.Width;
+            bool withinYBounds = _y > boundaries.Y && _y < boundaries.Y + boundaries.Height;
 
             return withinXBounds && withinYBounds;
         }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuadTree.QTree;
 
-namespace QuadTree.QTree
+namespace QuadTree.Structures
 {
     internal interface ISpatialObject
     {
@@ -14,5 +15,6 @@ namespace QuadTree.QTree
 
         public bool IsContainedInQuad(Quad quad);
         Quad FindQuad(Quad quad); // You can customize the method as per your needs.
+        public bool IsContainedInArea(Boundaries boundaries);
     }
 }
