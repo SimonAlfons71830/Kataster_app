@@ -8,6 +8,7 @@ namespace QuadTree.QTree
     internal class QuadTreeStruct
     {
         private readonly int _maxDepth;
+        public int _objectsCount;
         private int _level;
         const int MAX_QUAD_CAPACITY = 1;
         //rectangleF - stores 4 data in float that represents size and location of the rectangle
@@ -68,6 +69,7 @@ namespace QuadTree.QTree
 
                 //if current does not have childQuads or it does lie on the border 
                 current._objects.Add(spatialObject);
+                _objectsCount++;
 
                 while (NeedToSplit(current))
                 {

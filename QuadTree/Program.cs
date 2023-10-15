@@ -1,5 +1,7 @@
 using QuadTree.QTree;
 using QuadTree.Structures;
+using QuadTree.test;
+using System.Diagnostics;
 
 namespace QuadTree
 {
@@ -53,16 +55,18 @@ namespace QuadTree
             quadTree.Insert(A);
             quadTree.Insert(C);
 
+            Process.Start("cmd.exe");
+
             var point =  quadTree.Find(A);
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            //ApplicationConfiguration.Initialize();
-            //Application.Run(new Form1());
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
 
-
-
+            
 
         }
+        
 
     }
 }
