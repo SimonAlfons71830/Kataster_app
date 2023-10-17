@@ -71,6 +71,11 @@ namespace QuadTree.QTree
                 current._objects.Add(spatialObject);
                 _objectsCount++;
 
+                //ked mam 2 objekty v koreni a uz je strom split - preco sa splituje znovu ?
+                //v tom pripade ak sa nenajde ziadny subquad v predchadzajucom kode moze to znamenat ze je na hrane
+                //ak je na hrane a current uz ma nejakych potomkov nepotrebuje sa splitovat
+
+
                 while (NeedToSplit(current))
                 {
                     current.splitQuad();
@@ -103,6 +108,11 @@ namespace QuadTree.QTree
                     }
                     //skontrolovat ci synovia splnaju podmienku splitu
                     current = pomC;
+                    //ak sa do current ulozi null -> objekty su na hrane 
+                    if (current == null) 
+                    {
+                        break;
+                    }
                 }
                 break;
             }
@@ -128,6 +138,10 @@ namespace QuadTree.QTree
                 Quad quad = quads.Dequeue();
                 if (_object.IsContainedInQuad(quad))
                 {
+                    //when the object is located in one of the 4 added quad i can erease all of them from there
+                    //ill be adding just childQuads of the quad that is object within
+                    quads.Clear();
+
                     foreach (var point in quad._objects) {
                         if (point is MyPoint)
                         {
@@ -346,7 +360,7 @@ namespace QuadTree.QTree
         /// <returns></returns>
         public Boolean NeedToSplit(Quad quad)
         {
-            return quad._objects.Count > MAX_QUAD_CAPACITY && _level < _maxDepth ? true : false;
+            return quad._objects.Count > MAX_QUAD_CAPACITY && _level < _maxDepth && quad.getNW() == null ? true : false;
         }
 
        
@@ -376,8 +390,8 @@ namespace QuadTree.QTree
         public Quad? FindQuad(Quad current, MyPoint point)
         {
             //find the center of quad -> from there the boundaries will be determined
-            double centerX = (current._boundaries.X + (current._boundaries.X + current._boundaries.Width)) / 2;
-            double centerY = (current._boundaries.Y + (current._boundaries.Y + current._boundaries.Height)) / 2;
+            double centerX = (current._boundaries.X0 + current._boundaries.Xk ) / 2;
+            double centerY = (current._boundaries.Y0 + current._boundaries.Xk) / 2;
 
             //SW || NW
             if (point._x < centerX)

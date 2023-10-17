@@ -44,20 +44,22 @@ namespace QuadTree
 
 
 
-           /* quadTree.Insert(A);
-            quadTree.Insert(C);
-            quadTree.Insert(D);
-            quadTree.Insert(E);
-            quadTree.Insert(E2);
-            quadTree.Insert(H);*/
+            /* quadTree.Insert(A);
+             quadTree.Insert(C);
+             quadTree.Insert(D);
+             quadTree.Insert(E);
+             quadTree.Insert(E2);
+             quadTree.Insert(H);*/
+            var newPoint = new MyPoint(50.0, 50.0, "center");
+            var newPoint2 = new MyPoint(100.0, 100.0, "end");
 
+            quadTree.Insert(newPoint);
+            quadTree.Insert(newPoint2);
 
-            quadTree.Insert(A);
-            quadTree.Insert(C);
+            //Process.Start("cmd.exe");
 
-            Process.Start("cmd.exe");
-
-            var point =  quadTree.Find(A);
+            var point =  quadTree.Find(newPoint);
+            var point2 = quadTree.Find(newPoint2);
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

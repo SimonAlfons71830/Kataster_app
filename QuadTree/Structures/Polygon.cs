@@ -121,8 +121,8 @@ namespace QuadTree.Structures
         public Quad? FindQuad(Quad quad)
         {
             //find the center of quad -> from there the boundaries will be determined
-            double centerX = (quad._boundaries.X + (quad._boundaries.X + quad._boundaries.Width)) / 2;
-            double centerY = (quad._boundaries.Y + (quad._boundaries.Y + quad._boundaries.Height)) / 2;
+            double centerX = (quad._boundaries.X0 + quad._boundaries.Xk) / 2;
+            double centerY = (quad._boundaries.Y0 + quad._boundaries.Yk) / 2;
 
             double PcenterX = _tops.Average(point => point._x);
             double PcenterY = _tops.Average(point => point._y);
@@ -202,8 +202,8 @@ namespace QuadTree.Structures
             foreach (var t in _tops)
             {
                 // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > quad._boundaries.X && t._x < quad._boundaries.X + quad._boundaries.Width;
-                bool withinYBounds = t._y > quad._boundaries.Y && t._y < quad._boundaries.Y + quad._boundaries.Height;
+                bool withinXBounds = t._x > quad._boundaries.X0 && t._x < quad._boundaries.Xk;
+                bool withinYBounds = t._y > quad._boundaries.Y0 && t._y < quad._boundaries.Yk;
 
                 if (!withinXBounds || !withinYBounds)
                 {
@@ -220,8 +220,8 @@ namespace QuadTree.Structures
             foreach (var t in _tops)
             {
                 // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > boundaries.X && t._x < boundaries.X + boundaries.Width;
-                bool withinYBounds = t._y > boundaries.Y && t._y < boundaries.Y + boundaries.Height;
+                bool withinXBounds = t._x > boundaries.X0 && t._x < boundaries.Xk;
+                bool withinYBounds = t._y > boundaries.Y0 && t._y < boundaries.Yk;
 
                 if (!withinXBounds || !withinYBounds)
                 {

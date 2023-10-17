@@ -105,41 +105,41 @@
             // 
             numericUpDown1.Location = new Point(389, 31);
             numericUpDown1.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDown1.Minimum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown1.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(150, 27);
             numericUpDown1.TabIndex = 100;
-            numericUpDown1.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown1.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // numericUpDown2
             // 
             numericUpDown2.Location = new Point(389, 84);
             numericUpDown2.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDown2.Minimum = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown2.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown2.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
             numericUpDown3.Location = new Point(389, 145);
-            numericUpDown3.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericUpDown3.Minimum = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown3.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
+            numericUpDown3.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown3.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // numericUpDown4
             // 
             numericUpDown4.Location = new Point(389, 201);
-            numericUpDown4.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericUpDown4.Minimum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown4.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDown4.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown4.Name = "numericUpDown4";
             numericUpDown4.Size = new Size(150, 27);
             numericUpDown4.TabIndex = 13;
-            numericUpDown4.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown4.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // Form1
             // 

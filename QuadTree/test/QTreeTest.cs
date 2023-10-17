@@ -21,12 +21,12 @@ namespace QuadTree.test
         public int pocetInsert;
         //int pocetRemove;
         public int pocetFind;
-        QuadTreeStruct quadTree =new QuadTreeStruct(new Boundaries(0.0,0.0, 1000,1000),10);
+        QuadTreeStruct quadTree =new QuadTreeStruct(new Boundaries(0.0,0.0, 1000.0,1000.0),20);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         public int passed = 0;
         public int failed = 0;
-        private static Random random = new Random();
+        private static Random random = new Random(0);
 
         public static string RandomString(int length)
         {
@@ -53,7 +53,6 @@ namespace QuadTree.test
                 availableObjects.RemoveAt(index);
                 //BTreePrinter.Print(binary.Root);
             }
-
 
             for (int i = 0; i < pocetOperacii; i++)
             {
@@ -89,7 +88,8 @@ namespace QuadTree.test
                     var point = quadTree.Find(tryFindKey);
                     if (point == null) { 
                         failed++; 
-                        return; }
+                        //return; 
+                    }
                     if (pomNodeKey == point)
                     {
                         passed++;

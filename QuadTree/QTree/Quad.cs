@@ -10,9 +10,9 @@ namespace QuadTree.QTree
     {
         /*
         struct that represents a rectangle
-        double x, y; //start of the recatngle (left bottom as xy axis)
-        double width; //width from x to right border
-        double height; //height from y to upper border 
+        double _x0, _y0; //start of the rectangle (left bottom as xy axis)
+        double width; //width from _x0 to right border
+        double height; //height from _y0 to upper border 
         */
 
         // in every node/quad there is
@@ -20,8 +20,10 @@ namespace QuadTree.QTree
         // coordinates of area that node represents
         // list to save data 
 
+        //primary key
         private MyPoint _key; //the starting points of the quad
-        public Boundaries _boundaries; //X, Y, Heigth, Width
+        //secondary key
+        public Boundaries _boundaries; //X0, Y0, Heigth, Width
 
         //list of the points that belongs to the Quad
         public List<ISpatialObject> _objects = new List<ISpatialObject>();
@@ -34,7 +36,7 @@ namespace QuadTree.QTree
         private Quad? _southWest { get; set; }
 
         public Quad(Boundaries boundaries) {
-            _key = new MyPoint(boundaries.X, boundaries.Y, "Starting MyPoint");
+            _key = new MyPoint(boundaries.X0, boundaries.Y0, "Starting MyPoint");
             _boundaries = boundaries;
         }
 
@@ -57,13 +59,10 @@ namespace QuadTree.QTree
         /// </remarks>
         public void splitQuad() {
 
-            double newHeight = _boundaries.Height / 2;
-            double newWidth = _boundaries.Width / 2;
-
-            _northWest = new Quad(new Boundaries(_boundaries.X, (float)(_boundaries.Y + newHeight), (float)newWidth, (float)newHeight));
-            _northEast = new Quad(new Boundaries((float)(_boundaries.X + newWidth), (float)(_boundaries.Y + newHeight), (float)newWidth, (float)newHeight));
-            _southEast = new Quad(new Boundaries((float)(_boundaries.X + newWidth), _boundaries.Y, (float)newWidth, (float)newHeight));
-            _southWest = new Quad(new Boundaries(_boundaries.X , _boundaries.Y , (float)newWidth, (float)newHeight));
+            _northWest = new Quad(new Boundaries(_boundaries.X0, (_boundaries.Y0 + _boundaries.Yk) /2, (_boundaries.Xk + _boundaries.X0) /2 , _boundaries.Yk));
+            _northEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2, _boundaries.Xk,_boundaries.Yk));
+            _southEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2,_boundaries.Y0,_boundaries.Xk, (_boundaries.Yk + _boundaries.Y0) / 2));
+            _southWest = new Quad(new Boundaries(_boundaries.X0,_boundaries.Y0, (_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2));
 
         }
 
@@ -79,10 +78,12 @@ namespace QuadTree.QTree
                 return true;
             }
 
-            return _boundaries.X == other._boundaries.X &&
-          _boundaries.Y == other._boundaries.Y &&
-          _boundaries.Width == other._boundaries.Width &&
-          _boundaries.Height == other._boundaries.Height;
+            double epsylon = 0.0000001;
+
+            return (_boundaries.X0 + epsylon > other._boundaries.X0 && _boundaries.X0 - epsylon < other._boundaries.X0 ) &&
+          (_boundaries.Y0 + epsylon > other._boundaries.Y0 && _boundaries.Y0 - epsylon < other._boundaries.Y0) &&
+          (_boundaries.Xk + epsylon > other._boundaries.Xk && _boundaries.Xk - epsylon < other._boundaries.Xk) &&
+          (_boundaries.Yk + epsylon > other._boundaries.Yk && _boundaries.Yk - epsylon < other._boundaries.Yk);
         }
     }
 }

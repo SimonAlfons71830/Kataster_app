@@ -5,7 +5,7 @@ using QuadTree.QTree;
 namespace QuadTree.Structures
 {
     //trieda ktora reprezentuje bod v koreni QStromu
-    //ma svoje suradnice x a y ktore reprezentuju presne umiestnenie v ramci korena stromu
+    //ma svoje suradnice _x0 a _y0 ktore reprezentuju presne umiestnenie v ramci korena stromu
     internal class MyPoint : ISpatialObject, IEquatable<MyPoint>
     {
         public double _x { get; }
@@ -33,33 +33,33 @@ namespace QuadTree.Structures
         public Quad? FindQuad(Quad quad)
         {
             //find the center of quad -> from there the boundaries will be determined
-            double centerX = (quad._boundaries.X + (quad._boundaries.X + quad._boundaries.Width)) / 2;
-            double centerY = (quad._boundaries.Y + (quad._boundaries.Y + quad._boundaries.Height)) / 2;
+            double centerX = (quad._boundaries.X0 + quad._boundaries.Xk) / 2;
+            double centerY = (quad._boundaries.Y0 + quad._boundaries.Yk) / 2;
 
             //SW || NW
-            if (_x < centerX)
+            if (_x < centerX && _x > quad._boundaries.X0)
             {
                 //SW
-                if (_y < centerY)
+                if (_y < centerY && _y > quad._boundaries.Y0)
                 {
                     return quad.getSW();
                 }
                 //NW
-                else if (_y > centerY)
+                else if (_y > centerY && _y < quad._boundaries.Yk)
                 {
                     return quad.getNW();
                 }
 
             }
-            else //NE || SE
+            else if(_x > centerX && _x < quad._boundaries.Xk)//NE || SE
             {
                 //SE
-                if (_y < centerY)
+                if (_y < centerY && _y > quad._boundaries.Y0)
                 {
                     return quad.getSE();
                 }
                 //NE
-                else if (_y > centerY)
+                else if (_y > centerY && _y < quad._boundaries.Yk)
                 {
                     return quad.getNE();
                 }
@@ -78,22 +78,25 @@ namespace QuadTree.Structures
 
         public bool Equals(MyPoint? other)
         {
-            return _x == other._x && _y == other._y;
+            double epsylon = 0.000001;
+            //TODO: osetrit porovnavanie double!
+            return (_x + epsylon > other._x && _x - epsylon < other._x) 
+                && (_y + epsylon > other._y && _y - epsylon < other._y);
         }
 
         public bool IsContainedInQuad(Quad quad)
         {
             // Check if the point is within the quad's boundaries.
-            bool withinXBounds = _x > quad._boundaries.X && _x < quad._boundaries.X + quad._boundaries.Width;
-            bool withinYBounds = _y > quad._boundaries.Y && _y < quad._boundaries.Y + quad._boundaries.Height;
+            bool withinXBounds = _x >= quad._boundaries.X0 && _x <= quad._boundaries.Xk;
+            bool withinYBounds = _y >= quad._boundaries.Y0 && _y <= quad._boundaries.Yk;
 
             return withinXBounds && withinYBounds;
         }
 
         public bool IsContainedInArea(Boundaries boundaries) {
             // Check if the point is within the quad's boundaries.
-            bool withinXBounds = _x > boundaries.X && _x < boundaries.X + boundaries.Width;
-            bool withinYBounds = _y > boundaries.Y && _y < boundaries.Y + boundaries.Height;
+            bool withinXBounds = _x > boundaries.X0 && _x < boundaries.Xk;
+            bool withinYBounds = _y > boundaries.Y0 && _y < boundaries.Yk;
 
             return withinXBounds && withinYBounds;
         }
