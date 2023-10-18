@@ -133,7 +133,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInQuad(quad.getSW()))
+                        if (point.IsContainedInArea(quad.getSW()._boundaries))
                         {
                             continue;
                         }
@@ -149,7 +149,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInQuad(quad.getNW()))
+                        if (point.IsContainedInArea(quad.getNW()._boundaries))
                         {
                             continue;
                         }
@@ -167,7 +167,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInQuad(quad.getSE()))
+                        if (point.IsContainedInArea(quad.getSE()._boundaries))
                         {
                             continue;
                         }
@@ -182,7 +182,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInQuad(quad.getNW()))
+                        if (point.IsContainedInArea(quad.getNW()._boundaries))
                         {
                             continue;
                         }
@@ -196,7 +196,7 @@ namespace QuadTree.Structures
             }
         }
 
-        public bool IsContainedInQuad(Quad quad)
+        /*public bool IsContainedInQuad(Quad quad)
         {
             // Assuming you have a list of vertices in your polygon.
             foreach (var t in _tops)
@@ -213,7 +213,7 @@ namespace QuadTree.Structures
             }
             // If all vertices are within the quad, the polygon is contained.
             return true;
-        }
+        }*/
 
         public bool IsContainedInArea(Boundaries boundaries) {
             // Assuming you have a list of vertices in your polygon.

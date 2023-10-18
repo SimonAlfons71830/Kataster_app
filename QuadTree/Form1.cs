@@ -1,3 +1,4 @@
+using QuadTree.Structures;
 using QuadTree.test;
 
 namespace QuadTree
@@ -33,7 +34,27 @@ namespace QuadTree
             richTextBox1.Text = "POCET VYKONANYCH OPERACII : " + test.pocetVykonanychOperacii + "\n     " +
                                 "pocet operacii insert : " + test.pocetInsert + "\n       " +
                                 "pocet operacii find : " + test.pocetFind + "\n\n" +
-                                "SUMAR TESTOV : \n\t passed : " + test.passed + "\n\t failed : " + test.failed;
+                                "SUMAR TESTOV : \n\t passed : " + test.passed + "\n\t failed : " + test.failed +
+                                "\n\n";
+
+            List<ISpatialObject> list = test.IntervalSearchTest(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
+            richTextBox1.Text += "Points in interval X < " + numericUpDown8.Value + "; " + numericUpDown7.Value + "> and Y <" + numericUpDown6.Value + "; " + numericUpDown5.Value + ">\n";
+            var pomPassed = 0;
+            var pomFailed = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                //richTextBox1.Text += "[" + list[i]._x + " ; " + list[i]._y + "]";
+
+                if (list[i]._x <= (double)numericUpDown6.Value && list[i]._x >= (double)numericUpDown8.Value && list[i]._y <= (double)numericUpDown5.Value && list[i]._y >= (double)numericUpDown7.Value)
+                {
+                    pomPassed++;
+                }
+                else
+                {
+                    pomFailed++;
+                }
+            }
+            richTextBox1.Text += "\nPASSED : " + pomPassed + " FAILED : " + pomFailed;
 
         }
 

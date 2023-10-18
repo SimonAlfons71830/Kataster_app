@@ -94,8 +94,8 @@ namespace QuadTree.QTree
             foreach (var t in points)
             {
                 // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > quad._boundaries.X0 && t._x < quad._boundaries.Xk;
-                bool withinYBounds = t._y > quad._boundaries.Y0 && t._y < quad._boundaries.Xk;
+                bool withinXBounds = t._x >= quad._boundaries.X0 && t._x <= quad._boundaries.Xk;
+                bool withinYBounds = t._y >= quad._boundaries.Y0 && t._y <= quad._boundaries.Xk;
 
                 if (!withinXBounds || !withinYBounds)
                 {
@@ -105,6 +105,75 @@ namespace QuadTree.QTree
             }
             // If all vertices are within the quad, the polygon is contained.
             return true;
+        }
+
+        public bool IntersectWithQuad(Quad quad)
+        {
+            // Check if any of the 4 points of the polygon are within the quad's boundaries.
+            List<MyPoint> points = new List<MyPoint>();
+            points.Add(new MyPoint(this._x0, this._y0, "x0y0"));
+            points.Add(new MyPoint(this._x0, this._yk, "x0yk"));
+            points.Add(new MyPoint(this._xk, this._y0, "xky0"));
+            points.Add(new MyPoint(this._xk, this._yk, "xkyk"));
+            foreach (var t in points)
+            {
+                // Check if the vertex is within the quad's boundaries.
+                bool withinXBounds = t._x >= quad._boundaries.X0 && t._x <= quad._boundaries.Xk;
+                bool withinYBounds = t._y >= quad._boundaries.Y0 && t._y <= quad._boundaries.Yk;
+                if (withinXBounds && withinYBounds)
+                {
+                    // If any vertex is within the quad, the polygon intersects with the quad.
+                    return true;
+                }
+            }
+
+            // Check if any of the line segments intersect with the quad's boundaries.
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                MyPoint p1 = points[i];
+                MyPoint p2 = points[i + 1];
+                // Check if the line segment intersects with the quad's horizontal boundaries.
+                if (p1._y > quad._boundaries.Yk && p2._y < quad._boundaries.Yk)
+                {
+                    double xIntersection = p1._x + (quad._boundaries.Yk - p1._y) * (p2._x - p1._x) / (p2._y - p1._y);
+                    if (xIntersection >= quad._boundaries.X0 && xIntersection <= quad._boundaries.Xk)
+                    {
+                        // The line segment intersects with the quad's horizontal boundary.
+                        return true;
+                    }
+                }
+                else if (p1._y < quad._boundaries.Y0 && p2._y > quad._boundaries.Y0)
+                {
+                    double xIntersection = p1._x + (quad._boundaries.Y0 - p1._y) * (p2._x - p1._x) / (p2._y - p1._y);
+                    if (xIntersection >= quad._boundaries.X0 && xIntersection <= quad._boundaries.Xk)
+                    {
+                        // The line segment intersects with the quad's horizontal boundary.
+                        return true;
+                    }
+                }
+                // Check if the line segment intersects with the quad's vertical boundaries.
+                if (p1._x > quad._boundaries.Xk && p2._x < quad._boundaries.Xk)
+                {
+                    double yIntersection = p1._y + (quad._boundaries.Xk - p1._x) * (p2._y - p1._y) / (p2._x - p1._x);
+                    if (yIntersection >= quad._boundaries.Y0 && yIntersection <= quad._boundaries.Yk)
+                    {
+                        // The line segment intersects with the quad's vertical boundary.
+                        return true;
+                    }
+                }
+                else if (p1._x < quad._boundaries.X0 && p2._x > quad._boundaries.X0)
+                {
+                    double yIntersection = p1._y + (quad._boundaries.X0 - p1._x) * (p2._y - p1._y) / (p2._x - p1._x);
+                    if (yIntersection >= quad._boundaries.Y0 && yIntersection <= quad._boundaries.Yk)
+                    {
+                        // The line segment intersects with the quad's vertical boundary.
+                        return true;
+                    }
+                }
+            }
+
+            // If no vertices or line segments intersect with the quad, the polygon does not intersect with the quad.
+            return false;
         }
     }
 }

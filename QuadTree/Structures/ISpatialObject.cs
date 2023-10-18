@@ -13,7 +13,7 @@ namespace QuadTree.Structures
         double _x { get; }
         double _y { get; }
 
-        public bool IsContainedInQuad(Quad quad);
+        //public bool IsContainedInQuad(Quad quad);
         Quad FindQuad(Quad quad); // You can customize the method as per your needs.
         public bool IsContainedInArea(Boundaries boundaries);
     }

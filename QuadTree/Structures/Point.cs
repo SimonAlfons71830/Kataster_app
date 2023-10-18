@@ -84,19 +84,18 @@ namespace QuadTree.Structures
                 && (_y + epsylon > other._y && _y - epsylon < other._y);
         }
 
-        public bool IsContainedInQuad(Quad quad)
+        /*public bool IsContainedInQuad(Quad quad)
         {
             // Check if the point is within the quad's boundaries.
             bool withinXBounds = _x >= quad._boundaries.X0 && _x <= quad._boundaries.Xk;
             bool withinYBounds = _y >= quad._boundaries.Y0 && _y <= quad._boundaries.Yk;
 
             return withinXBounds && withinYBounds;
-        }
+        }*/
 
         public bool IsContainedInArea(Boundaries boundaries) {
-            // Check if the point is within the quad's boundaries.
-            bool withinXBounds = _x > boundaries.X0 && _x < boundaries.Xk;
-            bool withinYBounds = _y > boundaries.Y0 && _y < boundaries.Yk;
+            bool withinXBounds = _x >= boundaries.X0 && _x <= boundaries.Xk;
+            bool withinYBounds = _y >= boundaries.Y0 && _y <= boundaries.Yk;
 
             return withinXBounds && withinYBounds;
         }

@@ -21,7 +21,7 @@ namespace QuadTree.test
         public int pocetInsert;
         //int pocetRemove;
         public int pocetFind;
-        QuadTreeStruct quadTree =new QuadTreeStruct(new Boundaries(0.0,0.0, 1000.0,1000.0),20);
+        QuadTreeStruct quadTree =new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),20);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         public int passed = 0;
@@ -39,8 +39,10 @@ namespace QuadTree.test
         {
             for (int i = 0; i < seed; i++)
             {
-                availableObjects.Add(new MyPoint(random.Next(0,1000), random.Next(0,1000), RandomString(1)));
+                availableObjects.Add(new MyPoint(random.Next(0,100), random.Next(0,100), RandomString(1)));
             }
+
+
 
             for (int i = 0; i < podielFind; i++)
             {
@@ -85,7 +87,7 @@ namespace QuadTree.test
                     MyPoint tryFindKey = (MyPoint)usedKeys[tryFindIndex];
                     var pomNodeKey = tryFindKey;
 
-                    var point = quadTree.Find(tryFindKey);
+                    var point = quadTree.PointSearch(tryFindKey);
                     if (point == null) { 
                         failed++; 
                         //return; 
@@ -109,6 +111,11 @@ namespace QuadTree.test
                                 "pocet operacii find : " + pocetFind + "\n");
             Console.WriteLine("SUMAR TESTOV : \n\tpassed : " + passed + "\n\tfailed : " + failed);
 
+        }
+
+        public List<ISpatialObject> IntervalSearchTest(Boundaries boundaries) {
+
+           return quadTree.IntervalSearchN(boundaries);
         }
 
         public void SetPocetOperacii(int pocetOperacii) {
