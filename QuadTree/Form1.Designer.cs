@@ -53,6 +53,10 @@
             width_tree = new NumericUpDown();
             label11 = new Label();
             label12 = new Label();
+            label13 = new Label();
+            label14 = new Label();
+            numberOfObjects = new NumericUpDown();
+            maxDepth = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -63,6 +67,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
             ((System.ComponentModel.ISupportInitialize)width_tree).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numberOfObjects).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)maxDepth).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -260,34 +266,34 @@
             // 
             QuadPanel.Location = new Point(711, 24);
             QuadPanel.Name = "QuadPanel";
-            QuadPanel.Size = new Size(535, 481);
+            QuadPanel.Size = new Size(535, 516);
             QuadPanel.TabIndex = 111;
             QuadPanel.Paint += QuadPanel_Paint;
             // 
             // heigth_tree
             // 
-            heigth_tree.Location = new Point(813, 618);
+            heigth_tree.Location = new Point(763, 605);
             heigth_tree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             heigth_tree.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             heigth_tree.Name = "heigth_tree";
             heigth_tree.Size = new Size(150, 27);
             heigth_tree.TabIndex = 112;
-            heigth_tree.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            heigth_tree.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // width_tree
             // 
-            width_tree.Location = new Point(813, 565);
+            width_tree.Location = new Point(763, 552);
             width_tree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             width_tree.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             width_tree.Name = "width_tree";
             width_tree.Size = new Size(150, 27);
             width_tree.TabIndex = 113;
-            width_tree.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            width_tree.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(748, 625);
+            label11.Location = new Point(698, 612);
             label11.Name = "label11";
             label11.Size = new Size(54, 20);
             label11.TabIndex = 115;
@@ -296,17 +302,58 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(748, 572);
+            label12.Location = new Point(698, 559);
             label12.Name = "label12";
             label12.Size = new Size(49, 20);
             label12.TabIndex = 114;
             label12.Text = "Width";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(926, 612);
+            label13.Name = "label13";
+            label13.Size = new Size(106, 20);
+            label13.TabIndex = 119;
+            label13.Text = "No.  of objects";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(926, 559);
+            label14.Name = "label14";
+            label14.Size = new Size(78, 20);
+            label14.TabIndex = 118;
+            label14.Text = "MaxDepth";
+            // 
+            // numberOfObjects
+            // 
+            numberOfObjects.Location = new Point(1050, 605);
+            numberOfObjects.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numberOfObjects.Name = "numberOfObjects";
+            numberOfObjects.Size = new Size(150, 27);
+            numberOfObjects.TabIndex = 116;
+            numberOfObjects.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // maxDepth
+            // 
+            maxDepth.Location = new Point(1050, 552);
+            maxDepth.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            maxDepth.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
+            maxDepth.Name = "maxDepth";
+            maxDepth.Size = new Size(150, 27);
+            maxDepth.TabIndex = 117;
+            maxDepth.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(label13);
+            Controls.Add(label14);
+            Controls.Add(numberOfObjects);
+            Controls.Add(maxDepth);
             Controls.Add(label11);
             Controls.Add(label12);
             Controls.Add(heigth_tree);
@@ -345,6 +392,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown8).EndInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).EndInit();
             ((System.ComponentModel.ISupportInitialize)width_tree).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numberOfObjects).EndInit();
+            ((System.ComponentModel.ISupportInitialize)maxDepth).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -375,5 +424,9 @@
         private NumericUpDown width_tree;
         private Label label11;
         private Label label12;
+        private Label label13;
+        private Label label14;
+        private NumericUpDown numberOfObjects;
+        private NumericUpDown maxDepth;
     }
 }

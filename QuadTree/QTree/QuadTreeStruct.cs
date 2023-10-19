@@ -16,105 +16,103 @@ namespace QuadTree.QTree
         private Quad _root;
 
         /// <summary>
-        /// Constructor of a currentQuad tree
+        /// Initializes a new instance of the <see cref="QuadTreeStruct"/> class with the specified boundaries and maximum depth.
         /// </summary>
-        /// <param name="dimension">
-        /// the size of the rectangle that represents currentQuad tree (bounds)
-        /// </param>
-        /// <param name="maxDepth">
-        /// number of levels of children from root node
-        /// </param>
+        /// <param name="dimension">The boundaries of the quadtree.</param>
+        /// <param name="maxDepth">The maximum depth to which the quadtree will be constructed.</param>
         public QuadTreeStruct(Boundaries dimension, int maxDepth)
         {
-
             _maxDepth = maxDepth;
             _dimension = dimension;
-            //current level of the tree
             _root = new Quad(_dimension,0);
         }
 
-        public Quad GetRoot()
-        { return _root; }
+        /// <summary>
+        /// Gets the root quad of the quadtree structure.
+        /// </summary>
+        /// <returns>The root <see cref="Quad"/> of the quadtree.</returns>
+        public Quad GetRoot() => _root;
 
         /// <summary>
-        /// Method for inserting object that is implemented by interface. 
+        /// Method for inserting object which is implemented by interface (Points and Polygons). 
         /// Firstly it controls if there exists any childQuad of the root where the object 
         /// can be located if it fits within boundaries.
         /// Then its added to list of object in the currentQuad.
-        /// Condition is controlled for slitting the currentQuad, if the conditions are met 
-        /// the currentQuad is splitted and the objects are inserted to correct currentQuad.
+        /// Condition is controlled for splitting the currentQuad, if the conditions are met 
+        /// the currentQuad is split and the objects are inserted to correct Quad.
         /// </summary>
         /// <param name="spatialObject"></param>
         public void Insert(ISpatialObject spatialObject)
         {
             Quad current = _root;
-
             while (true)
             {
                 //if there is any child of the current currentQuad, determine in which childQuad point belongs to
+                //if it is on the borders the subQuad will be null and object will be added to current
                 if (current.getNW() != null)
                 {
                     //find position of the point to the right currentQuad
                     Quad subQuad = spatialObject.FindQuad(current);
-
                     if (subQuad != null)
                     {
-
                         current._objects.Remove(spatialObject);
                         current = subQuad;
+                        //continue the iterations until the leaf is found
                         continue;
                     }
                 }
-
-                //if current does not have childQuads or it does lie on the border 
                 current._objects.Add(spatialObject);
+                //pom
                 _objectsCount++;
 
-                //ked mam 2 objekty v koreni a uz je strom split - preco sa splituje znovu ?
-                //v tom pripade ak sa nenajde ziadny subquad v predchadzajucom kode moze to znamenat ze je na hrane
-                //ak je na hrane a current uz ma nejakych potomkov nepotrebuje sa splitovat
-
-
+                //check whether the currentQuad needs to be split - (maxQuadCapacity, level, already is split)
                 while (NeedToSplit(current))
                 {
                     current.splitQuad();
-                    //if the currentQuad is splitted every point from the currentQuad must bee extracted and reinserted to the correct child currentQuad
-                    Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>();
-                    foreach (var rObject in current._objects)
-                    {
-                        reinsertObjects.Enqueue(rObject);
-                    }
+                    //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
+                    Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(current._objects);
                     current._objects.Clear();
+                    //pom to remember the last point's quad
                     var pomC = current;
-                    //currentQuad is edited now each point add to its designed currentQuad
+
                     while (reinsertObjects.Count > 0)
                     {
-                        //insert the points to the right childQuad
-
+                        //find the right quad for objects
                         var rObject = reinsertObjects.Dequeue();
                         Quad? rQuad = rObject.FindQuad(current);
 
-                        if (rQuad != null)
-                        {
-                            rQuad._objects.Add(rObject);
-                        }
-                        else
-                        {
-                            current._objects.Add(rObject);
-                        }
+                        (rQuad ?? current)._objects.Add(rObject);
+
                         pomC = rQuad;
                     }
-                    //skontrolovat ci synovia splnaju podmienku splitu
+                    //check if quad where was the last point inserted needs to be split again 
+                    //last point's is checked bc of it the quad needed to be split in first place
                     current = pomC;
-                    //ak sa do current ulozi null -> objekty su na hrane 
-                    if (current == null)
-                    {
-                        break;
-                    }
+                    //if the current is null -> object is on the boundary
+                    if (current == null) { break; }
                 }
                 break;
             }
         }
+
+        /// <summary>
+        ///  A quad needs to be split if it exceeds the maximum capacity, has not reached the maximum depth, 
+        ///  and has no childQuads.
+        /// </summary>
+        /// <param name="quad">The Quad to check for splitting.</param>
+        /// <returns>
+        ///   <c>true</c> if the quad needs to be split; otherwise, <c>false</c>.
+        /// </returns>
+        public Boolean NeedToSplit(Quad quad)
+        {
+            return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
+        }
+
+
+
+
+
+
 
 
         /*
@@ -262,16 +260,7 @@ namespace QuadTree.QTree
             return true;
         }
 
-        /// <summary>
-        /// checks if Quad meets the condition defined from the user
-        /// if no -> it returns true so currentQuad needs to be split if conditions are met -> true
-        /// </summary>
-        /// <param name="quad"></param>
-        /// <returns></returns>
-        public Boolean NeedToSplit(Quad quad)
-        {
-            return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null ? true : false;
-        }
+        
 
        
 
@@ -350,15 +339,5 @@ namespace QuadTree.QTree
             }
 
         }*/
-
-
-
-
-
-
-
-
-
-
     }
 }

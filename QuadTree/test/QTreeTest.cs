@@ -26,7 +26,7 @@ namespace QuadTree.test
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         public int passed = 0;
         public int failed = 0;
-        private static Random random = new Random(0);
+        private static Random random = new Random();
 
         public static string RandomString(int length)
         {
