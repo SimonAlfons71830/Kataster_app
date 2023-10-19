@@ -7,11 +7,12 @@ using QuadTree.QTree;
 
 namespace QuadTree.Structures
 {
-    internal interface ISpatialObject
+    public interface ISpatialObject
     {
         // Properties that are common to both points and polygons.
         double _x { get; }
         double _y { get; }
+        int _id { get; }
 
         //public bool IsContainedInQuad(Quad quad);
         Quad FindQuad(Quad quad); // You can customize the method as per your needs.

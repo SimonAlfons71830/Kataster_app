@@ -6,14 +6,13 @@ using QuadTree.Structures;
 
 namespace QuadTree.QTree
 {
-    internal class QuadTreeStruct
+    public class QuadTreeStruct
     {
         private readonly int _maxDepth;
         public int _objectsCount;
-        private int _level;
         const int MAX_QUAD_CAPACITY = 1;
         //rectangleF - stores 4 data in float that represents size and location of the rectangle
-        private readonly Boundaries _dimension;
+        public Boundaries _dimension;
         private Quad _root;
 
         /// <summary>
@@ -31,8 +30,7 @@ namespace QuadTree.QTree
             _maxDepth = maxDepth;
             _dimension = dimension;
             //current level of the tree
-            _level = 0;
-            _root = new Quad(_dimension);
+            _root = new Quad(_dimension,0);
         }
 
         public Quad GetRoot()
@@ -80,7 +78,6 @@ namespace QuadTree.QTree
                 while (NeedToSplit(current))
                 {
                     current.splitQuad();
-                    _level++;
                     //if the currentQuad is splitted every point from the currentQuad must bee extracted and reinserted to the correct child currentQuad
                     Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>();
                     foreach (var rObject in current._objects)
@@ -209,6 +206,8 @@ namespace QuadTree.QTree
             return foundObjects;
         }
 
+
+
         /// <summary>
         /// interval search with n complexity
         /// 
@@ -271,7 +270,7 @@ namespace QuadTree.QTree
         /// <returns></returns>
         public Boolean NeedToSplit(Quad quad)
         {
-            return quad._objects.Count > MAX_QUAD_CAPACITY && _level < _maxDepth && quad.getNW() == null ? true : false;
+            return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null ? true : false;
         }
 
        
@@ -336,14 +335,30 @@ namespace QuadTree.QTree
             //if its not in any childQuad then its set on boundaries
             return null;
 
-            //rewritten with ternaty operators
-
-            /*Quad? result = point._x < centerX ? (point._y < centerY ? current.getSW() : current.getNW()) : (point._y < centerY ? current.getSE() : current.getNE());
-
-            // If result is null, the point is outside all child quadrants and should be placed in the current currentQuad
-            return result ?? null;*/
-
         }
+
+        /*public bool RemoveObject(int objectId) 
+        {
+            Quad current = _root;
+            //ak je zaznam v zozname vrcholu tak sa odstrani
+            foreach (var _object in current._objects)
+            {
+                if (_object._id == objectId)
+                {
+                    current._objects.Remove(_object);
+                }
+            }
+
+        }*/
+
+
+
+
+
+
+
+
+
 
     }
 }

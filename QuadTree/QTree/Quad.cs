@@ -6,13 +6,12 @@ namespace QuadTree.QTree
     /// <summary>
     /// also called Node (Vrchol)
     /// </summary>
-    internal class Quad
+    public class Quad
     {
         /*
         struct that represents a rectangle
         double _x0, _y0; //start of the rectangle (left bottom as xy axis)
-        double width; //width from _x0 to right border
-        double height; //height from _y0 to upper border 
+        double xk, yk; //end of the rectangle (right upper corner)
         */
 
         // in every node/quad there is
@@ -20,10 +19,11 @@ namespace QuadTree.QTree
         // coordinates of area that node represents
         // list to save data 
 
-        //primary key
+        //primary _id
         private MyPoint _key; //the starting points of the quad
-        //secondary key
+        //secondary _id
         public Boundaries _boundaries; //X0, Y0, Heigth, Width
+        public int level;
 
         //list of the points that belongs to the Quad
         public List<ISpatialObject> _objects = new List<ISpatialObject>();
@@ -35,9 +35,11 @@ namespace QuadTree.QTree
         private Quad? _southEast { get; set; }
         private Quad? _southWest { get; set; }
 
-        public Quad(Boundaries boundaries) {
-            _key = new MyPoint(boundaries.X0, boundaries.Y0, "Starting MyPoint");
+        public Quad(Boundaries boundaries, int level)
+        {
+            _key = new MyPoint(boundaries.X0, boundaries.Y0, 90000);
             _boundaries = boundaries;
+            this.level = level;
         }
 
         public Quad? getNW() { return _northWest; }
@@ -58,11 +60,11 @@ namespace QuadTree.QTree
         /// - South-West (Bottom-left) Quadrant
         /// </remarks>
         public void splitQuad() {
-
-            _northWest = new Quad(new Boundaries(_boundaries.X0, (_boundaries.Y0 + _boundaries.Yk) /2, (_boundaries.Xk + _boundaries.X0) /2 , _boundaries.Yk));
-            _northEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2, _boundaries.Xk,_boundaries.Yk));
-            _southEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2,_boundaries.Y0,_boundaries.Xk, (_boundaries.Yk + _boundaries.Y0) / 2));
-            _southWest = new Quad(new Boundaries(_boundaries.X0,_boundaries.Y0, (_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2));
+            level++;
+            _northWest = new Quad(new Boundaries(_boundaries.X0, (_boundaries.Y0 + _boundaries.Yk) /2, (_boundaries.Xk + _boundaries.X0) /2 , _boundaries.Yk),level);
+            _northEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2, _boundaries.Xk,_boundaries.Yk), level);
+            _southEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2,_boundaries.Y0,_boundaries.Xk, (_boundaries.Yk + _boundaries.Y0) / 2), level);
+            _southWest = new Quad(new Boundaries(_boundaries.X0,_boundaries.Y0, (_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2), level);
 
         }
 

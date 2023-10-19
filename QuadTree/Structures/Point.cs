@@ -6,18 +6,17 @@ namespace QuadTree.Structures
 {
     //trieda ktora reprezentuje bod v koreni QStromu
     //ma svoje suradnice _x0 a _y0 ktore reprezentuju presne umiestnenie v ramci korena stromu
-    internal class MyPoint : ISpatialObject, IEquatable<MyPoint>
+    public class MyPoint: ISpatialObject, IEquatable<MyPoint>
     {
         public double _x { get; }
         public double _y { get; }
-        public string _name { get; }
+        public int _id { get; }
 
-
-        public MyPoint(double x, double y, string name)
+        public MyPoint(double x, double y, int id)
         {
             _x = x;
             _y = y;
-            _name = name;
+            _id = id;
         }
 
         public double DistanceTo(MyPoint other)
@@ -81,7 +80,7 @@ namespace QuadTree.Structures
             double epsylon = 0.000001;
             //TODO: osetrit porovnavanie double!
             return (_x + epsylon > other._x && _x - epsylon < other._x) 
-                && (_y + epsylon > other._y && _y - epsylon < other._y);
+                && (_y + epsylon > other._y && _y - epsylon < other._y) && other._id == this._id;
         }
 
         /*public bool IsContainedInQuad(Quad quad)

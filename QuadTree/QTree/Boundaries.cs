@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuadTree.QTree
 {
-    internal class Boundaries : IEquatable<Boundaries>
+    public class Boundaries : IEquatable<Boundaries>
     {
         private double _x0; //pociatocne suradnice stvoruholniku
         private double _y0;
@@ -86,10 +86,10 @@ namespace QuadTree.QTree
             //4 points  x0y0, xky0, x0yk xkyk
             //4 tops of the rectangular area
             List<MyPoint> points = new List<MyPoint>();
-            points.Add(new MyPoint(this._x0, this._y0, "x0y0"));
-            points.Add(new MyPoint(this._x0, this._yk, "x0yk"));
-            points.Add(new MyPoint(this._xk ,this._y0, "xky0"));
-            points.Add(new MyPoint(this._xk, this._yk, "xkyk"));
+            points.Add(new MyPoint(this._x0, this._y0, 00));
+            points.Add(new MyPoint(this._x0, this._yk, 01));
+            points.Add(new MyPoint(this._xk ,this._y0, 10));
+            points.Add(new MyPoint(this._xk, this._yk, 11));
 
             foreach (var t in points)
             {
@@ -111,10 +111,10 @@ namespace QuadTree.QTree
         {
             // Check if any of the 4 points of the polygon are within the quad's boundaries.
             List<MyPoint> points = new List<MyPoint>();
-            points.Add(new MyPoint(this._x0, this._y0, "x0y0"));
-            points.Add(new MyPoint(this._x0, this._yk, "x0yk"));
-            points.Add(new MyPoint(this._xk, this._y0, "xky0"));
-            points.Add(new MyPoint(this._xk, this._yk, "xkyk"));
+            points.Add(new MyPoint(this._x0, this._y0, 00));
+            points.Add(new MyPoint(this._x0, this._yk, 01));
+            points.Add(new MyPoint(this._xk, this._y0, 10));
+            points.Add(new MyPoint(this._xk, this._yk, 11));
             foreach (var t in points)
             {
                 // Check if the vertex is within the quad's boundaries.

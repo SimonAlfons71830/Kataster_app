@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace QuadTree.test
 {
-    internal class QTreeTest
+    public class QTreeTest
     {
         public int pocetOperacii;
         public int podielInsert;
@@ -21,7 +21,7 @@ namespace QuadTree.test
         public int pocetInsert;
         //int pocetRemove;
         public int pocetFind;
-        QuadTreeStruct quadTree =new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),20);
+        public QuadTreeStruct quadTree = new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),10);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         public int passed = 0;
@@ -39,10 +39,8 @@ namespace QuadTree.test
         {
             for (int i = 0; i < seed; i++)
             {
-                availableObjects.Add(new MyPoint(random.Next(0,100), random.Next(0,100), RandomString(1)));
+                availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk-quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));
             }
-
-
 
             for (int i = 0; i < podielFind; i++)
             {
@@ -50,7 +48,7 @@ namespace QuadTree.test
                 int index = random.Next(availableObjects.Count);
                 MyPoint point = (MyPoint)availableObjects[index];
                 quadTree.Insert(point);
-                //if (binary.Insert(key,data) == null) { failed++; }
+                //if (binary.Insert(_id,data) == null) { failed++; }
                 usedKeys.Add(point);
                 availableObjects.RemoveAt(index);
                 //BTreePrinter.Print(binary.Root);
@@ -134,5 +132,13 @@ namespace QuadTree.test
         this.seed = seedQ;
         }
 
+
+        public void setSizeOfTree(double w, double h) {
+            quadTree._dimension.X0 = 0;
+            quadTree._dimension.Y0 = 0;
+            quadTree._dimension.Xk = 0+w;
+            quadTree._dimension.Yk = 0+h;
+
+        }
     }
 }

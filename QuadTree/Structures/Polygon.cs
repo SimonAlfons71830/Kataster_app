@@ -8,9 +8,10 @@ using QuadTree.QTree;
 
 namespace QuadTree.Structures
 {
-    internal class Polygon : IEquatable<Polygon>, ISpatialObject
+    public class Polygon: IEquatable<Polygon>, ISpatialObject
     {
         private List<MyPoint> _tops;
+        public int _id { get; } 
 
         // Calculate the center (centroid) of the polygon based on its vertices.
         public double _x
@@ -48,8 +49,9 @@ namespace QuadTree.Structures
         }
 
 
-        public Polygon()
+        public Polygon(int id)
         {
+            _id = id;
             _tops = new List<MyPoint>();
         }
 
@@ -104,6 +106,11 @@ namespace QuadTree.Structures
                 {
                     return false;
                 }
+            }
+
+            if (other._id != this._id)
+            {
+                return false;
             }
 
             return true; // All tops are equal, so the Polygons are equal.

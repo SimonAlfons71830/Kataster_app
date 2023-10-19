@@ -48,6 +48,11 @@
             label8 = new Label();
             label9 = new Label();
             label10 = new Label();
+            QuadPanel = new Panel();
+            heigth_tree = new NumericUpDown();
+            width_tree = new NumericUpDown();
+            label11 = new Label();
+            label12 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -56,6 +61,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)width_tree).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -98,7 +105,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(918, 616);
+            button1.Location = new Point(1152, 638);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 8;
@@ -110,7 +117,7 @@
             // 
             richTextBox1.Location = new Point(34, 291);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(800, 354);
+            richTextBox1.Size = new Size(635, 354);
             richTextBox1.TabIndex = 9;
             richTextBox1.Text = "";
             richTextBox1.TextChanged += richTextBox1_TextChanged;
@@ -123,7 +130,7 @@
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(150, 27);
             numericUpDown1.TabIndex = 100;
-            numericUpDown1.Value = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDown1.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // numericUpDown2
             // 
@@ -133,7 +140,7 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 5000, 0, 0, 0 });
+            numericUpDown2.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
@@ -143,7 +150,7 @@
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 5000, 0, 0, 0 });
+            numericUpDown3.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // numericUpDown4
             // 
@@ -153,11 +160,11 @@
             numericUpDown4.Name = "numericUpDown4";
             numericUpDown4.Size = new Size(150, 27);
             numericUpDown4.TabIndex = 13;
-            numericUpDown4.Value = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDown4.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // numericUpDown5
             // 
-            numericUpDown5.Location = new Point(684, 237);
+            numericUpDown5.Location = new Point(519, 237);
             numericUpDown5.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown5.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown5.Name = "numericUpDown5";
@@ -167,7 +174,7 @@
             // 
             // numericUpDown6
             // 
-            numericUpDown6.Location = new Point(684, 181);
+            numericUpDown6.Location = new Point(519, 181);
             numericUpDown6.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             numericUpDown6.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown6.Name = "numericUpDown6";
@@ -177,7 +184,7 @@
             // 
             // numericUpDown7
             // 
-            numericUpDown7.Location = new Point(684, 120);
+            numericUpDown7.Location = new Point(519, 120);
             numericUpDown7.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown7.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown7.Name = "numericUpDown7";
@@ -187,7 +194,7 @@
             // 
             // numericUpDown8
             // 
-            numericUpDown8.Location = new Point(684, 67);
+            numericUpDown8.Location = new Point(519, 67);
             numericUpDown8.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown8.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown8.Name = "numericUpDown8";
@@ -198,7 +205,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(626, 244);
+            label5.Location = new Point(461, 244);
             label5.Name = "label5";
             label5.Size = new Size(24, 20);
             label5.TabIndex = 108;
@@ -207,7 +214,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(626, 181);
+            label6.Location = new Point(461, 181);
             label6.Name = "label6";
             label6.Size = new Size(25, 20);
             label6.TabIndex = 107;
@@ -216,7 +223,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(626, 125);
+            label7.Location = new Point(461, 125);
             label7.Name = "label7";
             label7.Size = new Size(25, 20);
             label7.TabIndex = 106;
@@ -225,7 +232,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(626, 72);
+            label8.Location = new Point(461, 72);
             label8.Name = "label8";
             label8.Size = new Size(26, 20);
             label8.TabIndex = 105;
@@ -243,17 +250,68 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(626, 24);
+            label10.Location = new Point(461, 24);
             label10.Name = "label10";
             label10.Size = new Size(104, 20);
             label10.TabIndex = 110;
             label10.Text = "Interval search";
             // 
+            // QuadPanel
+            // 
+            QuadPanel.Location = new Point(711, 24);
+            QuadPanel.Name = "QuadPanel";
+            QuadPanel.Size = new Size(535, 481);
+            QuadPanel.TabIndex = 111;
+            QuadPanel.Paint += QuadPanel_Paint;
+            // 
+            // heigth_tree
+            // 
+            heigth_tree.Location = new Point(813, 618);
+            heigth_tree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            heigth_tree.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
+            heigth_tree.Name = "heigth_tree";
+            heigth_tree.Size = new Size(150, 27);
+            heigth_tree.TabIndex = 112;
+            heigth_tree.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            // 
+            // width_tree
+            // 
+            width_tree.Location = new Point(813, 565);
+            width_tree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            width_tree.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
+            width_tree.Name = "width_tree";
+            width_tree.Size = new Size(150, 27);
+            width_tree.TabIndex = 113;
+            width_tree.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(748, 625);
+            label11.Name = "label11";
+            label11.Size = new Size(54, 20);
+            label11.TabIndex = 115;
+            label11.Text = "Heigth";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(748, 572);
+            label12.Name = "label12";
+            label12.Size = new Size(49, 20);
+            label12.TabIndex = 114;
+            label12.Text = "Width";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1054, 679);
+            ClientSize = new Size(1258, 679);
+            Controls.Add(label11);
+            Controls.Add(label12);
+            Controls.Add(heigth_tree);
+            Controls.Add(width_tree);
+            Controls.Add(QuadPanel);
             Controls.Add(label10);
             Controls.Add(label9);
             Controls.Add(label5);
@@ -285,6 +343,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown6).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown7).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)heigth_tree).EndInit();
+            ((System.ComponentModel.ISupportInitialize)width_tree).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -310,5 +370,10 @@
         private Label label8;
         private Label label9;
         private Label label10;
+        private Panel QuadPanel;
+        private NumericUpDown heigth_tree;
+        private NumericUpDown width_tree;
+        private Label label11;
+        private Label label12;
     }
 }
