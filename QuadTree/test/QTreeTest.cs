@@ -21,7 +21,7 @@ namespace QuadTree.test
         public int pocetInsert;
         //int pocetRemove;
         public int pocetFind;
-        public QuadTreeStruct quadTree = new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),10);
+        public QuadTreeStruct quadTree = new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),10,1);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         public int passed = 0;
@@ -113,7 +113,11 @@ namespace QuadTree.test
 
         public List<ISpatialObject> IntervalSearchTest(Boundaries boundaries) {
 
-           return quadTree.IntervalSearchN(boundaries);
+            return quadTree.IntervalSearch(boundaries);
+        }
+
+        public List<ISpatialObject> IntervalSearchNcomplex(Boundaries boundaries) {
+            return quadTree.IntervalSearchN(boundaries);
         }
 
         public void SetPocetOperacii(int pocetOperacii) {
@@ -138,7 +142,14 @@ namespace QuadTree.test
             quadTree._dimension.Y0 = 0;
             quadTree._dimension.Xk = 0+w;
             quadTree._dimension.Yk = 0+h;
+        }
 
+        public void setMaxDepth(int maxDepth) { 
+            quadTree._maxDepth = maxDepth;
+        }
+
+        public void setMaxObjects(int maxObjCount) { 
+            quadTree.MAX_QUAD_CAPACITY = maxObjCount;
         }
     }
 }

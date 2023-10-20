@@ -339,7 +339,6 @@
             // 
             maxDepth.Location = new Point(1050, 552);
             maxDepth.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            maxDepth.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             maxDepth.Name = "maxDepth";
             maxDepth.Size = new Size(150, 27);
             maxDepth.TabIndex = 117;

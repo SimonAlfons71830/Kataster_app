@@ -17,7 +17,7 @@ namespace QuadTree
         {
 
             // Create a Quadtree instance
-            var quadTree = new QuadTreeStruct(new Boundaries(0,0,100,100),7);
+            var quadTree = new QuadTreeStruct(new Boundaries(0,0,100,100),7, 1);
 
             // Create a list to store points
             List<MyPoint> points = new List<MyPoint>();
@@ -66,7 +66,7 @@ namespace QuadTree
             var point =  quadTree.PointSearch(newPoint);
             var point2 = quadTree.PointSearch(newPoint2);
 
-            List<ISpatialObject> spatialObjects = quadTree.IntervalSearchN(new Boundaries(0.0,0.0,100.0,100.0));
+            List<ISpatialObject> spatialObjects = quadTree.IntervalSearch(new Boundaries(0.0,0.0,100.0,100.0));
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.

@@ -2,15 +2,18 @@
 using System.Drawing;
 using System.Reflection;
 using System.Security.Cryptography.Xml;
+using Microsoft.VisualBasic;
+using System.Xml.Linq;
 using QuadTree.Structures;
 
 namespace QuadTree.QTree
 {
     public class QuadTreeStruct
     {
-        private readonly int _maxDepth;
-        public int _objectsCount;
-        const int MAX_QUAD_CAPACITY = 1;
+        public int _maxDepth { get; set; }
+        public int _objectsCount { get; set; }
+        public int _objectsSearched = 0;
+        public int MAX_QUAD_CAPACITY { get; set; }
         //rectangleF - stores 4 data in float that represents size and location of the rectangle
         public Boundaries _dimension;
         private Quad _root;
@@ -20,9 +23,10 @@ namespace QuadTree.QTree
         /// </summary>
         /// <param name="dimension">The boundaries of the quadtree.</param>
         /// <param name="maxDepth">The maximum depth to which the quadtree will be constructed.</param>
-        public QuadTreeStruct(Boundaries dimension, int maxDepth)
+        public QuadTreeStruct(Boundaries dimension, int maxDepth, int maxQuadCapacity)
         {
             _maxDepth = maxDepth;
+            MAX_QUAD_CAPACITY = maxQuadCapacity;
             _dimension = dimension;
             _root = new Quad(_dimension,0);
         }
@@ -108,24 +112,13 @@ namespace QuadTree.QTree
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
         }
 
-
-
-
-
-
-
-
-        /*
-         * PointSearch (vyhľadanie) :
-         * - bodové aj intervalové
-         * - majme zadanú obdĺžniková oblasť S a chceme nájsť všetky záznamy z tejto oblasti
-         * - prehľadávaním stromu od koreňa postupne sprístupňujeme tie oblasti currentQuad stromu, 
-         * ktoré sa s S prelínajú, neprehľadávame teda tie oblasti, kde S nezasahuje
-         * - v každom vrchole prehľadáme zoznam tam uložených záznamov, či patria do S
-         * - na listoch skontrolujeme, či záznamy patria do S
-         * - výsledkom je zoznam všetkých záznamov z oblasti S
-         */
-
+        /// <summary>
+        /// Searches for a specific object within the quadtree based on its location.
+        /// </summary>
+        /// <param name="_object">The spatial object to search for.</param>
+        /// <returns>
+        ///   The found <see cref="ISpatialObject"/> if it exists in the quadtree; otherwise, <c>null</c>.
+        /// </returns>
         public ISpatialObject PointSearch(ISpatialObject _object) {
             Queue<Quad> quads = new Queue<Quad>();
             quads.Enqueue(_root);
@@ -156,70 +149,67 @@ namespace QuadTree.QTree
                     }
                 }
             }
-
             return null;
         }
 
         /// <summary>
-        /// interval search
-        /// 
-        /// vstupny parameter su hranice z ktoryh vyberam vsetky objekty
-        /// skontrolujem ci sa hranice nachadzaju v roote ak ano, prejdem jeho list objektov a ak sa nachadzaju v boundaries tak ich pridam ako return value
-        /// pokracujem childQuadmi root-a, pridam ich do queue
-        /// uz nekontrolujem currentQuad z queue lebo hranice obsahuje aspon jeden 
-        /// prejdem vsetky a zapisem ich body ak sa zmestia do hranic
-        /// 
-        /// ASPON JEDEN BOD Z HRANIC SA MUSI NACHADZAT V CHILD QUAD (NIE LEN BOD ALE MOZE PRECHADZAT AJ NA KRIVO)
+        /// Searches for spatial objects within the given boundaries.
         /// </summary>
-        /// <param name="_object"></param>
-        /// <returns></returns>
+        /// <param name="boundaries">The boundaries of the area to search for objects.</param>
+        /// <returns>
+        ///   A list of <see cref="ISpatialObject"/> instances that intersect with the specified boundaries.
+        /// </returns>
         public List<ISpatialObject> IntervalSearch(Boundaries boundaries)
         {
             List<ISpatialObject> foundObjects = new List<ISpatialObject>();
-            Queue<Quad> quads = new Queue<Quad>();
-            quads.Enqueue(_root);
+            Queue<Quad> quadsQ = new Queue<Quad>();
+            quadsQ.Enqueue(_root);
 
-            while (quads.Count > 0) {
-                Quad currentQuad = quads.Dequeue();
-                if (boundaries.IntersectWithQuad(currentQuad))
+
+            while (quadsQ.Count > 0) { 
+                Quad current = quadsQ.Dequeue();
+
+                if (boundaries.IntersectsWithArea(current._boundaries))
                 {
-                    foreach (var _object in currentQuad._objects)
+                    foreach (var _object in current._objects)
                     {
+                        this._objectsSearched++;
                         if (_object.IsContainedInArea(boundaries))
                         {
                             foundObjects.Add(_object);
                         }
                     }
 
-                    if (currentQuad.getNW() != null)
+                    if (current.getNE()!= null)
                     {
-                        quads.Enqueue(currentQuad.getNW());
-                        quads.Enqueue(currentQuad.getNE());
-                        quads.Enqueue(currentQuad.getSW());
-                        quads.Enqueue(currentQuad.getSE());
+                        quadsQ.Enqueue(current.getNE());
+                        quadsQ.Enqueue(current.getNW());
+                        quadsQ.Enqueue(current.getSW());
+                        quadsQ.Enqueue(current.getSE());
                     }
                 }
             }
-
             return foundObjects;
         }
 
 
-
         /// <summary>
-        /// interval search with n complexity
-        /// 
-        /// TODO: Find the smallest possible quad that fits whole boundaries into it and then search withing it
+        /// Searches for spatial objects within the given boundaries with N-complexity.
         /// </summary>
-        /// <param name="boundaries"></param>
-        /// <returns></returns>
+        /// <param name="boundaries">The boundaries of the area to search for objects.</param>
+        /// <returns>
+        ///   A list of <see cref="ISpatialObject"/> instances that intersect with the specified boundaries.
+        /// </returns>
+        /// <remarks> 
+        /// Just for the testing purposes. 
+        /// </remarks>
         public List<ISpatialObject> IntervalSearchN(Boundaries boundaries)
         {
             List<ISpatialObject> foundObjects = new List<ISpatialObject>();
             Queue<Quad> quads = new Queue<Quad>();
             //quads.Enqueue(_root);
 
-            if (boundaries.IntersectWithQuad(_root))
+            if (boundaries.IntersectWith(_root))
             {
                 quads.Enqueue(_root);
                 while (quads.Count > 0) {
@@ -245,7 +235,10 @@ namespace QuadTree.QTree
             return null;
         }
     
-        public static bool AreQuadsSame(Quad[] quads)
+
+
+
+        /*public static bool AreQuadsSame(Quad[] quads)
         {
             for (int i = 0; i < quads.Length; i++)
             {
@@ -258,13 +251,13 @@ namespace QuadTree.QTree
                 }
             }
             return true;
-        }
+        }*/
 
         
 
        
 
-        public void Reinsert(Quad current, Queue<MyPoint> reinsertPointsQ) {
+        /*public void Reinsert(Quad current, Queue<MyPoint> reinsertPointsQ) {
             
 
             while (reinsertPointsQ.Count > 0)
@@ -284,9 +277,9 @@ namespace QuadTree.QTree
                 }
 
             }
-        }
+        }*/
 
-        public Quad? FindQuad(Quad current, MyPoint point)
+        /*public Quad? FindQuad(Quad current, MyPoint point)
         {
             //find the center of currentQuad -> from there the boundaries will be determined
             double centerX = (current._boundaries.X0 + current._boundaries.Xk ) / 2;
@@ -324,7 +317,7 @@ namespace QuadTree.QTree
             //if its not in any childQuad then its set on boundaries
             return null;
 
-        }
+        }*/
 
         /*public bool RemoveObject(int objectId) 
         {
