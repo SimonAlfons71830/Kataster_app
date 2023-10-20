@@ -30,10 +30,10 @@ namespace QuadTree.QTree
 
         //public List<Quad> children = new List<Quad>();
 
-        private Quad? _northWest { get; set; }
-        private Quad? _northEast { get; set; }
-        private Quad? _southEast { get; set; }
-        private Quad? _southWest { get; set; }
+        public Quad? _northWest { get; set; }
+        public Quad? _northEast { get; set; }
+        public Quad? _southEast { get; set; }
+        public Quad? _southWest { get; set; }
 
         public Quad(Boundaries boundaries, int level)
         {

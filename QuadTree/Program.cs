@@ -66,6 +66,9 @@ namespace QuadTree
             var point =  quadTree.PointSearch(newPoint);
             var point2 = quadTree.PointSearch(newPoint2);
 
+            quadTree.RemoveObject(D);
+
+
             List<ISpatialObject> spatialObjects = quadTree.IntervalSearch(new Boundaries(0.0,0.0,100.0,100.0));
 
             // To customize application configuration such as set high DPI settings or default font,

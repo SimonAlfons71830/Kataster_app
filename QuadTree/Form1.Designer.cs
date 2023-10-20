@@ -57,6 +57,9 @@
             label14 = new Label();
             numberOfObjects = new NumericUpDown();
             maxDepth = new NumericUpDown();
+            removeCount = new NumericUpDown();
+            label15 = new Label();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -69,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)width_tree).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maxDepth).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)removeCount).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -79,22 +83,20 @@
             label1.Size = new Size(103, 20);
             label1.TabIndex = 4;
             label1.Text = "Počet operácií";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(35, 125);
+            label2.Location = new Point(35, 109);
             label2.Name = "label2";
             label2.Size = new Size(85, 20);
             label2.TabIndex = 5;
             label2.Text = "Počet Insert";
-            label2.Click += label2_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(35, 181);
+            label3.Location = new Point(35, 137);
             label3.Name = "label3";
             label3.Size = new Size(126, 20);
             label3.TabIndex = 6;
@@ -111,7 +113,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1152, 638);
+            button1.Location = new Point(361, 63);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 8;
@@ -121,12 +123,11 @@
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(34, 291);
+            richTextBox1.Location = new Point(35, 278);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.Size = new Size(635, 354);
             richTextBox1.TabIndex = 9;
             richTextBox1.Text = "";
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // numericUpDown1
             // 
@@ -136,11 +137,11 @@
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(150, 27);
             numericUpDown1.TabIndex = 100;
-            numericUpDown1.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown1.Value = new decimal(new int[] { 1500, 0, 0, 0 });
             // 
             // numericUpDown2
             // 
-            numericUpDown2.Location = new Point(191, 118);
+            numericUpDown2.Location = new Point(191, 102);
             numericUpDown2.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown2.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
@@ -150,7 +151,7 @@
             // 
             // numericUpDown3
             // 
-            numericUpDown3.Location = new Point(191, 179);
+            numericUpDown3.Location = new Point(191, 135);
             numericUpDown3.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             numericUpDown3.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numericUpDown3.Name = "numericUpDown3";
@@ -176,7 +177,7 @@
             numericUpDown5.Name = "numericUpDown5";
             numericUpDown5.Size = new Size(150, 27);
             numericUpDown5.TabIndex = 103;
-            numericUpDown5.Value = new decimal(new int[] { 50, 0, 0, 0 });
+            numericUpDown5.Value = new decimal(new int[] { 190, 0, 0, 0 });
             // 
             // numericUpDown6
             // 
@@ -186,7 +187,7 @@
             numericUpDown6.Name = "numericUpDown6";
             numericUpDown6.Size = new Size(150, 27);
             numericUpDown6.TabIndex = 102;
-            numericUpDown6.Value = new decimal(new int[] { 60, 0, 0, 0 });
+            numericUpDown6.Value = new decimal(new int[] { 210, 0, 0, 0 });
             // 
             // numericUpDown7
             // 
@@ -206,7 +207,7 @@
             numericUpDown8.Name = "numericUpDown8";
             numericUpDown8.Size = new Size(150, 27);
             numericUpDown8.TabIndex = 104;
-            numericUpDown8.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            numericUpDown8.Value = new decimal(new int[] { 59, 0, 0, 0 });
             // 
             // label5
             // 
@@ -344,11 +345,43 @@
             maxDepth.TabIndex = 117;
             maxDepth.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
+            // removeCount
+            // 
+            removeCount.Location = new Point(191, 174);
+            removeCount.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
+            removeCount.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
+            removeCount.Name = "removeCount";
+            removeCount.Size = new Size(150, 27);
+            removeCount.TabIndex = 121;
+            removeCount.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(35, 176);
+            label15.Name = "label15";
+            label15.Size = new Size(103, 20);
+            label15.TabIndex = 120;
+            label15.Text = "Počet Remove";
+            // 
+            // button2
+            // 
+            button2.Location = new Point(361, 174);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 29);
+            button2.TabIndex = 122;
+            button2.Text = "Remove";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(button2);
+            Controls.Add(removeCount);
+            Controls.Add(label15);
             Controls.Add(label13);
             Controls.Add(label14);
             Controls.Add(numberOfObjects);
@@ -393,6 +426,7 @@
             ((System.ComponentModel.ISupportInitialize)width_tree).EndInit();
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).EndInit();
             ((System.ComponentModel.ISupportInitialize)maxDepth).EndInit();
+            ((System.ComponentModel.ISupportInitialize)removeCount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -427,5 +461,8 @@
         private Label label14;
         private NumericUpDown numberOfObjects;
         private NumericUpDown maxDepth;
+        private NumericUpDown removeCount;
+        private Label label15;
+        private Button button2;
     }
 }

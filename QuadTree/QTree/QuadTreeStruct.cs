@@ -234,103 +234,82 @@ namespace QuadTree.QTree
             }
             return null;
         }
-    
 
-
-
-        /*public static bool AreQuadsSame(Quad[] quads)
+        public bool RemoveObject(ISpatialObject _object)
         {
-            for (int i = 0; i < quads.Length; i++)
+            //find object
+            //if quad that would containd P is empty return null
+            //else remove P change to empty
+            //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
+            //ak dvaja surodenci obsahuju bod tak ich necham tak
+
+            var objectDelete = this.PointSearch(_object);
+
+            if (objectDelete != null)
             {
-                for (int j = i + 1; j < quads.Length; j++)
+                Quad current = _root;
+                Quad parent = null;
+                while (current != null) 
                 {
-                    if (!quads[i].Equals(quads[j]))
+                    foreach (var _obj in current._objects)
                     {
-                        return false;
+                        if (_obj == _object)
+                        {
+                            current._objects.Remove(_obj);
+
+                            //joining of the split quad
+                            if (current.getNW() == null)
+                            {
+                                Queue<Quad> parentQuads = new Queue<Quad>();
+                                parentQuads.Enqueue(parent);
+                                var count = 0;
+                                List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+
+                                while (parentQuads.Count > 0) { 
+                                
+                                    Quad quad = parentQuads.Dequeue();
+                                    count += quad._objects.Count;
+                                    foreach (var item in quad._objects)
+                                    {
+                                        objectsToReinsert.Add(item);
+                                    }
+
+                                    if (quad._southEast != null)
+                                    {
+                                        parentQuads.Enqueue(quad.getNW());
+                                        parentQuads.Enqueue(quad.getSW());
+                                        parentQuads.Enqueue(quad.getNE());
+                                        parentQuads.Enqueue(quad.getSE());
+                                    }
+                                
+                                }
+                                if (count < MAX_QUAD_CAPACITY)
+                                {
+                                    parent._southWest = null;
+                                    parent._northEast = null;
+                                    parent._northWest = null;
+                                    parent._southEast = null;
+
+                                    parent._objects = objectsToReinsert;
+                                }
+
+                            }
+                            this._objectsCount--;
+                            return true;
+                        }
                     }
+                    //not in the current -> search childQuad
+                    parent = current;
+                    current = objectDelete.FindQuad(current);
                 }
+                //notfound
+                return false;
             }
-            return true;
-        }*/
-
-        
-
-       
-
-        /*public void Reinsert(Quad current, Queue<MyPoint> reinsertPointsQ) {
-            
-
-            while (reinsertPointsQ.Count > 0)
+            else
             {
-                //insert the points to the right childQuad
-
-                var rPoint = reinsertPointsQ.Dequeue();
-                Quad rQuad = FindQuad(current, rPoint);
-
-                if (rQuad != null)
-                {
-                    rQuad._objects.Add(rPoint);
-                }
-                else
-                {
-                    current._objects.Add(rPoint);
-                }
-
-            }
-        }*/
-
-        /*public Quad? FindQuad(Quad current, MyPoint point)
-        {
-            //find the center of currentQuad -> from there the boundaries will be determined
-            double centerX = (current._boundaries.X0 + current._boundaries.Xk ) / 2;
-            double centerY = (current._boundaries.Y0 + current._boundaries.Xk) / 2;
-
-            //SW || NW
-            if (point._x < centerX)
-            {
-                //SW
-                if (point._y < centerY)
-                {
-                    return current.getSW();
-                }
-                //NW
-                else if (point._y > centerY)
-                {
-                    return current.getNW();
-                }
-
-            }
-            else //NE || SE
-            {
-                //SE
-                if (point._y < centerY)
-                {
-                    return current.getSE();
-                }
-                //NE
-                else if (point._y > centerY)
-                {
-                    return current.getNE();
-                }
+                return false;
             }
 
-            //if its not in any childQuad then its set on boundaries
-            return null;
-
-        }*/
-
-        /*public bool RemoveObject(int objectId) 
-        {
-            Quad current = _root;
-            //ak je zaznam v zozname vrcholu tak sa odstrani
-            foreach (var _object in current._objects)
-            {
-                if (_object._id == objectId)
-                {
-                    current._objects.Remove(_object);
-                }
-            }
-
-        }*/
+        }
     }
 }

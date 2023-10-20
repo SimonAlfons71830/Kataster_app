@@ -7,7 +7,7 @@ namespace QuadTree
     public partial class Form1 : Form
     {
         Pen blkpen = new Pen(Color.FromArgb(255, 0, 155, 0), 1);
-        Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 1);
+        Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 2);
         QTreeTest _test;
         Boolean buttonClicked = false;
         List<ISpatialObject> list = new List<ISpatialObject>();
@@ -18,21 +18,15 @@ namespace QuadTree
             _test = test;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            this.ClearPanel();
+
             _test.SetPocetOperacii((int)numericUpDown1.Value);
             _test.SetPocetInsert((int)numericUpDown2.Value);
             _test.SetPocetFind((int)numericUpDown3.Value);
+            _test.SetPocetRemove((int)removeCount.Value);
+
             _test.SetSeed((int)numericUpDown4.Value);
             _test.setSizeOfTree((double)width_tree.Value, (double)heigth_tree.Value);
             _test.setMaxDepth((int)maxDepth.Value);
@@ -40,14 +34,16 @@ namespace QuadTree
 
             _test.TestujInsertRemoveFind();
 
-            richTextBox1.Text = "POCET VYKONANYCH OPERACII : " + _test.pocetVykonanychOperacii + "\n     " +
-                                "pocet operacii insert : " + _test.pocetInsert + "\n       " +
-                                "pocet operacii find : " + _test.pocetFind + "\n\n" +
-                                "SUMAR TESTOV : \n\t passed : " + _test.passed + "\n\t failed : " + _test.failed +
-                                "\n\n";
+            richTextBox1.Text = "POCET VYKONANYCH OPERACII : " + _test.pocetVykonanychOperacii + "\n" +
+                                "   pocet operacii insert : \n\t\tpassed: " + _test.passedInsert + "\n\t\tfailed: " + _test.failedInsert + "\n" +
+                                "   pocet operacii find : \n\t\tpassed: " + _test.passedFind + "\n\t\tfailed: " + _test.failedFind + "\n" +
+                                "   pocet operacii remove : \n\t\tpassed:" + _test.passedRemove + "\n\t\tfailed: " + _test.failedRemove + "\n";// +
+                                                                                                                                               //"\nSUMAR TESTOV : \n\t passed : " + _test.passed + "\n\t failed : " + _test.failed + "\n";
 
             list = _test.IntervalSearchTest(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
-            richTextBox1.Text += "Points in interval X < " + numericUpDown8.Value + "; " + numericUpDown7.Value + "> and Y <" + numericUpDown6.Value + "; " + numericUpDown5.Value + ">\n";
+            List<ISpatialObject> list2 = _test.quadTree.IntervalSearchN(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
+            richTextBox1.Text += "\nINTERVAL SEARACH : " + _test.TestIntervalSearch(list, list2);
+            richTextBox1.Text += "\n\tPoints in interval X < " + numericUpDown8.Value + "; " + numericUpDown7.Value + "> and Y <" + numericUpDown6.Value + "; " + numericUpDown5.Value + ">\n";
             var pomPassed = 0;
             var pomFailed = 0;
             for (int i = 0; i < list.Count; i++)
@@ -63,24 +59,16 @@ namespace QuadTree
                     pomFailed++;
                 }
             }
-            richTextBox1.Text += "\nPASSED : " + pomPassed + " FAILED : " + pomFailed;
-            richTextBox1.Text += "\n\n TOTAL POINTS: " + _test.quadTree._objectsCount;
-            richTextBox1.Text += "\n POINTS SEARCHED: " + _test.quadTree._objectsSearched;
+            richTextBox1.Text += "\t\tpassed : " + pomPassed + " \n\t\tfailed : " + pomFailed;
+            richTextBox1.Text += "\n\tTOTAL POINTS: " + _test.quadTree._objectsCount;
+            richTextBox1.Text += "\n\tPOINTS SEARCHED: " + _test.quadTree._objectsSearched;
+
+
 
             buttonClicked = true;
 
             //redraws the panel
             this.QuadPanel.Invalidate();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void ClearPanel()
@@ -129,13 +117,30 @@ namespace QuadTree
             }
         }
 
-        private void showIntervalSearch(List<ISpatialObject> selectedPoints, PaintEventArgs e) 
+        private void showIntervalSearch(List<ISpatialObject> selectedPoints, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(redpen, (int)numericUpDown8.Value, (int)numericUpDown7.Value, (int)numericUpDown6.Value, (int)numericUpDown5.Value);
-            foreach (var point in selectedPoints) {
+            float x0 = (float)numericUpDown8.Value;
+            float y0 = (float)numericUpDown7.Value;
+            float xk = (float)numericUpDown6.Value;
+            float yk = (float)numericUpDown5.Value;
+
+            e.Graphics.DrawRectangle(redpen, x0, y0, xk - x0, yk - y0);
+            foreach (var point in selectedPoints)
+            {
                 e.Graphics.DrawRectangle(redpen, (float)point._x, (float)point._y, 1, 1);
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _test.TestRemoveSeparatelly();
+            list = _test.IntervalSearchTest(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
+            this.QuadPanel.Invalidate();
+        }
     }
 }

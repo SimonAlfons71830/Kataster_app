@@ -15,7 +15,7 @@ namespace QuadTree.Structures
         int _id { get; }
 
         //public bool IsContainedInQuad(Quad quad);
-        Quad FindQuad(Quad quad); // You can customize the method as per your needs.
+        Quad FindQuad(Quad quad);
         public bool IsContainedInArea(Boundaries boundaries);
     }
 }
