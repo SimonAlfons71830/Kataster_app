@@ -5,6 +5,7 @@ using System.Security.Cryptography.Xml;
 using Microsoft.VisualBasic;
 using System.Xml.Linq;
 using QuadTree.Structures;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace QuadTree.QTree
 {
@@ -235,6 +236,11 @@ namespace QuadTree.QTree
             return null;
         }
 
+        /// <summary>
+        /// Removing the object from QuadTree.
+        /// </summary>
+        /// <param name="_object"></param>
+        /// <returns></returns>
         public bool RemoveObject(ISpatialObject _object)
         {
             //find object
@@ -257,43 +263,8 @@ namespace QuadTree.QTree
                         {
                             current._objects.Remove(_obj);
 
-                            //joining of the split quad
-                            if (current.getNW() == null)
-                            {
-                                Queue<Quad> parentQuads = new Queue<Quad>();
-                                parentQuads.Enqueue(parent);
-                                var count = 0;
-                                List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+                            this.Rejoin(current,parent);
 
-                                while (parentQuads.Count > 0) { 
-                                
-                                    Quad quad = parentQuads.Dequeue();
-                                    count += quad._objects.Count;
-                                    foreach (var item in quad._objects)
-                                    {
-                                        objectsToReinsert.Add(item);
-                                    }
-
-                                    if (quad._southEast != null)
-                                    {
-                                        parentQuads.Enqueue(quad.getNW());
-                                        parentQuads.Enqueue(quad.getSW());
-                                        parentQuads.Enqueue(quad.getNE());
-                                        parentQuads.Enqueue(quad.getSE());
-                                    }
-                                
-                                }
-                                if (count < MAX_QUAD_CAPACITY)
-                                {
-                                    parent._southWest = null;
-                                    parent._northEast = null;
-                                    parent._northWest = null;
-                                    parent._southEast = null;
-
-                                    parent._objects = objectsToReinsert;
-                                }
-
-                            }
                             this._objectsCount--;
                             return true;
                         }
@@ -312,6 +283,57 @@ namespace QuadTree.QTree
 
         }
 
+        /// <summary>
+        /// Rejoining the split of the child quad if the conditions are met.
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="parent"></param>
+        public void Rejoin(Quad current, Quad parent) 
+        {
+            //joining of the split quad
+            if (current.getNW() == null)
+            {
+                Queue<Quad> parentQuads = new Queue<Quad>();
+                parentQuads.Enqueue(parent);
+                var count = 0;
+                List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+
+                while (parentQuads.Count > 0)
+                {
+
+                    Quad quad = parentQuads.Dequeue();
+                    count += quad._objects.Count;
+                    foreach (var item in quad._objects)
+                    {
+                        objectsToReinsert.Add(item);
+                    }
+
+                    if (quad._southEast != null)
+                    {
+                        parentQuads.Enqueue(quad.getNW());
+                        parentQuads.Enqueue(quad.getSW());
+                        parentQuads.Enqueue(quad.getNE());
+                        parentQuads.Enqueue(quad.getSE());
+                    }
+
+                }
+                if (count < MAX_QUAD_CAPACITY)
+                {
+                    parent._southWest = null;
+                    parent._northEast = null;
+                    parent._northWest = null;
+                    parent._southEast = null;
+
+                    parent._objects = objectsToReinsert;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Recursively resets the tree
+        /// </summary>
+        /// <param name="quad"></param>
         public void ResetTree(Quad quad)
         {
             // Clear data in the current quad
@@ -329,7 +351,6 @@ namespace QuadTree.QTree
             _objectsCount = 0;
             _objectsSearched = 0;
         }
-
 
     }
     
