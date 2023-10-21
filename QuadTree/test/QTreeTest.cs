@@ -33,131 +33,156 @@ namespace QuadTree.test
         public QuadTreeStruct quadTree = new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),10,1);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
+        HashSet<int> uniqueNumbers = new HashSet<int>();
 
         public int passed = 0;
         public int failed = 0;
 
-        private static Random random = new Random(0);
+        private static Random random = new Random();
 
-        public void TestujInsertRemoveFind()
+        public void TestInsertRemoveFind()
         {
-            HashSet<int> uniqueNumbers = new HashSet<int>();
-            
-                while (uniqueNumbers.Count < 1000)
-                {
-                    int number = random.Next(1, 10000); // Generate random numbers between 1 and 10,000
+            this.GenerateID();
 
-                    if (!uniqueNumbers.Contains(number))
-                    {
-                        uniqueNumbers.Add(number);
-                    }
-                }
-                List<int> uniqueNumbersList = uniqueNumbers.ToList();
-
-            for (int i = 0; i < seed; i++)
-            {
-                availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk-quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
-            }
-
-            for (int i = 0; i < podielRemove; i++)
-            {
-                int index = random.Next(availableObjects.Count);
-                MyPoint point = (MyPoint)availableObjects[index];
-                quadTree.Insert(point);
-                //if (binary.Insert(_id,data) == null) { failed++; }
-                usedKeys.Add(point);
-                availableObjects.RemoveAt(index);
-                //BTreePrinter.Print(binary.Root);
-            }
+            //seed the QTree
+            this.SeedQT();
 
             for (int i = 0; i < pocetOperacii; i++)
             {
                 int cislo = random.Next(pocetOperacii - i);
-                //BTreePrinter.Print(binary.Root);
-                if (cislo < podielInsert)
-                {
-                    int oldSize = this.quadTree._objectsCount;
-                    int insertIndex = random.Next(availableObjects.Count);
-                    MyPoint insertPoint = (MyPoint)availableObjects[insertIndex];
 
-                    quadTree.Insert(insertPoint);
-                    if (oldSize + 1 == this.quadTree._objectsCount)
-                    {
-                        passedInsert++;
-                        passed++;
-                    }
-                    else
-                    {
-                        failedInsert++;
-                        failed++;
-                    }
-                    usedKeys.Add(insertPoint);
-                    availableObjects.RemoveAt(insertIndex);
-                    podielInsert--;
-                    pocetInsert++;
-                    pocetVykonanychOperacii++;
+                if (cislo < podielInsert) //INSERT
+                {
+                    this.TestInsert();
                 }
-                else if(podielInsert <= cislo && cislo < (podielInsert + podielFind))
+                else if(podielInsert <= cislo && cislo < (podielInsert + podielFind)) //FIND
                 {
-                    int tryFindIndex = random.Next(usedKeys.Count);
-                    MyPoint tryFindKey = (MyPoint)usedKeys[tryFindIndex];
-                    var pomNodeKey = tryFindKey;
-
-                    var point = quadTree.PointSearch(tryFindKey);
-                    if (point == null) { 
-                        //failed++; 
-                        //return; 
-                    }
-                    if (pomNodeKey == point)
-                    {
-                        passedFind++;
-                        passed++;
-                    }
-                    else
-                    {
-                        failedFind++;
-                        failed++;
-                    }
-                    podielFind--;
-                    pocetVykonanychOperacii++;
-                    pocetFind++;
+                    this.TestFind();
                 }
                 else //remove
                 {
-                    int removeIndex = random.Next(usedKeys.Count);
-                    var removeObj = usedKeys[removeIndex];
-
-                    var exists = quadTree.PointSearch(removeObj);
-                    if (exists != null)
-                    {
-                        var boolDel = quadTree.RemoveObject(removeObj);
-                        if (boolDel)
-                        {
-                            passedRemove++;
-                            passed++;
-                        }
-                        else
-                        {
-                            failedRemove++;
-                            failed++;
-                        }
-                    }
-                    else
-                    {
-                        failedRemove++;
-                        //debug
-                    }
-
-                    availableObjects.Add(removeObj);
-                    usedKeys.RemoveAt(removeIndex);
-                    podielRemove--;
-                    pocetVykonanychOperacii++;
-                    pocetRemove++;
+                    this.TestRemove();
 
                 }
             }
         }
 
+        public void TestInsert() {
+            int oldSize = this.quadTree._objectsCount;
+
+            int insertIndex = random.Next(availableObjects.Count);
+            MyPoint insertPoint = (MyPoint)availableObjects[insertIndex];
+
+            quadTree.Insert(insertPoint);
+            if (oldSize + 1 == this.quadTree._objectsCount)
+            {
+                passedInsert++;
+                passed++;
+            }
+            else
+            {
+                failedInsert++;
+                failed++;
+            }
+            usedKeys.Add(insertPoint);
+            availableObjects.RemoveAt(insertIndex);
+            podielInsert--;
+            pocetInsert++;
+            pocetVykonanychOperacii++;
+        }
+
+        public void TestFind()
+        {
+            int tryFindIndex = random.Next(usedKeys.Count);
+            MyPoint tryFindKey = (MyPoint)usedKeys[tryFindIndex];
+            var pomNodeKey = tryFindKey;
+
+            var point = quadTree.PointSearch(tryFindKey);
+            if (point == null)
+            {
+                //failed++; 
+                //return; 
+            }
+            if (pomNodeKey == point)
+            {
+                passedFind++;
+                passed++;
+            }
+            else
+            {
+                failedFind++;
+                failed++;
+            }
+            podielFind--;
+            pocetVykonanychOperacii++;
+            pocetFind++;
+        }
+
+
+        public void TestRemove() {
+            int removeIndex = random.Next(usedKeys.Count);
+            var removeObj = usedKeys[removeIndex];
+
+            var exists = quadTree.PointSearch(removeObj);
+            if (exists != null)
+            {
+                var boolDel = quadTree.RemoveObject(removeObj);
+                if (boolDel)
+                {
+                    passedRemove++;
+                    passed++;
+                }
+                else
+                {
+                    failedRemove++;
+                    failed++;
+                }
+            }
+            else
+            {
+                failedRemove++;
+                //debug
+            }
+            availableObjects.Add(removeObj);
+            usedKeys.RemoveAt(removeIndex);
+            podielRemove--;
+            pocetVykonanychOperacii++;
+            pocetRemove++;
+        }
+
+        public void GenerateID()
+        {
+            //generate a set of unique ID for objects inserted to the Qtree
+            while (uniqueNumbers.Count < 1000)
+            {
+                int number = random.Next(1, 10000); // Generate random numbers between 1 and 10,000
+
+                if (!uniqueNumbers.Contains(number))
+                {
+                    uniqueNumbers.Add(number);
+                }
+            }
+            List<int> uniqueNumbersList = uniqueNumbers.ToList();
+
+            for (int i = 0; i < seed; i++)
+            {
+                availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
+            }
+        
+        }
+
+        public void SeedQT()
+        {
+            for (int i = 0; i < podielRemove; i++)
+            {
+                int index = random.Next(availableObjects.Count);
+                MyPoint point = (MyPoint)availableObjects[index];
+                quadTree.Insert(point);
+
+                usedKeys.Add(point);
+                availableObjects.RemoveAt(index);
+            }
+        }
         public List<ISpatialObject> IntervalSearchTest(Boundaries boundaries) {
 
             return quadTree.IntervalSearch(boundaries);
@@ -192,6 +217,7 @@ namespace QuadTree.test
                 }
                 else
                 {
+                    failedRemove++;
                     var pom = 0;
                     //debug
                 }
@@ -204,7 +230,6 @@ namespace QuadTree.test
             }
             
         }
-
 
         public List<ISpatialObject> IntervalSearchNcomplex(Boundaries boundaries) {
             return quadTree.IntervalSearchN(boundaries);
@@ -242,6 +267,40 @@ namespace QuadTree.test
 
         public void setMaxObjects(int maxObjCount) { 
             quadTree.MAX_QUAD_CAPACITY = maxObjCount;
+        }
+
+        public void ResetTest()
+        {
+            pocetOperacii = 0;
+            podielInsert = 0;
+            podielRemove = 0;
+            podielFind = 0;
+            seed = 0;
+
+            passedInsert = 0;
+            passedRemove = 0;
+            passedFind = 0;
+
+            failedInsert = 0;
+            failedRemove = 0;
+            failedFind = 0;
+
+            pocetVykonanychOperacii = 0;
+            pocetInsert = 0;
+            pocetRemove = 0;
+            pocetFind = 0;
+
+            this.availableObjects.Clear();
+            this.usedKeys.Clear();
+            this.uniqueNumbers.Clear();
+
+            this.passed = 0;
+            this.failed = 0;
+
+            quadTree.ResetTree(quadTree.GetRoot());
+
+
+
         }
     }
 }

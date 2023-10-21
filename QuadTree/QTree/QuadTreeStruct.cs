@@ -311,5 +311,26 @@ namespace QuadTree.QTree
             }
 
         }
+
+        public void ResetTree(Quad quad)
+        {
+            // Clear data in the current quad
+            quad._objects.Clear();
+
+            // Recursively reset child quads
+            if (quad.getNE() != null)
+            {
+                ResetTree(quad.getNE());
+                ResetTree(quad.getNW());
+                ResetTree(quad.getSW());
+                ResetTree(quad.getSE());
+            }
+
+            _objectsCount = 0;
+            _objectsSearched = 0;
+        }
+
+
     }
+    
 }

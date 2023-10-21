@@ -11,6 +11,13 @@ namespace QuadTree
         QTreeTest _test;
         Boolean buttonClicked = false;
         List<ISpatialObject> list = new List<ISpatialObject>();
+        List<ISpatialObject> list2 = new List<ISpatialObject>();
+        Random rand = new Random();
+
+        int x0;
+        int y0;
+        int xk;
+        int yk;
 
         public Form1(QTreeTest test)
         {
@@ -20,6 +27,10 @@ namespace QuadTree
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this._test.ResetTest();
+            list.Clear();
+            list2.Clear();
+
             this.ClearPanel();
 
             _test.SetPocetOperacii((int)numericUpDown1.Value);
@@ -32,7 +43,7 @@ namespace QuadTree
             _test.setMaxDepth((int)maxDepth.Value);
             _test.setMaxObjects((int)numberOfObjects.Value);
 
-            _test.TestujInsertRemoveFind();
+            _test.TestInsertRemoveFind();
 
             richTextBox1.Text = "POCET VYKONANYCH OPERACII : " + _test.pocetVykonanychOperacii + "\n" +
                                 "   pocet operacii insert : \n\t\tpassed: " + _test.passedInsert + "\n\t\tfailed: " + _test.failedInsert + "\n" +
@@ -40,17 +51,21 @@ namespace QuadTree
                                 "   pocet operacii remove : \n\t\tpassed:" + _test.passedRemove + "\n\t\tfailed: " + _test.failedRemove + "\n";// +
                                                                                                                                                //"\nSUMAR TESTOV : \n\t passed : " + _test.passed + "\n\t failed : " + _test.failed + "\n";
 
-            list = _test.IntervalSearchTest(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
-            List<ISpatialObject> list2 = _test.quadTree.IntervalSearchN(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
+            x0 = rand.Next(0, (int)width_tree.Value);
+            y0 = rand.Next(0, (int)heigth_tree.Value);
+            xk = rand.Next(x0, (int)width_tree.Value);
+            yk = rand.Next(y0, (int)heigth_tree.Value);
+            list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk));
+            list2 = _test.quadTree.IntervalSearchN(new QTree.Boundaries(x0, y0, xk, yk));
             richTextBox1.Text += "\nINTERVAL SEARACH : " + _test.TestIntervalSearch(list, list2);
-            richTextBox1.Text += "\n\tPoints in interval X < " + numericUpDown8.Value + "; " + numericUpDown7.Value + "> and Y <" + numericUpDown6.Value + "; " + numericUpDown5.Value + ">\n";
+            richTextBox1.Text += "\n\tPoints in interval X < " + x0 + "; " + y0 + "> and Y <" + xk + "; " + yk + ">\n";
             var pomPassed = 0;
             var pomFailed = 0;
             for (int i = 0; i < list.Count; i++)
             {
                 //richTextBox1.Text += "[" + list[i]._x + " ; " + list[i]._y + "]";
 
-                if (list[i]._x <= (double)numericUpDown6.Value && list[i]._x >= (double)numericUpDown8.Value && list[i]._y <= (double)numericUpDown5.Value && list[i]._y >= (double)numericUpDown7.Value)
+                if (list[i]._x <= xk && list[i]._x >= x0 && list[i]._y <= yk && list[i]._y >= y0)
                 {
                     pomPassed++;
                 }
@@ -119,11 +134,6 @@ namespace QuadTree
 
         private void showIntervalSearch(List<ISpatialObject> selectedPoints, PaintEventArgs e)
         {
-            float x0 = (float)numericUpDown8.Value;
-            float y0 = (float)numericUpDown7.Value;
-            float xk = (float)numericUpDown6.Value;
-            float yk = (float)numericUpDown5.Value;
-
             e.Graphics.DrawRectangle(redpen, x0, y0, xk - x0, yk - y0);
             foreach (var point in selectedPoints)
             {
@@ -139,7 +149,7 @@ namespace QuadTree
         private void button2_Click(object sender, EventArgs e)
         {
             _test.TestRemoveSeparatelly();
-            list = _test.IntervalSearchTest(new QTree.Boundaries((double)numericUpDown8.Value, (double)numericUpDown7.Value, (double)numericUpDown6.Value, (double)numericUpDown5.Value));
+            list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk));
             this.QuadPanel.Invalidate();
         }
     }
