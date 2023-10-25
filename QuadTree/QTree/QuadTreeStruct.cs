@@ -133,13 +133,14 @@ namespace QuadTree.QTree
                     quads.Clear();
 
                     foreach (var point in quad._objects) {
-                        if (point is MyPoint)
-                        {
+                        //if (point is MyPoint)
+                        //{
                             if (_object == point)
                             {
-                                return (MyPoint?)point;
+                            //return (MyPoint?)point;
+                            return point;    
                             }
-                        }
+                        //}
                     }
                     if (quad.getNE() != null)
                     {
@@ -317,7 +318,7 @@ namespace QuadTree.QTree
                     }
 
                 }
-                if (count < MAX_QUAD_CAPACITY)
+                if (count <= MAX_QUAD_CAPACITY)
                 {
                     parent._southWest = null;
                     parent._northEast = null;
@@ -336,7 +337,10 @@ namespace QuadTree.QTree
         /// <param name="quad"></param>
         public void ResetTree(Quad quad)
         {
-            // Clear data in the current quad
+            var pom = _root;
+            _root = new Quad(pom._boundaries,0);
+            
+            /*// Clear data in the current quad
             quad._objects.Clear();
 
             // Recursively reset child quads
@@ -348,6 +352,7 @@ namespace QuadTree.QTree
                 ResetTree(quad.getSE());
             }
 
+            quad._southEast = null;*/
             _objectsCount = 0;
             _objectsSearched = 0;
         }

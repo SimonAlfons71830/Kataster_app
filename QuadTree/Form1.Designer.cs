@@ -50,6 +50,10 @@
             maxDepth = new NumericUpDown();
             removeCount = new NumericUpDown();
             label15 = new Label();
+            radioButtonPoints = new RadioButton();
+            radioButtonPolygons = new RadioButton();
+            radioButtonBoth = new RadioButton();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -123,7 +127,7 @@
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(150, 27);
             numericUpDown1.TabIndex = 100;
-            numericUpDown1.Value = new decimal(new int[] { 1500, 0, 0, 0 });
+            numericUpDown1.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // numericUpDown2
             // 
@@ -133,7 +137,7 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown2.Value = new decimal(new int[] { 50, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
@@ -143,7 +147,7 @@
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            numericUpDown3.Value = new decimal(new int[] { 50, 0, 0, 0 });
             // 
             // numericUpDown4
             // 
@@ -153,7 +157,7 @@
             numericUpDown4.Name = "numericUpDown4";
             numericUpDown4.Size = new Size(150, 27);
             numericUpDown4.TabIndex = 13;
-            numericUpDown4.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDown4.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // label9
             // 
@@ -250,11 +254,9 @@
             // 
             removeCount.Location = new Point(191, 174);
             removeCount.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
-            removeCount.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             removeCount.Name = "removeCount";
             removeCount.Size = new Size(150, 27);
             removeCount.TabIndex = 121;
-            removeCount.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // label15
             // 
@@ -265,11 +267,57 @@
             label15.TabIndex = 120;
             label15.Text = "Počet Remove";
             // 
+            // radioButtonPoints
+            // 
+            radioButtonPoints.AutoSize = true;
+            radioButtonPoints.Location = new Point(500, 69);
+            radioButtonPoints.Name = "radioButtonPoints";
+            radioButtonPoints.Size = new Size(71, 24);
+            radioButtonPoints.TabIndex = 122;
+            radioButtonPoints.TabStop = true;
+            radioButtonPoints.Text = "points";
+            radioButtonPoints.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPolygons
+            // 
+            radioButtonPolygons.AutoSize = true;
+            radioButtonPolygons.Location = new Point(500, 102);
+            radioButtonPolygons.Name = "radioButtonPolygons";
+            radioButtonPolygons.Size = new Size(173, 24);
+            radioButtonPolygons.TabIndex = 123;
+            radioButtonPolygons.TabStop = true;
+            radioButtonPolygons.Text = "polygons (rectangles)";
+            radioButtonPolygons.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonBoth
+            // 
+            radioButtonBoth.AutoSize = true;
+            radioButtonBoth.Location = new Point(500, 135);
+            radioButtonBoth.Name = "radioButtonBoth";
+            radioButtonBoth.Size = new Size(61, 24);
+            radioButtonBoth.TabIndex = 124;
+            radioButtonBoth.TabStop = true;
+            radioButtonBoth.Text = "both";
+            radioButtonBoth.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(500, 37);
+            label5.Name = "label5";
+            label5.Size = new Size(113, 20);
+            label5.TabIndex = 125;
+            label5.Text = "Objects in quad";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(label5);
+            Controls.Add(radioButtonBoth);
+            Controls.Add(radioButtonPolygons);
+            Controls.Add(radioButtonPoints);
             Controls.Add(removeCount);
             Controls.Add(label15);
             Controls.Add(label13);
@@ -331,5 +379,9 @@
         private NumericUpDown maxDepth;
         private NumericUpDown removeCount;
         private Label label15;
+        private RadioButton radioButtonPoints;
+        private RadioButton radioButtonPolygons;
+        private RadioButton radioButtonBoth;
+        private Label label5;
     }
 }

@@ -189,7 +189,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInArea(quad.getNW()._boundaries))
+                        if (point.IsContainedInArea(quad.getNE()._boundaries))
                         {
                             continue;
                         }
@@ -227,8 +227,8 @@ namespace QuadTree.Structures
             foreach (var t in _tops)
             {
                 // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > boundaries.X0 && t._x < boundaries.Xk;
-                bool withinYBounds = t._y > boundaries.Y0 && t._y < boundaries.Yk;
+                bool withinXBounds = t._x >= boundaries.X0 && t._x <= boundaries.Xk;
+                bool withinYBounds = t._y >= boundaries.Y0 && t._y <= boundaries.Yk;
 
                 if (!withinXBounds || !withinYBounds)
                 {
