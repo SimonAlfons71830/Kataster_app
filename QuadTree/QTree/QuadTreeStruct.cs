@@ -126,13 +126,6 @@ namespace QuadTree.QTree
 
         public void InsertUpdate(ISpatialObject spatialObject)
         {
-            if (spatialObject is MyPoint)
-            {
-                if (spatialObject._x == 24)
-                {
-                    var pom = 0;
-                }
-            }
             Quad current = _root;
             while (true)
             {
