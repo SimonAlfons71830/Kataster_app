@@ -28,16 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
             button1 = new Button();
             richTextBox1 = new RichTextBox();
-            numericUpDown1 = new NumericUpDown();
             numericUpDown2 = new NumericUpDown();
             numericUpDown3 = new NumericUpDown();
-            numericUpDown4 = new NumericUpDown();
             label9 = new Label();
             QuadPanel = new Panel();
             heigth_tree = new NumericUpDown();
@@ -54,10 +50,9 @@
             radioButtonPolygons = new RadioButton();
             radioButtonBoth = new RadioButton();
             label5 = new Label();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
             ((System.ComponentModel.ISupportInitialize)width_tree).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).BeginInit();
@@ -65,19 +60,10 @@
             ((System.ComponentModel.ISupportInitialize)removeCount).BeginInit();
             SuspendLayout();
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(35, 72);
-            label1.Name = "label1";
-            label1.Size = new Size(103, 20);
-            label1.TabIndex = 4;
-            label1.Text = "Počet operácií";
-            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(35, 109);
+            label2.Location = new Point(39, 67);
             label2.Name = "label2";
             label2.Size = new Size(85, 20);
             label2.TabIndex = 5;
@@ -86,20 +72,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(35, 137);
+            label3.Location = new Point(39, 95);
             label3.Name = "label3";
             label3.Size = new Size(126, 20);
             label3.TabIndex = 6;
             label3.Text = "Počet PointSearch";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(35, 244);
-            label4.Name = "label4";
-            label4.Size = new Size(120, 20);
-            label4.TabIndex = 7;
-            label4.Text = "Seed QUADTREE";
             // 
             // button1
             // 
@@ -119,54 +96,32 @@
             richTextBox1.TabIndex = 9;
             richTextBox1.Text = "";
             // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(191, 65);
-            numericUpDown1.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDown1.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(150, 27);
-            numericUpDown1.TabIndex = 100;
-            numericUpDown1.Value = new decimal(new int[] { 100, 0, 0, 0 });
-            // 
             // numericUpDown2
             // 
-            numericUpDown2.Location = new Point(191, 102);
-            numericUpDown2.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDown2.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
+            numericUpDown2.Location = new Point(195, 60);
+            numericUpDown2.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 50, 0, 0, 0 });
+            numericUpDown2.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
-            numericUpDown3.Location = new Point(191, 135);
-            numericUpDown3.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
-            numericUpDown3.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
+            numericUpDown3.Location = new Point(195, 93);
+            numericUpDown3.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 50, 0, 0, 0 });
-            // 
-            // numericUpDown4
-            // 
-            numericUpDown4.Location = new Point(191, 235);
-            numericUpDown4.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDown4.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDown4.Name = "numericUpDown4";
-            numericUpDown4.Size = new Size(150, 27);
-            numericUpDown4.TabIndex = 13;
-            numericUpDown4.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            numericUpDown3.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Location = new Point(35, 24);
             label9.Name = "label9";
-            label9.Size = new Size(122, 20);
+            label9.Size = new Size(187, 20);
             label9.TabIndex = 109;
-            label9.Text = "INSERT and FIND";
+            label9.Text = "INSERT, FIND and REMOVE";
             // 
             // QuadPanel
             // 
@@ -252,16 +207,17 @@
             // 
             // removeCount
             // 
-            removeCount.Location = new Point(191, 174);
-            removeCount.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
+            removeCount.Location = new Point(195, 132);
+            removeCount.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             removeCount.Name = "removeCount";
             removeCount.Size = new Size(150, 27);
             removeCount.TabIndex = 121;
+            removeCount.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(35, 176);
+            label15.Location = new Point(39, 134);
             label15.Name = "label15";
             label15.Size = new Size(103, 20);
             label15.TabIndex = 120;
@@ -309,11 +265,24 @@
             label5.TabIndex = 125;
             label5.Text = "Objects in quad";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = CheckState.Checked;
+            checkBox1.Location = new Point(576, 203);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(74, 24);
+            checkBox1.TabIndex = 126;
+            checkBox1.Text = "DRAW";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(checkBox1);
             Controls.Add(label5);
             Controls.Add(radioButtonBoth);
             Controls.Add(radioButtonPolygons);
@@ -330,23 +299,17 @@
             Controls.Add(width_tree);
             Controls.Add(QuadPanel);
             Controls.Add(label9);
-            Controls.Add(numericUpDown4);
             Controls.Add(numericUpDown3);
             Controls.Add(numericUpDown2);
-            Controls.Add(numericUpDown1);
             Controls.Add(richTextBox1);
             Controls.Add(button1);
-            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(label1);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).EndInit();
             ((System.ComponentModel.ISupportInitialize)width_tree).EndInit();
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).EndInit();
@@ -357,16 +320,12 @@
         }
 
         #endregion
-        private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
         private Button button1;
         private RichTextBox richTextBox1;
-        private NumericUpDown numericUpDown1;
         private NumericUpDown numericUpDown2;
         private NumericUpDown numericUpDown3;
-        private NumericUpDown numericUpDown4;
         private Label label9;
         private Panel QuadPanel;
         private NumericUpDown heigth_tree;
@@ -383,5 +342,6 @@
         private RadioButton radioButtonPolygons;
         private RadioButton radioButtonBoth;
         private Label label5;
+        private CheckBox checkBox1;
     }
 }

@@ -34,7 +34,7 @@ namespace QuadTree
                 {
                     _test.setGeneratingObjects(1);
                 }
-                else if (radioButtonPolygons.Checked) 
+                else if (radioButtonPolygons.Checked)
                 {
                     _test.setGeneratingObjects(2);
                 }
@@ -50,12 +50,13 @@ namespace QuadTree
 
                 this.ClearPanel();
 
-                _test.SetPocetOperacii((int)numericUpDown1.Value);
+                _test.SetPocetOperacii((int)numericUpDown2.Value + (int)numericUpDown3.Value + (int)removeCount.Value);
+
                 _test.SetPocetInsert((int)numericUpDown2.Value);
                 _test.SetPocetFind((int)numericUpDown3.Value);
                 _test.SetPocetRemove((int)removeCount.Value);
 
-                _test.SetSeed((int)numericUpDown4.Value);
+                //_test.SetSeed((int)numericUpDown4.Value);
                 _test.setSizeOfTree((double)width_tree.Value, (double)heigth_tree.Value);
                 _test.setMaxDepth((int)maxDepth.Value);
                 _test.setMaxObjects((int)numberOfObjects.Value);
@@ -118,10 +119,13 @@ namespace QuadTree
 
         private void QuadPanel_Paint(object sender, PaintEventArgs e)
         {
-            this.ClearPanel();
-            this.show(this._test.quadTree.GetRoot(), e);
-            this.showIntervalSearch(list, e);
-            this.showFailedFind(_test.failedObj, e);
+            if (checkBox1.Checked)
+            {
+                this.ClearPanel();
+                this.show(this._test.quadTree.GetRoot(), e);
+                this.showIntervalSearch(list, e);
+                this.showFailedFind(_test.failedObj, e);
+            }
         }
 
         private void show(Quad quad, PaintEventArgs e)
@@ -198,5 +202,6 @@ namespace QuadTree
             list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk));
             this.QuadPanel.Invalidate();
         }
+
     }
 }

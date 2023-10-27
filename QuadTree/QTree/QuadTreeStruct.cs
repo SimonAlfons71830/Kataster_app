@@ -370,8 +370,11 @@ namespace QuadTree.QTree
                         {
                             current._objects.Remove(_obj);
 
-                            this.Rejoin(current, parent);
-
+                            if (parent != null)
+                            {
+                                this.Rejoin(current, parent);
+                            }
+                            
                             this._objectsCount--;
                             return true;
                         }

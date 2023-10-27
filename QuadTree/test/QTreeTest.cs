@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace QuadTree.test
         public int podielInsert;
         public int podielRemove;
         public int podielFind;
-        public int seed;
+        //public int seed;
 
         public int passedInsert;
         public int passedRemove;
@@ -165,10 +166,12 @@ namespace QuadTree.test
 
         public void GenerateID()
         {
+            //TODO: negenerovat to staitcky
+
             //generate a set of unique ID for objects inserted to the Qtree
-            while (uniqueNumbers.Count < 10000)
+            while (uniqueNumbers.Count < 100000) 
             {
-                int number = random.Next(1, 1000000); // Generate random numbers between 1 and 10,000
+                int number = random.Next(1, 10000000); // Generate random numbers between 1 and 10,000
 
                 if (!uniqueNumbers.Contains(number))
                 {
@@ -177,7 +180,7 @@ namespace QuadTree.test
             }
             List<int> uniqueNumbersList = uniqueNumbers.ToList();
 
-            for (int i = 0; i < seed; i++)
+            for (int i = 0; i < (podielFind + podielRemove + podielInsert); i++)
             {
                 var rozmer = 0;
                 if ((this.quadTree._dimension.Xk - this.quadTree._dimension.X0) > (this.quadTree._dimension.Yk - this.quadTree._dimension.Y0))
@@ -243,7 +246,7 @@ namespace QuadTree.test
 
         public void SeedQT()
         {
-            for (int i = 0; i < podielFind; i++)
+            for (int i = 0; i < podielFind + podielRemove; i++)
             {
                 int index = random.Next(availableObjects.Count);
                 ISpatialObject _object;
@@ -343,9 +346,9 @@ namespace QuadTree.test
             this.podielFind = pocetFind;
         }
 
-        public void SetSeed(int seedQ) { 
+        /*public void SetSeed(int seedQ) { 
         this.seed = seedQ;
-        }
+        }*/
 
         public void setSizeOfTree(double w, double h) {
             quadTree._dimension.X0 = 0;
@@ -373,7 +376,7 @@ namespace QuadTree.test
             podielInsert = 0;
             podielRemove = 0;
             podielFind = 0;
-            seed = 0;
+            //seed = 0;
 
             passedInsert = 0;
             passedRemove = 0;
