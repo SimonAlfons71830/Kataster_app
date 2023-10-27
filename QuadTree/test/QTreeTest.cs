@@ -139,7 +139,7 @@ namespace QuadTree.test
             var exists = quadTree.PointSearch(removeObj);
             if (exists != null)
             {
-                var boolDel = quadTree.RemoveObject(removeObj);
+                var boolDel = quadTree.RemoveObjectUpdate(removeObj);
                 if (boolDel)
                 {
                     passedRemove++;

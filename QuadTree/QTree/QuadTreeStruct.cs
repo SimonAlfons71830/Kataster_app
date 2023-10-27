@@ -348,6 +348,48 @@ namespace QuadTree.QTree
 
         }
 
+        public bool RemoveObjectUpdate(ISpatialObject _object)
+        {
+            //find object
+            //if quad that would containd P is empty return null
+            //else remove P change to empty
+            //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
+            //ak dvaja surodenci obsahuju bod tak ich necham tak
+
+            var objectDelete = this.PointSearch(_object);
+
+            if (objectDelete != null)
+            {
+                Quad current = _root;
+                Quad parent = null;
+                while (current != null)
+                {
+                    foreach (var _obj in current._objects)
+                    {
+                        if (_obj == _object)
+                        {
+                            current._objects.Remove(_obj);
+
+                            this.Rejoin(current, parent);
+
+                            this._objectsCount--;
+                            return true;
+                        }
+                    }
+                    //not in the current -> search childQuad
+                    parent = current;
+                    current = objectDelete.FindQuadUpdate(current);
+                }
+                //notfound
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// Rejoining the split of the child quad if the conditions are met.
         /// </summary>
