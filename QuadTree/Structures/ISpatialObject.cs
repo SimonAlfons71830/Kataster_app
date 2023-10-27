@@ -14,8 +14,8 @@ namespace QuadTree.Structures
         double _y { get; }
         int _id { get; }
 
-        //public bool IsContainedInQuad(Quad quad);
         Quad FindQuad(Quad quad);
         public bool IsContainedInArea(Boundaries boundaries);
+        Quad FindQuadUpdate(Quad quad);
     }
 }

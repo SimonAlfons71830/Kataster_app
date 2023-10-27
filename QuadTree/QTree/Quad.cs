@@ -68,6 +68,18 @@ namespace QuadTree.QTree
 
         }
 
+        //proportions ?
+        public void splitQuadUpdate(MyPoint centroid) 
+        {
+            level++;
+            _northWest = new Quad(new Boundaries(_boundaries.X0, centroid._y, centroid._x, _boundaries.Yk), level);
+            _northEast = new Quad(new Boundaries(centroid._x, centroid._y, _boundaries.Xk, _boundaries.Yk), level);
+            _southEast = new Quad(new Boundaries(centroid._x, _boundaries.Y0, _boundaries.Xk, centroid._y), level);
+            _southWest = new Quad(new Boundaries(_boundaries.X0, _boundaries.Y0, centroid._x, centroid._y), level);
+
+        }
+
+
         public bool Equals(Quad? other)
         {
             if (ReferenceEquals(null, other))

@@ -203,25 +203,6 @@ namespace QuadTree.Structures
             }
         }
 
-        /*public bool IsContainedInQuad(Quad quad)
-        {
-            // Assuming you have a list of vertices in your polygon.
-            foreach (var t in _tops)
-            {
-                // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x > quad._boundaries.X0 && t._x < quad._boundaries.Xk;
-                bool withinYBounds = t._y > quad._boundaries.Y0 && t._y < quad._boundaries.Yk;
-
-                if (!withinXBounds || !withinYBounds)
-                {
-                    // If any vertex is outside the quad, the polygon is not fully contained.
-                    return false;
-                }
-            }
-            // If all vertices are within the quad, the polygon is contained.
-            return true;
-        }*/
-
         public bool IsContainedInArea(Boundaries boundaries) {
             // Assuming you have a list of vertices in your polygon.
             foreach (var t in _tops)
@@ -241,6 +222,9 @@ namespace QuadTree.Structures
 
         }
 
-
+        public Quad FindQuadUpdate(Quad quad)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

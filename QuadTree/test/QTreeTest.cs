@@ -3,6 +3,7 @@ using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -42,7 +43,7 @@ namespace QuadTree.test
         public int passed = 0;
         public int failed = 0;
 
-        private static Random random = new Random();
+        private static Random random = new Random(0);
 
         public void TestInsertRemoveFind()
         {
@@ -76,8 +77,11 @@ namespace QuadTree.test
 
             int insertIndex = random.Next(availableObjects.Count);
             //MyPoint insertPoint = (MyPoint)availableObjects[insertIndex];
-            Polygon insertPoint = (Polygon)availableObjects[insertIndex];
-            quadTree.Insert(insertPoint);
+            //Polygon insertPoint = (Polygon)availableObjects[insertIndex];
+            ISpatialObject insertPoint = availableObjects[insertIndex];
+            
+            //quadTree.Insert(insertPoint);
+            quadTree.InsertUpdate(insertPoint);
             if (oldSize + 1 == this.quadTree._objectsCount)
             {
                 passedInsert++;
@@ -99,8 +103,9 @@ namespace QuadTree.test
         {
             int tryFindIndex = random.Next(usedKeys.Count);
             //MyPoint tryFindKey = (MyPoint)usedKeys[tryFindIndex];
-            Polygon tryFindKey = (Polygon)usedKeys[tryFindIndex];
-            
+            //Polygon tryFindKey = (Polygon)usedKeys[tryFindIndex];
+            ISpatialObject tryFindKey = usedKeys[tryFindIndex];
+
             var pomNodeKey = tryFindKey;
 
             var point = quadTree.PointSearch(tryFindKey);
@@ -183,23 +188,53 @@ namespace QuadTree.test
                 {
                     rozmer = random.Next(1, (int)(this.quadTree._dimension.Xk - this.quadTree._dimension.X0)/5);
                 }
+
+
+                if (this.generateOptions == 1)
+                {
+                    availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
+                }
+                else if (this.generateOptions == 2)
+                {
+                    var _object = new Polygon(uniqueNumbers.ElementAt(i));
+                    _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
+                    //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
+                    var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
+                    var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
+                    var top4 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y, random.Next(100000));
+
+                    _object.AddTop(top2);
+                    _object.AddTop(top3);
+                    _object.AddTop(top4);
+
+                    availableObjects.Add(_object);
+                }
+                else
+                {
+                    var chance = random.NextDouble();
+                    if (chance > 0.5)
+                    {
+                        //point
+                        availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
+                    }
+                    else
+                    {
+                        //polygon
+                        var _object = new Polygon(uniqueNumbers.ElementAt(i));
+                        _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
+                        //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
+                        var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
+                        var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
+                        var top4 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y, random.Next(100000));
+
+                        _object.AddTop(top2);
+                        _object.AddTop(top3);
+                        _object.AddTop(top4);
+
+                        availableObjects.Add(_object);
+                    }
+                }
                 
-
-                //TODO : OPTIONS TO INSERT
-
-                //availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
-                var _object = new Polygon(uniqueNumbers.ElementAt(i));
-                _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk-rozmer), random.Next(1000000)));
-                //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
-                var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                var top4 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y, random.Next(100000));
-
-                _object.AddTop(top2);
-                _object.AddTop(top3);
-                _object.AddTop(top4);
-
-                availableObjects.Add(_object);
 
 
             }
@@ -235,7 +270,7 @@ namespace QuadTree.test
                     }
                 }
                 
-                quadTree.Insert(_object);
+                quadTree.InsertUpdate(_object);
 
                 usedKeys.Add(_object);
                 availableObjects.RemoveAt(index);

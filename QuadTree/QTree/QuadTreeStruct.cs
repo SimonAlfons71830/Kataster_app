@@ -100,17 +100,88 @@ namespace QuadTree.QTree
             }
         }
 
-        /// <summary>
-        ///  A quad needs to be split if it exceeds the maximum capacity, has not reached the maximum depth, 
-        ///  and has no childQuads.
-        /// </summary>
-        /// <param name="quad">The Quad to check for splitting.</param>
-        /// <returns>
-        ///   <c>true</c> if the quad needs to be split; otherwise, <c>false</c>.
-        /// </returns>
+
         public Boolean NeedToSplit(Quad quad)
         {
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
+        }
+
+        public MyPoint findCentroid(List<ISpatialObject> _objects) 
+        {
+            double sumX = 0.0;
+            double sumY = 0.0;
+
+            foreach (var point in _objects)
+            {
+                sumX += point._x; 
+                sumY += point._y;
+            }
+
+            // Calculate the centroid (midpoint)
+            double midX = sumX / _objects.Count;
+            double midY = sumY / _objects.Count;
+
+            return new MyPoint(midX, midY, -1);
+        }
+
+        public void InsertUpdate(ISpatialObject spatialObject)
+        {
+            if (spatialObject is MyPoint)
+            {
+                if (spatialObject._x == 24)
+                {
+                    var pom = 0;
+                }
+            }
+            Quad current = _root;
+            while (true)
+            {
+                //if there is any child of the current currentQuad, determine in which childQuad point belongs to
+                //if it is on the borders the subQuad will be null and object will be added to current
+                if (current.getNW() != null)
+                {
+                    //find position of the point to the right currentQuad
+                    Quad subQuad = spatialObject.FindQuadUpdate(current);
+                    if (subQuad != null)
+                    {
+                        current._objects.Remove(spatialObject);
+                        current = subQuad;
+                        //continue the iterations until the leaf is found
+                        continue;
+                    }
+                }
+                current._objects.Add(spatialObject);
+                //pom
+                _objectsCount++;
+
+                //check whether the currentQuad needs to be split - (maxQuadCapacity, level, already is split)
+                while (NeedToSplit(current))
+                {
+                    current.splitQuadUpdate(this.findCentroid(current._objects));
+                    //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
+                    Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(current._objects);
+                    current._objects.Clear();
+                    //pom to remember the last point's quad
+                    var pomC = current;
+
+                    while (reinsertObjects.Count > 0)
+                    {
+                        //find the right quad for objects
+                        var rObject = reinsertObjects.Dequeue();
+                        Quad? rQuad = rObject.FindQuadUpdate(current);
+
+                        (rQuad ?? current)._objects.Add(rObject);
+
+                        pomC = rQuad;
+                    }
+                    //check if quad where was the last point inserted needs to be split again 
+                    //last point's is checked bc of it the quad needed to be split in first place
+                    current = pomC;
+                    //if the current is null -> object is on the boundary
+                    if (current == null) { break; }
+                }
+                break;
+            }
         }
 
         /// <summary>
@@ -332,27 +403,13 @@ namespace QuadTree.QTree
         }
 
         /// <summary>
-        /// Recursively resets the tree
+        /// creates a new Root
         /// </summary>
         /// <param name="quad"></param>
         public void ResetTree(Quad quad)
         {
             var pom = _root;
             _root = new Quad(pom._boundaries,0);
-            
-            /*// Clear data in the current quad
-            quad._objects.Clear();
-
-            // Recursively reset child quads
-            if (quad.getNE() != null)
-            {
-                ResetTree(quad.getNE());
-                ResetTree(quad.getNW());
-                ResetTree(quad.getSW());
-                ResetTree(quad.getSE());
-            }
-
-            quad._southEast = null;*/
             _objectsCount = 0;
             _objectsSearched = 0;
         }
