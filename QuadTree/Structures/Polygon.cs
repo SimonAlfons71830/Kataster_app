@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using QuadTree.QTree;
 
@@ -11,8 +13,7 @@ namespace QuadTree.Structures
     public class Polygon: IEquatable<Polygon>, ISpatialObject
     {
         private List<MyPoint> _tops;
-        public int _id { get; } 
-
+        public int _registerNumber { get; set; }
         // Calculate the center (centroid) of the polygon based on its vertices.
         public double _x
         {
@@ -51,7 +52,7 @@ namespace QuadTree.Structures
 
         public Polygon(int id)
         {
-            _id = id;
+            _registerNumber = id;
             _tops = new List<MyPoint>();
         }
 
@@ -63,21 +64,6 @@ namespace QuadTree.Structures
         public List<MyPoint> GetTops()
         {
             return _tops;
-        }
-
-        public double GetPerimeter()
-        {
-            double perimeter = 0;
-
-            for (int i = 0; i < _tops.Count; i++)
-            {
-                int nextIndex = (i + 1) % _tops.Count;
-                MyPoint currentVertex = _tops[i];
-                MyPoint nextVertex = _tops[nextIndex];
-                perimeter += currentVertex.DistanceTo(nextVertex);
-            }
-
-            return perimeter;
         }
 
         public bool Equals(Polygon? other)
@@ -108,7 +94,7 @@ namespace QuadTree.Structures
                 }
             }
 
-            if (other._id != this._id)
+            if (other._registerNumber != this._registerNumber)
             {
                 return false;
             }
@@ -140,7 +126,151 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInArea(quad.getSW()._boundaries))
+                        if (point.IsContainedInArea(quad.getSW()._boundaries, false))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+
+
+                    //also all points of the polygon needs to be in this quad
+                    return quad.getSW();
+                }
+                else
+                {
+                    foreach (var point in _tops)
+                    {
+                        if (point.IsContainedInArea(quad.getNW()._boundaries, false))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    return quad.getNW();
+
+
+                }
+            }
+            else
+            {
+                if (PcenterY < centerY)
+                {
+                    foreach (var point in _tops)
+                    {
+                        if (point.IsContainedInArea(quad.getSE()._boundaries, false))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    return quad.getSE();
+
+                }
+                else
+                {
+                    foreach (var point in _tops)
+                    {
+                        if (point.IsContainedInArea(quad.getNE()._boundaries, false))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    return quad.getNE();
+
+                }
+            }
+        }
+
+        public bool IsContainedInArea(Boundaries boundaries, bool interfere) {
+
+            if (interfere)
+            {
+                var pointIntersection = false;
+                bool sideIntersection = false;
+                //at least one of the tops
+                foreach (var t in _tops)
+                {
+                    // Check if the vertex is within the quad's boundaries.
+                    bool withinXBounds = t._x >= boundaries.X0 && t._x <= boundaries.Xk;
+                    bool withinYBounds = t._y >= boundaries.Y0 && t._y <= boundaries.Yk;
+
+                    if (withinXBounds && withinYBounds)
+                    {
+                        // If any vertex is outside the quad, the polygon is not fully contained.
+                        pointIntersection = true;
+                    }
+                }
+
+
+                //checking the side intersection only applies to rectangles 
+                var top0 = _tops.ElementAt(0);
+                var topK = _tops.ElementAt(1);
+                sideIntersection = (top0._x < boundaries.Xk && topK._x > boundaries.X0 && top0._y < boundaries.Yk && topK._y > boundaries.Y0) ||
+                    (boundaries.X0 < topK._x && boundaries.Xk > top0._x && boundaries.Y0 < topK._y && boundaries.Yk > top0._y);
+
+
+                return pointIntersection || sideIntersection;
+
+            }
+            else
+            {
+
+                // Assuming you have a list of vertices in your polygon.
+                foreach (var t in _tops)
+                {
+                    // Check if the vertex is within the quad's boundaries.
+                    bool withinXBounds = t._x >= boundaries.X0 && t._x <= boundaries.Xk;
+                    bool withinYBounds = t._y >= boundaries.Y0 && t._y <= boundaries.Yk;
+
+                    if (!withinXBounds || !withinYBounds)
+                    {
+                        // If any vertex is outside the quad, the polygon is not fully contained.
+                        return false;
+                    }
+                }
+                // If all vertices are within the quad, the polygon is contained.
+                return true;
+            }
+        }
+
+        public Quad FindQuadUpdate(Quad quad)
+        {
+            //find the center of quad -> from there the boundaries will be determined
+            if (quad._northEast == null)
+            {
+                return null;
+            }
+            double centerX = quad._northEast._boundaries.X0;
+            double centerY = quad._northEast._boundaries.Y0;
+
+
+            double PcenterX = _tops.Average(point => point._x);
+            double PcenterY = _tops.Average(point => point._y);
+
+            //double PcenterX =  _tops.Average(point => point._x);
+            //double PcenterY = _tops.Average(point => point._y);
+
+            if (PcenterX < centerX)
+            {
+                if (PcenterY < centerY)
+                {
+                    foreach (var point in _tops)
+                    {
+                        if (point.IsContainedInArea(quad.getSW()._boundaries, false))
                         {
                             continue;
                         }
@@ -151,12 +281,13 @@ namespace QuadTree.Structures
                     }
                     //also all points of the polygon needs to be in this quad
                     return quad.getSW();
+
                 }
                 else
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInArea(quad.getNW()._boundaries))
+                        if (point.IsContainedInArea(quad.getNW()._boundaries, false))
                         {
                             continue;
                         }
@@ -166,6 +297,7 @@ namespace QuadTree.Structures
                         }
                     }
                     return quad.getNW();
+                    
                 }
             }
             else
@@ -174,7 +306,7 @@ namespace QuadTree.Structures
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInArea(quad.getSE()._boundaries))
+                        if (point.IsContainedInArea(quad.getSE()._boundaries, false))
                         {
                             continue;
                         }
@@ -184,12 +316,14 @@ namespace QuadTree.Structures
                         }
                     }
                     return quad.getSE();
+
+
                 }
                 else
                 {
                     foreach (var point in _tops)
                     {
-                        if (point.IsContainedInArea(quad.getNE()._boundaries))
+                        if (point.IsContainedInArea(quad.getNE()._boundaries, false))
                         {
                             continue;
                         }
@@ -199,32 +333,10 @@ namespace QuadTree.Structures
                         }
                     }
                     return quad.getNE();
+
+
                 }
             }
-        }
-
-        public bool IsContainedInArea(Boundaries boundaries) {
-            // Assuming you have a list of vertices in your polygon.
-            foreach (var t in _tops)
-            {
-                // Check if the vertex is within the quad's boundaries.
-                bool withinXBounds = t._x >= boundaries.X0 && t._x <= boundaries.Xk;
-                bool withinYBounds = t._y >= boundaries.Y0 && t._y <= boundaries.Yk;
-
-                if (!withinXBounds || !withinYBounds)
-                {
-                    // If any vertex is outside the quad, the polygon is not fully contained.
-                    return false;
-                }
-            }
-            // If all vertices are within the quad, the polygon is contained.
-            return true;
-
-        }
-
-        public Quad FindQuadUpdate(Quad quad)
-        {
-            throw new NotImplementedException();
         }
     }
 }

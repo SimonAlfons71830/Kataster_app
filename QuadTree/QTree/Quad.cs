@@ -19,9 +19,9 @@ namespace QuadTree.QTree
         // coordinates of area that node represents
         // list to save data 
 
-        //primary _id
+        //primary _registerNumber
         private MyPoint _key; //the starting points of the quad
-        //secondary _id
+        //secondary _registerNumber
         public Boundaries _boundaries; //X0, Y0, Heigth, Width
         public int level;
 

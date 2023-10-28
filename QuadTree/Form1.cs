@@ -12,8 +12,7 @@ namespace QuadTree
         QTreeTest _test;
         List<ISpatialObject> list = new List<ISpatialObject>();
         List<ISpatialObject> list2 = new List<ISpatialObject>();
-        Random rand = new Random();
-
+        Random rand = new Random(0);
 
         int x0;
         int y0;
@@ -28,6 +27,15 @@ namespace QuadTree
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (checkBoxSeed.Checked)
+            {
+                rand = new Random(0);
+            }
+            else
+            {
+                rand = new Random();
+            }
+
             if (radioButtonPoints.Checked || radioButtonPolygons.Checked || radioButtonBoth.Checked)
             {
                 if (radioButtonPoints.Checked)
@@ -73,25 +81,46 @@ namespace QuadTree
                 y0 = rand.Next(0, (int)heigth_tree.Value);
                 xk = rand.Next(x0, (int)width_tree.Value);
                 yk = rand.Next(y0, (int)heigth_tree.Value);
-                list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk));
-                list2 = _test.quadTree.IntervalSearchN(new QTree.Boundaries(x0, y0, xk, yk));
+                list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk), checkBoxInterference.Checked);
+                list2 = _test.quadTree.IntervalSearchN(new QTree.Boundaries(x0, y0, xk, yk), checkBoxDrawing.Checked);
                 richTextBox1.Text += "\nINTERVAL SEARACH : " + _test.TestIntervalSearch(list, list2);
                 richTextBox1.Text += "\n\tPoints in interval X < " + x0 + "; " + y0 + "> and Y <" + xk + "; " + yk + ">\n";
                 var pomPassed = 0;
                 var pomFailed = 0;
-                for (int i = 0; i < list.Count; i++)
+                if (!checkBoxInterference.Checked)
                 {
-                    //richTextBox1.Text += "[" + list[i]._x + " ; " + list[i]._y + "]";
-
-                    if (list[i]._x <= xk && list[i]._x >= x0 && list[i]._y <= yk && list[i]._y >= y0)
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        pomPassed++;
-                    }
-                    else
-                    {
-                        pomFailed++;
+                        //this checks just centers of the object 
+                        //good when all points are in the searched area
+                        if (list[i]._x <= xk && list[i]._x >= x0 && list[i]._y <= yk && list[i]._y >= y0)
+                        {
+                            pomPassed++;
+                        }
+                        else
+                        {
+                            pomFailed++;
+                        }
                     }
                 }
+                else
+                {
+                    //need to manually check if the objects are interfering with searched area
+                    foreach (var item in list)
+                    {
+                        if (item.IsContainedInArea(new QTree.Boundaries(x0, y0, xk, yk), checkBoxInterference.Checked))
+                        {
+                            pomPassed++;
+                        }
+                        else
+                        {
+                            pomFailed--;
+                        }
+                    }
+
+                }
+
+
                 richTextBox1.Text += "\t\tpassed : " + pomPassed + " \n\t\tfailed : " + pomFailed;
                 richTextBox1.Text += "\n\tTOTAL POINTS: " + _test.quadTree._objectsCount;
                 richTextBox1.Text += "\n\tPOINTS SEARCHED: " + _test.quadTree._objectsSearched;
@@ -119,11 +148,12 @@ namespace QuadTree
 
         private void QuadPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (checkBox1.Checked)
+            if (checkBoxDrawing.Checked)
             {
                 this.ClearPanel();
                 this.show(this._test.quadTree.GetRoot(), e);
                 this.showIntervalSearch(list, e);
+                //this.showIntervalSearchN(list2, e);
                 this.showFailedFind(_test.failedObj, e);
             }
         }
@@ -173,7 +203,7 @@ namespace QuadTree
             {
                 if (point is MyPoint)
                 {
-                    e.Graphics.DrawRectangle(redpen, (float)point._x, (float)point._y, 1, 1);
+                    e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)point._x, (float)point._y, 1, 1);
                 }
                 else
                 {
@@ -181,6 +211,24 @@ namespace QuadTree
                 }
             }
         }
+
+        private void showIntervalSearchN(List<ISpatialObject> selectedPoints, PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(redpen, x0, y0, xk - x0, yk - y0);
+            foreach (var point in selectedPoints)
+            {
+                if (point is MyPoint)
+                {
+                    e.Graphics.DrawRectangle(redpen, (float)point._x, (float)point._y, 3, 3);
+                }
+                else
+                {
+                    e.Graphics.DrawRectangle(redpen, (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(0)._y, (float)((Polygon)point).GetTops().ElementAt(1)._x - (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(1)._y - (float)((Polygon)point).GetTops().ElementAt(0)._y);
+                }
+            }
+        }
+
+
 
         private void showFailedFind(List<ISpatialObject> failedPoints, PaintEventArgs e)
         {
@@ -195,13 +243,6 @@ namespace QuadTree
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            QuadPanel.Controls.Clear();
-            _test.TestRemoveSeparatelly();
-            list = _test.IntervalSearchTest(new QTree.Boundaries(x0, y0, xk, yk));
-            this.QuadPanel.Invalidate();
-        }
 
     }
 }

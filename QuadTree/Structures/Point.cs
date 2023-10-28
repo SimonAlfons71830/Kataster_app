@@ -8,25 +8,17 @@ namespace QuadTree.Structures
     //ma svoje suradnice _x0 a _y0 ktore reprezentuju presne umiestnenie v ramci korena stromu
     public class MyPoint: ISpatialObject, IEquatable<MyPoint>
     {
+        public int _registerNumber { get; set; }
         public double _x { get; }
         public double _y { get; }
-        public int _id { get; }
+        //public (double x, double y) suradnice { get; set; }
 
         public MyPoint(double x, double y, int id)
         {
+            //suradnice = (x, y);
             _x = x;
             _y = y;
-            _id = id;
-        }
-
-        public double DistanceTo(MyPoint other)
-        {
-            dynamic x1 = _x;
-            dynamic y1 = _y;
-            dynamic x2 = other._x;
-            dynamic y2 = other._y;
-
-            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+            _registerNumber = id;
         }
 
         public Quad? FindQuad(Quad quad)
@@ -73,14 +65,14 @@ namespace QuadTree.Structures
             double epsylon = 0.000001;
             //TODO: osetrit porovnavanie double!
             return (_x + epsylon > other._x && _x - epsylon < other._x) 
-                && (_y + epsylon > other._y && _y - epsylon < other._y) && other._id == this._id;
+                && (_y + epsylon > other._y && _y - epsylon < other._y) && other._registerNumber == this._registerNumber;
         }
 
-        public bool IsContainedInArea(Boundaries boundaries) {
+        public bool IsContainedInArea(Boundaries boundaries, bool interfere) {
             bool withinXBounds = _x >= boundaries.X0 && _x <= boundaries.Xk;
             bool withinYBounds = _y >= boundaries.Y0 && _y <= boundaries.Yk;
 
-            return withinXBounds && withinYBounds;
+            return withinXBounds && withinYBounds;          
         }
 
         public Quad FindQuadUpdate(Quad quad)

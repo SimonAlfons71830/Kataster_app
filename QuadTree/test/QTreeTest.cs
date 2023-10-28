@@ -279,9 +279,9 @@ namespace QuadTree.test
                 availableObjects.RemoveAt(index);
             }
         }
-        public List<ISpatialObject> IntervalSearchTest(Boundaries boundaries) {
+        public List<ISpatialObject> IntervalSearchTest(Boundaries boundaries, bool interfere) {
 
-            return quadTree.IntervalSearch(boundaries);
+            return quadTree.IntervalSearch(boundaries, interfere);
         }
 
         public bool TestIntervalSearch(List<ISpatialObject> list1, List<ISpatialObject> list2)
@@ -327,8 +327,8 @@ namespace QuadTree.test
             
         }
 
-        public List<ISpatialObject> IntervalSearchNcomplex(Boundaries boundaries) {
-            return quadTree.IntervalSearchN(boundaries);
+        public List<ISpatialObject> IntervalSearchNcomplex(Boundaries boundaries, bool intersects) {
+            return quadTree.IntervalSearchN(boundaries, intersects);
         }
 
         public void SetPocetOperacii(int pocetOperacii) {

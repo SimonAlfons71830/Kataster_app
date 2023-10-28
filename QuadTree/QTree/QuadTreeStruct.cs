@@ -190,7 +190,7 @@ namespace QuadTree.QTree
 
             while (quads.Count > 0) {
                 Quad quad = quads.Dequeue();
-                if (_object.IsContainedInArea(quad._boundaries))
+                if (_object.IsContainedInArea(quad._boundaries, false))
                 {
                     //when the object is located in one of the 4 added currentQuad i can erease all of them from there
                     //ill be adding just childQuads of the currentQuad that is object within
@@ -225,7 +225,7 @@ namespace QuadTree.QTree
         /// <returns>
         ///   A list of <see cref="ISpatialObject"/> instances that intersect with the specified boundaries.
         /// </returns>
-        public List<ISpatialObject> IntervalSearch(Boundaries boundaries)
+        public List<ISpatialObject> IntervalSearch(Boundaries boundaries, bool interfere)
         {
             List<ISpatialObject> foundObjects = new List<ISpatialObject>();
             Queue<Quad> quadsQ = new Queue<Quad>();
@@ -240,7 +240,7 @@ namespace QuadTree.QTree
                     foreach (var _object in current._objects)
                     {
                         this._objectsSearched++;
-                        if (_object.IsContainedInArea(boundaries))
+                        if (_object.IsContainedInArea(boundaries, interfere))
                         {
                             foundObjects.Add(_object);
                         }
@@ -269,7 +269,7 @@ namespace QuadTree.QTree
         /// <remarks> 
         /// Just for the testing purposes. 
         /// </remarks>
-        public List<ISpatialObject> IntervalSearchN(Boundaries boundaries)
+        public List<ISpatialObject> IntervalSearchN(Boundaries boundaries, bool intersects)
         {
             List<ISpatialObject> foundObjects = new List<ISpatialObject>();
             Queue<Quad> quads = new Queue<Quad>();
@@ -282,7 +282,7 @@ namespace QuadTree.QTree
 
                     Quad current = quads.Dequeue();
                     foreach (var _object in current._objects) {
-                        if (_object.IsContainedInArea(boundaries))
+                        if (_object.IsContainedInArea(boundaries, intersects))
                         {
                             foundObjects.Add(_object);
                         }

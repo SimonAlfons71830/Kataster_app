@@ -50,7 +50,10 @@
             radioButtonPolygons = new RadioButton();
             radioButtonBoth = new RadioButton();
             label5 = new Label();
-            checkBox1 = new CheckBox();
+            checkBoxDrawing = new CheckBox();
+            checkBoxInterference = new CheckBox();
+            label1 = new Label();
+            checkBoxSeed = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
@@ -80,7 +83,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(576, 233);
+            button1.Location = new Point(500, 233);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 8;
@@ -103,7 +106,6 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
@@ -112,7 +114,6 @@
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 500, 0, 0, 0 });
             // 
             // label9
             // 
@@ -226,6 +227,7 @@
             // radioButtonPoints
             // 
             radioButtonPoints.AutoSize = true;
+            radioButtonPoints.Checked = true;
             radioButtonPoints.Location = new Point(500, 69);
             radioButtonPoints.Name = "radioButtonPoints";
             radioButtonPoints.Size = new Size(71, 24);
@@ -241,7 +243,6 @@
             radioButtonPolygons.Name = "radioButtonPolygons";
             radioButtonPolygons.Size = new Size(173, 24);
             radioButtonPolygons.TabIndex = 123;
-            radioButtonPolygons.TabStop = true;
             radioButtonPolygons.Text = "polygons (rectangles)";
             radioButtonPolygons.UseVisualStyleBackColor = true;
             // 
@@ -252,7 +253,6 @@
             radioButtonBoth.Name = "radioButtonBoth";
             radioButtonBoth.Size = new Size(61, 24);
             radioButtonBoth.TabIndex = 124;
-            radioButtonBoth.TabStop = true;
             radioButtonBoth.Text = "both";
             radioButtonBoth.UseVisualStyleBackColor = true;
             // 
@@ -265,24 +265,56 @@
             label5.TabIndex = 125;
             label5.Text = "Objects in quad";
             // 
-            // checkBox1
+            // checkBoxDrawing
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Checked = true;
-            checkBox1.CheckState = CheckState.Checked;
-            checkBox1.Location = new Point(576, 203);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(74, 24);
-            checkBox1.TabIndex = 126;
-            checkBox1.Text = "DRAW";
-            checkBox1.UseVisualStyleBackColor = true;
+            checkBoxDrawing.AutoSize = true;
+            checkBoxDrawing.Checked = true;
+            checkBoxDrawing.CheckState = CheckState.Checked;
+            checkBoxDrawing.Location = new Point(500, 203);
+            checkBoxDrawing.Name = "checkBoxDrawing";
+            checkBoxDrawing.Size = new Size(74, 24);
+            checkBoxDrawing.TabIndex = 126;
+            checkBoxDrawing.Text = "DRAW";
+            checkBoxDrawing.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxInterference
+            // 
+            checkBoxInterference.AutoSize = true;
+            checkBoxInterference.Location = new Point(35, 236);
+            checkBoxInterference.Name = "checkBoxInterference";
+            checkBoxInterference.Size = new Size(157, 24);
+            checkBoxInterference.TabIndex = 127;
+            checkBoxInterference.Text = "partial interference";
+            checkBoxInterference.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(32, 203);
+            label1.Name = "label1";
+            label1.Size = new Size(133, 20);
+            label1.TabIndex = 128;
+            label1.Text = "INTERVAL SEARCH";
+            // 
+            // checkBoxSeed
+            // 
+            checkBoxSeed.AutoSize = true;
+            checkBoxSeed.Location = new Point(242, 233);
+            checkBoxSeed.Name = "checkBoxSeed";
+            checkBoxSeed.Size = new Size(99, 24);
+            checkBoxSeed.TabIndex = 129;
+            checkBoxSeed.Text = "fixed seed";
+            checkBoxSeed.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
-            Controls.Add(checkBox1);
+            Controls.Add(checkBoxSeed);
+            Controls.Add(label1);
+            Controls.Add(checkBoxInterference);
+            Controls.Add(checkBoxDrawing);
             Controls.Add(label5);
             Controls.Add(radioButtonBoth);
             Controls.Add(radioButtonPolygons);
@@ -342,6 +374,9 @@
         private RadioButton radioButtonPolygons;
         private RadioButton radioButtonBoth;
         private Label label5;
-        private CheckBox checkBox1;
+        private CheckBox checkBoxDrawing;
+        private CheckBox checkBoxInterference;
+        private Label label1;
+        private CheckBox checkBoxSeed;
     }
 }

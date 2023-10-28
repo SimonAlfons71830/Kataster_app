@@ -154,7 +154,7 @@ namespace QuadTree.QTree
                 // Check if the line segment intersects with the quad's vertical boundaries.
                 if (p1._x > quad._boundaries.Xk && p2._x < quad._boundaries.Xk)
                 {
-                    double yIntersection = p1._y + (quad._boundaries.Xk - p1._x) * (p2._y - p1._y) / (p2._x - p1._x);
+                    double yIntersection = p1._y + (quad._boundaries.Xk - p1._x) * (p2._y - p1._y) / (p2._y - p1._x);
                     if (yIntersection >= quad._boundaries.Y0 && yIntersection <= quad._boundaries.Yk)
                     {
                         // The line segment intersects with the quad's vertical boundary.
