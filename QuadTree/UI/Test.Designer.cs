@@ -106,6 +106,7 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
+            numericUpDown2.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
@@ -114,6 +115,7 @@
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
+            numericUpDown3.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // label9
             // 
@@ -213,7 +215,7 @@
             removeCount.Name = "removeCount";
             removeCount.Size = new Size(150, 27);
             removeCount.TabIndex = 121;
-            removeCount.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            removeCount.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // label15
             // 
@@ -306,7 +308,7 @@
             checkBoxSeed.Text = "fixed seed";
             checkBoxSeed.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // Test
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -337,7 +339,7 @@
             Controls.Add(button1);
             Controls.Add(label3);
             Controls.Add(label2);
-            Name = "Form1";
+            Name = "Test";
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();

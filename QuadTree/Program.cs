@@ -1,3 +1,4 @@
+using QuadTree.GeoSystem;
 using QuadTree.QTree;
 using QuadTree.Structures;
 using QuadTree.test;
@@ -19,7 +20,8 @@ namespace QuadTree
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             var test = new QTreeTest();
-            Application.Run(new Menu(test));
+            var app = new GeoApp(new QuadTreeStruct(new Boundaries(0,0,0,0),0,0));
+            Application.Run(new Menu(test,app));
 
             
 

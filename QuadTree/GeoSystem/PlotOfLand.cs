@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuadTree.GeoSystem
 {
-    internal class PlotOfLand : Polygon
+    public class PlotOfLand : Polygon
     {
         private string _description;
         private (Coordinates startPos, Coordinates endPos) _coordinates;

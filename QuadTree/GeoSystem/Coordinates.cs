@@ -8,7 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace QuadTree.GeoSystem
 {
-    internal class Coordinates
+    public class Coordinates
     {
         //_longitude >=0  -> E  
         //_longitude < 0  -> W

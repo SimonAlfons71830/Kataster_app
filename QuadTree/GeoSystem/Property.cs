@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuadTree.GeoSystem
 {
-    internal class Property : Polygon
+    public class Property : Polygon
     {
         //public int _registerNumber { get; set; }
         public (Coordinates x, Coordinates y) suradnice { get; set; }

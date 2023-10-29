@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace QuadTree.GeoSystem
 {
-    internal class GeoSystem
+    public class GeoApp
     {
         public QuadTreeStruct _area;
 
-        public GeoSystem(QuadTreeStruct area) 
+        public GeoApp(QuadTreeStruct area) 
         {
             //ked sa vytvori system, vytvori sa area zo zadanych suradnic od pouzivatela
             //naseeduju sa tu nejake parcely a nehnutelnosti do nich

@@ -1,4 +1,6 @@
-﻿using QuadTree.test;
+﻿using QuadTree.GeoSystem;
+using QuadTree.test;
+using QuadTree.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +16,12 @@ namespace QuadTree
     public partial class Menu : Form
     {
         private QTreeTest _test;
-        public Menu(QTreeTest test)
+        private GeoApp _app;
+        public Menu(QTreeTest test, GeoApp app)
         {
             InitializeComponent();
             _test = test;
+            _app = app;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -27,6 +31,12 @@ namespace QuadTree
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+            var appForm = new App(_app);
+            appForm.ShowDialog();
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
         {
 
         }

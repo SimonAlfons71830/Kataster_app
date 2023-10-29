@@ -61,6 +61,7 @@
             Controls.Add(button1);
             Name = "Menu";
             Text = "Menu";
+            Load += Menu_Load;
             ResumeLayout(false);
         }
 
