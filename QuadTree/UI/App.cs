@@ -86,7 +86,7 @@ namespace QuadTree.UI
                 }
             }
 
-            Property property = new Property(registerNumber, description, coordinates, new List<PlotOfLand>();
+            Property property = new Property(registerNumber, description, coordinates, new List<PlotOfLand>());
             _app._area.InsertUpdate(property);
 
             //plnenie zoznamu referencii pri pridani nehnutelnosti
