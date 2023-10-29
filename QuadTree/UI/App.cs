@@ -16,7 +16,7 @@ namespace QuadTree.UI
     public partial class App : Form
     {
         List<Property> list = new List<Property>();
-        (Coordinates start, Coordinates end) coordinatesIS = (new Coordinates(0, 0, 0),new Coordinates(0, 0, 0));
+        (Coordinates start, Coordinates end) coordinatesIS = (new Coordinates(0, 0, 0), new Coordinates(0, 0, 0));
 
         Pen blkpen = new Pen(Color.FromArgb(255, 0, 155, 0), 1);
         Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 2);
@@ -35,37 +35,28 @@ namespace QuadTree.UI
             _app._area.GetRoot()._boundaries = _app._area._dimension;
             _app._area.MAX_QUAD_CAPACITY = 2;
             _app._area._maxDepth = 10;
-            _app._area.InsertUpdate(new Property(10000, "New Property", ((new Coordinates(20, 20,0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
+            _app._area.InsertUpdate(new Property(10000, "New Property", ((new Coordinates(20, 20, 0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
 
             this.QuadPanel.Invalidate();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-            /*double startLongitude = 0;
-            double startLatitude = 0;
-            double endLongitude = 0;
-            double endLatitude = 0;*/
             using (SpatialSearch spatialForm = new SpatialSearch())
             {
                 if (spatialForm.ShowDialog() == DialogResult.OK)
                 {
-                    coordinatesIS = (new Coordinates(spatialForm.StartLongitudeValue, spatialForm.StartLatitudeValue, 0), new Coordinates(spatialForm.EndLongitudeValue, spatialForm.EndLatitudeValue,0));
-                    // Access the coordinates from the SpatialSearch form
-                    /*startLongitude = spatialForm.StartLongitudeValue;
-                    startLatitude = spatialForm.StartLatitudeValue;
-                    endLongitude = spatialForm.EndLongitudeValue;
-                    endLatitude = spatialForm.EndLatitudeValue;*/
-
-                    // Do something with the coordinates in the App form
+                    coordinatesIS = (new Coordinates(spatialForm.StartLongitudeValue, spatialForm.StartLatitudeValue, 0), 
+                        new Coordinates(spatialForm.EndLongitudeValue, spatialForm.EndLatitudeValue, 0));
+                    
                 }
             }
 
             gpsLabel.Text = "<" + coordinatesIS.start.Longitude + ", " + coordinatesIS.start.Latitude + ">" + "<" + coordinatesIS.end.Longitude + ", " + coordinatesIS.end.Latitude + ">";
-            //(Coordinates start, Coordinates end) intervalSearch = (new Coordinates(startLongitude, startLatitude), (new Coordinates(endLongitude, endLatitude)));
+     
             list = _app.FindPropertiesInterval(coordinatesIS, true); //zasahuju -> true
 
+            listView1.Clear();
             foreach (var property in list)
             {
                 var listViewItem = new ListViewItem(property.RegisterNumber.ToString());
@@ -95,7 +86,19 @@ namespace QuadTree.UI
                 }
             }
 
-            _app._area.InsertUpdate(new Property(registerNumber, description, coordinates, new List<PlotOfLand>()));
+            Property property = new Property(registerNumber, description, coordinates, new List<PlotOfLand>();
+            _app._area.InsertUpdate(property);
+
+            //plnenie zoznamu referencii pri pridani nehnutelnosti
+            var pomList = _app._area.IntervalSearch(new Boundaries(property.Coordinates.x.Longitude,property.Coordinates.x.Latitude,property.Coordinates.y.Longitude, property.Coordinates.y.Latitude),true);
+
+            foreach (var pl in pomList) 
+            {
+                if (pl is PlotOfLand)
+                {
+                    property.Lands.Add((PlotOfLand)pl);
+                }
+            }
             this.QuadPanel.Invalidate();
         }
 
@@ -137,19 +140,24 @@ namespace QuadTree.UI
             foreach (var _object in points)
             {
 
-                e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0, 155), 1), 
-                    (float)((Polygon)_object)._borders.startP._x, 
-                    (float)((Polygon)_object)._borders.startP._y, 
-                    ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x) == 0 ? 1 : ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x), 
-                    (((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y) == 0 ) ? 1 : ((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y));
+                e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0, 155), 1),
+                    (float)((Polygon)_object)._borders.startP._x,
+                    (float)((Polygon)_object)._borders.startP._y,
+                    ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x) == 0 ? 1 : ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x),
+                    (((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y) == 0) ? 1 : ((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y));
                 //e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)_object).suradnice.x.Longitude, (float)((Property)_object).suradnice.x.Latitude, (float)((Property)_object).suradnice.y.Longitude - (float)((Property)_object).suradnice.x.Longitude , (float)((Property)_object).suradnice.y.Latitude - (float)((Property)_object).suradnice.x.Latitude);
-                
+
             }
         }
 
         private void showIntervalSearch(List<Property> properties, PaintEventArgs e, (Coordinates start, Coordinates end) rectangleSearch)
         {
-            e.Graphics.DrawRectangle(redpen, (int)rectangleSearch.start.Longitude, (int)rectangleSearch.start.Latitude, (int)(rectangleSearch.end.Longitude - rectangleSearch.start.Longitude), (int)(rectangleSearch.end.Latitude - rectangleSearch.start.Latitude));
+            e.Graphics.DrawRectangle(redpen,
+                (int)rectangleSearch.start.Longitude,
+                (int)rectangleSearch.start.Latitude, 
+                ((int)(rectangleSearch.end.Longitude - rectangleSearch.start.Longitude)) == 0 ? 1 : ((int)(rectangleSearch.end.Longitude - rectangleSearch.start.Longitude)), 
+                ((int)(rectangleSearch.end.Latitude - rectangleSearch.start.Latitude)) == 0 ? 1 : (int)(rectangleSearch.end.Latitude - rectangleSearch.start.Latitude)) ;
+
             foreach (var property in properties)
             {
 
@@ -176,6 +184,32 @@ namespace QuadTree.UI
                 this.showIntervalSearch(list, e, coordinatesIS);
                 //this.showFailedFind(_test.failedObj, e);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (SearchForProperty searchForm = new SearchForProperty())
+            {
+                if (searchForm.ShowDialog() == DialogResult.OK)
+                {
+                    coordinatesIS = (new Coordinates(searchForm.LongitudeValue, searchForm.LatitudeValue, 0),
+                        new Coordinates(searchForm.LongitudeValue, searchForm.LatitudeValue,0));
+                }
+            }
+
+            list = _app.FindPropertiesInterval(coordinatesIS, true); //zasahuju -> true
+
+            listView1.Clear();
+            foreach (var property in list)
+            {
+                var listViewItem = new ListViewItem(property.RegisterNumber.ToString());
+                listViewItem.SubItems.Add(property.Description);
+                listViewItem.SubItems.Add(property.Coordinates.x.ToString());
+                listViewItem.SubItems.Add(property.Coordinates.y.ToString());
+                listView1.Items.Add(listViewItem);
+            }
+
+            this.QuadPanel.Invalidate();
         }
     }
 }
