@@ -14,7 +14,7 @@ namespace QuadTree.GeoSystem
         private List<Property> _properties;
 
         public PlotOfLand(int registerNumber, string description, (Coordinates startPos, Coordinates endPos) coordinates, List<Property> properties) 
-            : base(registerNumber)
+            : base(registerNumber, coordinates)
         {
             RegisterNumber = registerNumber;
             Description = description;

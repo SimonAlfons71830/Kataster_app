@@ -15,7 +15,8 @@ namespace QuadTree.GeoSystem
         private string _description;
         private List<PlotOfLand> _lands;
 
-        public Property(int registerNumber, string description, (Coordinates x, Coordinates y) coordinates, List<PlotOfLand> lands) : base(registerNumber)
+        public Property(int registerNumber, string description, (Coordinates x, Coordinates y) coordinates, List<PlotOfLand> lands) 
+            : base(registerNumber, coordinates)
         {
             RegisterNumber = registerNumber;
             Description = description;

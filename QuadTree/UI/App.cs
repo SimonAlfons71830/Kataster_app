@@ -1,4 +1,6 @@
 ﻿using QuadTree.GeoSystem;
+using QuadTree.QTree;
+using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +15,12 @@ namespace QuadTree.UI
 {
     public partial class App : Form
     {
+        List<Property> list = new List<Property>();
+        (Coordinates start, Coordinates end) coordinatesIS = (new Coordinates(0, 0, 0),new Coordinates(0, 0, 0));
+
+        Pen blkpen = new Pen(Color.FromArgb(255, 0, 155, 0), 1);
+        Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 2);
+        Pen failedPen = new Pen(Color.FromArgb(255, 155, 0, 0), 5);
         private GeoApp _app;
         public App(GeoApp app)
         {
@@ -22,36 +30,41 @@ namespace QuadTree.UI
 
         private void App_Load(object sender, EventArgs e)
         {
+            //initial seeding
             _app._area._dimension = new QTree.Boundaries(0, 0, 500, 500);
             _app._area.GetRoot()._boundaries = _app._area._dimension;
             _app._area.MAX_QUAD_CAPACITY = 2;
             _app._area._maxDepth = 10;
-            _app._area.InsertUpdate(new Property(10000, "New Property", ((new Coordinates(20, 20)), new Coordinates(20, 20)), new List<PlotOfLand>()));
+            _app._area.InsertUpdate(new Property(10000, "New Property", ((new Coordinates(20, 20,0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
+
+            this.QuadPanel.Invalidate();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            double startLongitude = 0;
+
+            /*double startLongitude = 0;
             double startLatitude = 0;
             double endLongitude = 0;
-            double endLatitude = 0;
+            double endLatitude = 0;*/
             using (SpatialSearch spatialForm = new SpatialSearch())
             {
                 if (spatialForm.ShowDialog() == DialogResult.OK)
                 {
+                    coordinatesIS = (new Coordinates(spatialForm.StartLongitudeValue, spatialForm.StartLatitudeValue, 0), new Coordinates(spatialForm.EndLongitudeValue, spatialForm.EndLatitudeValue,0));
                     // Access the coordinates from the SpatialSearch form
-                    startLongitude = spatialForm.StartLongitudeValue;
+                    /*startLongitude = spatialForm.StartLongitudeValue;
                     startLatitude = spatialForm.StartLatitudeValue;
                     endLongitude = spatialForm.EndLongitudeValue;
-                    endLatitude = spatialForm.EndLatitudeValue;
+                    endLatitude = spatialForm.EndLatitudeValue;*/
 
                     // Do something with the coordinates in the App form
                 }
             }
 
-            gpsLabel.Text = "<" + startLongitude + ", " + startLatitude + ">" + "<" + endLongitude + ", " + endLatitude + ">";
+            gpsLabel.Text = "<" + coordinatesIS.start.Longitude + ", " + coordinatesIS.start.Latitude + ">" + "<" + coordinatesIS.end.Longitude + ", " + coordinatesIS.end.Latitude + ">";
             //(Coordinates start, Coordinates end) intervalSearch = (new Coordinates(startLongitude, startLatitude), (new Coordinates(endLongitude, endLatitude)));
-            var list = _app.FindPropertiesInterval((new Coordinates(startLongitude, startLatitude), (new Coordinates(endLongitude, endLatitude))), false);
+            list = _app.FindPropertiesInterval(coordinatesIS, true); //zasahuju -> true
 
             foreach (var property in list)
             {
@@ -62,6 +75,107 @@ namespace QuadTree.UI
                 listView1.Items.Add(listViewItem);
             }
 
+            this.QuadPanel.Invalidate();
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int registerNumber = 0;
+            string description = "";
+            (Coordinates start, Coordinates end) coordinates = (new Coordinates(0, 0, 0), new Coordinates(0, 0, 0));
+
+            using (AddProperty propertyForm = new AddProperty())
+            {
+                if (propertyForm.ShowDialog() == DialogResult.OK)
+                {
+                    registerNumber = propertyForm.RegisterNumber;
+                    description = propertyForm.Description;
+                    coordinates = propertyForm.Coordinates;
+                }
+            }
+
+            _app._area.InsertUpdate(new Property(registerNumber, description, coordinates, new List<PlotOfLand>()));
+            this.QuadPanel.Invalidate();
+        }
+
+
+        private void ClearPanel()
+        {
+            using (Graphics g = QuadPanel.CreateGraphics())
+            {
+                g.Clear(QuadPanel.BackColor);
+            }
+        }
+
+
+        private void show(Quad quad, PaintEventArgs e)
+        {
+            if (quad == null)
+            {
+                return;
+            }
+            float x0 = (float)quad._boundaries.X0;
+            float y0 = (float)quad._boundaries.Y0;
+            float xk = (float)quad._boundaries.Xk;
+            float yk = (float)quad._boundaries.Yk;
+
+            e.Graphics.DrawRectangle(blkpen, x0, y0, xk - x0, yk - y0);
+            this.showPoints(quad._objects, e);
+            if (quad.getNE() != null)
+            {
+                this.show(quad.getNE(), e);
+                this.show(quad.getNW(), e);
+                this.show(quad.getSE(), e);
+                this.show(quad.getSW(), e);
+            }
+
+        }
+
+        private void showPoints(List<ISpatialObject> points, PaintEventArgs e)
+        {
+            foreach (var _object in points)
+            {
+
+                e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0, 155), 1), 
+                    (float)((Polygon)_object)._borders.startP._x, 
+                    (float)((Polygon)_object)._borders.startP._y, 
+                    ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x) == 0 ? 1 : ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x), 
+                    (((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y) == 0 ) ? 1 : ((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y));
+                //e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)_object).suradnice.x.Longitude, (float)((Property)_object).suradnice.x.Latitude, (float)((Property)_object).suradnice.y.Longitude - (float)((Property)_object).suradnice.x.Longitude , (float)((Property)_object).suradnice.y.Latitude - (float)((Property)_object).suradnice.x.Latitude);
+                
+            }
+        }
+
+        private void showIntervalSearch(List<Property> properties, PaintEventArgs e, (Coordinates start, Coordinates end) rectangleSearch)
+        {
+            e.Graphics.DrawRectangle(redpen, (int)rectangleSearch.start.Longitude, (int)rectangleSearch.start.Latitude, (int)(rectangleSearch.end.Longitude - rectangleSearch.start.Longitude), (int)(rectangleSearch.end.Latitude - rectangleSearch.start.Latitude));
+            foreach (var property in properties)
+            {
+
+                e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (int)property.suradnice.x.Longitude, (int)property.suradnice.x.Latitude, (int)(property.suradnice.y.Longitude - property.suradnice.x.Longitude), (int)(property.suradnice.y.Latitude - property.suradnice.x.Latitude));
+
+            }
+        }
+
+        private void showFailedFind(List<ISpatialObject> failedPoints, PaintEventArgs e)
+        {
+
+            foreach (var point in failedPoints)
+            {
+                e.Graphics.DrawRectangle(failedPen, (float)point._x, (float)point._y, 2, 2);
+            }
+        }
+
+        private void QuadPanel_Paint(object sender, PaintEventArgs e)
+        {
+            if (checkBoxDrawing.Checked)
+            {
+                this.ClearPanel();
+                this.show(this._app._area.GetRoot(), e);
+                this.showIntervalSearch(list, e, coordinatesIS);
+                //this.showFailedFind(_test.failedObj, e);
+            }
         }
     }
 }

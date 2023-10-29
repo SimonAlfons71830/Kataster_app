@@ -199,8 +199,11 @@ namespace QuadTree.test
                 }
                 else if (this.generateOptions == 2)
                 {
-                    var _object = new Polygon(uniqueNumbers.ElementAt(i));
-                    _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
+                    var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
+                    var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+
+                    var _object = new Polygon(uniqueNumbers.ElementAt(i), (new MyPoint(startPosGen._x,startPosGen._y,startPosGen._registerNumber),new MyPoint(endPosGen._x,endPosGen._y,endPosGen._registerNumber)));
+                   /*// _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
                     //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
                     var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
                     var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
@@ -208,7 +211,7 @@ namespace QuadTree.test
 
                     _object.AddTop(top2);
                     _object.AddTop(top3);
-                    _object.AddTop(top4);
+                    _object.AddTop(top4);*/
 
                     availableObjects.Add(_object);
                 }
@@ -222,7 +225,12 @@ namespace QuadTree.test
                     }
                     else
                     {
-                        //polygon
+                        var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
+                        var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+
+                        var _object = new Polygon(uniqueNumbers.ElementAt(i), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+
+                        /*//polygon
                         var _object = new Polygon(uniqueNumbers.ElementAt(i));
                         _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
                         //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
@@ -232,7 +240,7 @@ namespace QuadTree.test
 
                         _object.AddTop(top2);
                         _object.AddTop(top3);
-                        _object.AddTop(top4);
+                        _object.AddTop(top4);*/
 
                         availableObjects.Add(_object);
                     }

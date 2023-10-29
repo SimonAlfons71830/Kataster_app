@@ -39,6 +39,7 @@
             gpsLabel = new Label();
             listView1 = new ListView();
             QuadPanel = new Panel();
+            checkBoxDrawing = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             SuspendLayout();
@@ -102,6 +103,7 @@
             button4.TabIndex = 6;
             button4.Text = "Add Property";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label2
             // 
@@ -135,18 +137,32 @@
             QuadPanel.Name = "QuadPanel";
             QuadPanel.Size = new Size(535, 516);
             QuadPanel.TabIndex = 112;
+            QuadPanel.Paint += QuadPanel_Paint;
+            // 
+            // checkBoxDrawing
+            // 
+            checkBoxDrawing.AutoSize = true;
+            checkBoxDrawing.Checked = true;
+            checkBoxDrawing.CheckState = CheckState.Checked;
+            checkBoxDrawing.Location = new Point(12, 471);
+            checkBoxDrawing.Name = "checkBoxDrawing";
+            checkBoxDrawing.Size = new Size(66, 24);
+            checkBoxDrawing.TabIndex = 113;
+            checkBoxDrawing.Text = "Draw";
+            checkBoxDrawing.UseVisualStyleBackColor = true;
             // 
             // App
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(button3);
+            Controls.Add(checkBoxDrawing);
             Controls.Add(QuadPanel);
             Controls.Add(listView1);
             Controls.Add(gpsLabel);
             Controls.Add(label2);
             Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
@@ -174,5 +190,6 @@
         private Label gpsLabel;
         private ListView listView1;
         private Panel QuadPanel;
+        private CheckBox checkBoxDrawing;
     }
 }

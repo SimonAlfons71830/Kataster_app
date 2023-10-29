@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,28 +9,22 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace QuadTree.GeoSystem
 {
-    public class Coordinates
+    public class Coordinates : MyPoint
     {
         //_longitude >=0  -> E  
         //_longitude < 0  -> W
         //_latitude   >=0  -> N
         //_latitude   < 0  -> S
 
-        /// <summary>
-        /// x
-        /// </summary>
         private double _longitude;
-        /// <summary>
-        /// y
-        /// </summary>
         private double _latitude;
         private char _longHem;
         private char _latHem;
 
-        public Coordinates(double longitude, double latitude)
+        public Coordinates(double x, double y, int id) : base(x, y, id)
         {
-            Longitude = longitude; //x
-            Latitude = latitude; //y
+            _longitude = x;
+            _latitude = y;
             LongHem = (Longitude >= 0) ? 'E' : 'W';
             LatHem = (Latitude >= 0) ? 'N' : 'S';
         }

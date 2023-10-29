@@ -44,14 +44,5 @@ namespace QuadTree.GeoSystem
 
             return listOfProperties;
         }
-
-        /*public bool AddPlotOfLand(int registerNumber, string desc, Tuple<Coordinates, Coordinates> coordinates) 
-        { 
-            var plotOfLand = new PlotOfLand(registerNumber, desc, coordinates, new List<Property>());
-
-            //Polygon?
-            _area.InsertUpdate(plotOfLand);
-
-        }*/
     }
 }

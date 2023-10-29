@@ -191,7 +191,7 @@ namespace QuadTree
                 }
                 else
                 {
-                    e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0, 155), 1), (float)((Polygon)_object).GetTops().ElementAt(0)._x, (float)((Polygon)_object).GetTops().ElementAt(0)._y, (float)((Polygon)_object).GetTops().ElementAt(1)._x - (float)((Polygon)_object).GetTops().ElementAt(0)._x, (float)((Polygon)_object).GetTops().ElementAt(1)._y - (float)((Polygon)_object).GetTops().ElementAt(0)._y);
+                    e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 0, 0, 155), 1), (float)((Polygon)_object)._borders.startP._x, (float)((Polygon)_object)._borders.startP._y, (float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x, (float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y);
                 }
             }
         }
@@ -207,7 +207,9 @@ namespace QuadTree
                 }
                 else
                 {
-                    e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(0)._y, (float)((Polygon)point).GetTops().ElementAt(1)._x - (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(1)._y - (float)((Polygon)point).GetTops().ElementAt(0)._y);
+                    e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)point)._borders.startP._x, (float)((Polygon)point)._borders.startP._y, (float)((Polygon)point)._borders.endP._x - (float)((Polygon)point)._borders.startP._x, (float)((Polygon)point)._borders.endP._y - (float)((Polygon)point)._borders.startP._y);
+
+                    //e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(0)._y, (float)((Polygon)point).GetTops().ElementAt(1)._x - (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(1)._y - (float)((Polygon)point).GetTops().ElementAt(0)._y);
                 }
             }
         }
@@ -223,7 +225,9 @@ namespace QuadTree
                 }
                 else
                 {
-                    e.Graphics.DrawRectangle(redpen, (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(0)._y, (float)((Polygon)point).GetTops().ElementAt(1)._x - (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(1)._y - (float)((Polygon)point).GetTops().ElementAt(0)._y);
+                    e.Graphics.DrawRectangle(redpen, (float)((Polygon)point)._borders.startP._x, (float)((Polygon)point)._borders.startP._y, (float)((Polygon)point)._borders.endP._x - (float)((Polygon)point)._borders.startP._x, (float)((Polygon)point)._borders.endP._y - (float)((Polygon)point)._borders.startP._y);
+
+                    //e.Graphics.DrawRectangle(redpen, (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(0)._y, (float)((Polygon)point).GetTops().ElementAt(1)._x - (float)((Polygon)point).GetTops().ElementAt(0)._x, (float)((Polygon)point).GetTops().ElementAt(1)._y - (float)((Polygon)point).GetTops().ElementAt(0)._y);
                 }
             }
         }

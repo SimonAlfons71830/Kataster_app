@@ -12,24 +12,18 @@ namespace QuadTree.Structures
 {
     public class Polygon: IEquatable<Polygon>, ISpatialObject
     {
-        private (MyPoint startP, MyPoint endP) borders;
-        private List<MyPoint> _tops;
+        public (MyPoint startP, MyPoint endP) _borders;
+        //private List<MyPoint> _tops;
         public int _registerNumber { get; set; }
         // Calculate the center (centroid) of the polygon based on its vertices.
         public double _x
         {
             get
             {
-                if (_tops.Count == 0)
-                    return 0;
-
                 double sumX = 0;
-                foreach (var top in _tops)
-                {
-                    sumX += top._x;
-                }
-
-                return sumX / _tops.Count;
+                sumX += _borders.startP._x;
+                sumX += _borders.endP._x;
+                return sumX / 2;
             }
         }
 
@@ -37,35 +31,30 @@ namespace QuadTree.Structures
         {
             get
             {
-                if (_tops.Count == 0)
-                    return 0;
-
                 double sumY = 0;
-                foreach (var top in _tops)
-                {
-                    sumY += top._y;
-                }
-
-                return sumY / _tops.Count;
+                sumY += _borders.startP._y;
+                sumY += _borders.endP._y;
+                return sumY / 2;
             }
         }
 
 
-        public Polygon(int registerNumber)
+        public Polygon(int registerNumber, (MyPoint startP, MyPoint endP) borders)
         {
             _registerNumber = registerNumber;
-            _tops = new List<MyPoint>();
+            _borders = borders;
+            //_tops = new List<MyPoint>();
         }
 
-        public void AddTop(MyPoint top)
+        /*public void AddTop(MyPoint top)
         {
             _tops.Add(top);
-        }
+        }*/
 
-        public List<MyPoint> GetTops()
+        /*public List<MyPoint> GetTops()
         {
             return _tops;
-        }
+        }*/
 
         public bool Equals(Polygon? other)
         {
@@ -80,20 +69,20 @@ namespace QuadTree.Structures
                 return true;
             }
 
-            //differetn number of tops
-            if (_tops.Count != other._tops.Count)
+            //comparing pairs of tops
+            if (!(_borders.startP._x == other._borders.startP._x && _borders.startP._y == other._borders.startP._y && 
+                _borders.endP._x == other._borders.endP._x && _borders.endP._y == other._borders.endP._y))
             {
                 return false;
             }
 
-            //comparing pairs of tops
-            for (int i = 0; i < _tops.Count; i++)
+            /*for (int i = 0; i < _tops.Count; i++)
             {
                 if (!_tops[i].Equals(other._tops[i]))
                 {
                     return false;
                 }
-            }
+            }*/
 
             if (other._registerNumber != this._registerNumber)
             {
@@ -118,14 +107,25 @@ namespace QuadTree.Structures
             double centerX = (quad._boundaries.X0 + quad._boundaries.Xk) / 2;
             double centerY = (quad._boundaries.Y0 + quad._boundaries.Yk) / 2;
 
-            double PcenterX = _tops.Average(point => point._x);
-            double PcenterY = _tops.Average(point => point._y);
+
+            double PcenterX = (_borders.startP._x + _borders.endP._x) / 2; //_tops.Average(point => point._x);
+            double PcenterY = (_borders.startP._y + _borders.endP._y) / 2; // _tops.Average(point => point._y);
 
             if (PcenterX < centerX)
             {
                 if (PcenterY < centerY)
                 {
-                    foreach (var point in _tops)
+                    if (_borders.startP.IsContainedInArea(quad.getSW()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getSW()._boundaries, false))
+                    {
+                        return quad.getSW();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getSW()._boundaries, false))
                         {
@@ -139,11 +139,11 @@ namespace QuadTree.Structures
 
 
                     //also all points of the polygon needs to be in this quad
-                    return quad.getSW();
+                    return quad.getSW();*/
                 }
                 else
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getNW()._boundaries, false))
                         {
@@ -154,16 +154,24 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getNW();
+                    return quad.getNW();*/
 
-
+                    if (_borders.startP.IsContainedInArea(quad.getNW()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getNW()._boundaries, false))
+                    {
+                        return quad.getNW();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             else
             {
                 if (PcenterY < centerY)
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getSE()._boundaries, false))
                         {
@@ -174,12 +182,21 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getSE();
+                    return quad.getSE();*/
+                    if (_borders.startP.IsContainedInArea(quad.getSE()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getSE()._boundaries, false))
+                    {
+                        return quad.getSE();
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
                 }
                 else
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getNE()._boundaries, false))
                         {
@@ -190,8 +207,17 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getNE();
+                    return quad.getNE();*/
 
+                    if (_borders.startP.IsContainedInArea(quad.getNE()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getNE()._boundaries, false))
+                    {
+                        return quad.getNE();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
@@ -202,7 +228,7 @@ namespace QuadTree.Structures
             {
                 var pointIntersection = false;
                 bool sideIntersection = false;
-                //at least one of the tops
+                /*//at least one of the tops
                 foreach (var t in _tops)
                 {
                     // Check if the vertex is within the quad's boundaries.
@@ -214,12 +240,24 @@ namespace QuadTree.Structures
                         // If any vertex is outside the quad, the polygon is not fully contained.
                         pointIntersection = true;
                     }
-                }
+                }*/
+
+                bool startPointWithinBounds = _borders.startP._x >= boundaries.X0 && _borders.startP._x <= boundaries.Xk &&
+                                                _borders.startP._y >= boundaries.Y0 && _borders.startP._y <= boundaries.Yk;
+
+                bool endPointWithinBounds = _borders.endP._x >= boundaries.X0 && _borders.endP._x <= boundaries.Xk &&
+                                           _borders.endP._y >= boundaries.Y0 && _borders.endP._y <= boundaries.Yk;
+
+                pointIntersection = startPointWithinBounds || endPointWithinBounds;
+
+
 
 
                 //checking the side intersection only applies to rectangles 
-                var top0 = _tops.ElementAt(0);
-                var topK = _tops.ElementAt(1);
+                var top0 = _borders.startP;
+                //var top0 = _tops.ElementAt(0);
+                var topK = _borders.endP;
+                //var topK = _tops.ElementAt(1);
                 sideIntersection = (top0._x < boundaries.Xk && topK._x > boundaries.X0 && top0._y < boundaries.Yk && topK._y > boundaries.Y0) ||
                     (boundaries.X0 < topK._x && boundaries.Xk > top0._x && boundaries.Y0 < topK._y && boundaries.Yk > top0._y);
 
@@ -230,7 +268,7 @@ namespace QuadTree.Structures
             else
             {
 
-                // Assuming you have a list of vertices in your polygon.
+                /*// Assuming you have a list of vertices in your polygon.
                 foreach (var t in _tops)
                 {
                     // Check if the vertex is within the quad's boundaries.
@@ -244,7 +282,17 @@ namespace QuadTree.Structures
                     }
                 }
                 // If all vertices are within the quad, the polygon is contained.
-                return true;
+                return true;*/
+
+
+                bool startPointWithinBounds = _borders.startP._x >= boundaries.X0 && _borders.startP._x <= boundaries.Xk &&
+                                                _borders.startP._y >= boundaries.Y0 && _borders.startP._y <= boundaries.Yk;
+
+                bool endPointWithinBounds = _borders.endP._x >= boundaries.X0 && _borders.endP._x <= boundaries.Xk &&
+                                           _borders.endP._y >= boundaries.Y0 && _borders.endP._y <= boundaries.Yk;
+
+                return startPointWithinBounds && endPointWithinBounds;
+
             }
         }
 
@@ -259,8 +307,8 @@ namespace QuadTree.Structures
             double centerY = quad._northEast._boundaries.Y0;
 
 
-            double PcenterX = _tops.Average(point => point._x);
-            double PcenterY = _tops.Average(point => point._y);
+            double PcenterX = (_borders.startP._x + _borders.endP._x) / 2; //_tops.Average(point => point._x);
+            double PcenterY = (_borders.startP._y + _borders.endP._y) / 2; // _tops.Average(point => point._y);
 
             //double PcenterX =  _tops.Average(point => point._x);
             //double PcenterY = _tops.Average(point => point._y);
@@ -269,7 +317,7 @@ namespace QuadTree.Structures
             {
                 if (PcenterY < centerY)
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getSW()._boundaries, false))
                         {
@@ -281,12 +329,22 @@ namespace QuadTree.Structures
                         }
                     }
                     //also all points of the polygon needs to be in this quad
-                    return quad.getSW();
+                    return quad.getSW();*/
+
+                    if (_borders.startP.IsContainedInArea(quad.getSW()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getSW()._boundaries, false))
+                    {
+                        return quad.getSW();
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
                 }
                 else
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getNW()._boundaries, false))
                         {
@@ -297,15 +355,24 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getNW();
-                    
+                    return quad.getNW();*/
+                    if (_borders.startP.IsContainedInArea(quad.getNW()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getNW()._boundaries, false))
+                    {
+                        return quad.getNW();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 }
             }
             else
             {
                 if (PcenterY < centerY)
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getSE()._boundaries, false))
                         {
@@ -316,13 +383,22 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getSE();
+                    return quad.getSE();*/
+                    if (_borders.startP.IsContainedInArea(quad.getSE()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getSE()._boundaries, false))
+                    {
+                        return quad.getSE();
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
 
                 }
                 else
                 {
-                    foreach (var point in _tops)
+                    /*foreach (var point in _tops)
                     {
                         if (point.IsContainedInArea(quad.getNE()._boundaries, false))
                         {
@@ -333,7 +409,17 @@ namespace QuadTree.Structures
                             return null;
                         }
                     }
-                    return quad.getNE();
+                    return quad.getNE();*/
+
+                    if (_borders.startP.IsContainedInArea(quad.getNE()._boundaries, false) &&
+                        _borders.endP.IsContainedInArea(quad.getNE()._boundaries, false))
+                    {
+                        return quad.getNE();
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
 
                 }

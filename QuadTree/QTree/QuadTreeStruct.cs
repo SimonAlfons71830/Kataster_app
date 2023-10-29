@@ -53,7 +53,7 @@ namespace QuadTree.QTree
             while (true)
             {
                 //if there is any child of the current currentQuad, determine in which childQuad point belongs to
-                //if it is on the borders the subQuad will be null and object will be added to current
+                //if it is on the _borders the subQuad will be null and object will be added to current
                 if (current.getNW() != null)
                 {
                     //find position of the point to the right currentQuad
@@ -130,7 +130,7 @@ namespace QuadTree.QTree
             while (true)
             {
                 //if there is any child of the current currentQuad, determine in which childQuad point belongs to
-                //if it is on the borders the subQuad will be null and object will be added to current
+                //if it is on the _borders the subQuad will be null and object will be added to current
                 if (current.getNW() != null)
                 {
                     //find position of the point to the right currentQuad
