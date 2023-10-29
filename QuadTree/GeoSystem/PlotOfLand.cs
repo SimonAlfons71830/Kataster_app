@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace QuadTree.GeoSystem
 {
-    internal class PlotOfLand
+    internal class PlotOfLand : Polygon
     {
-        private int _registerNumber;
         private string _description;
-        private Tuple<Coordinates, Coordinates> _coordinates;
+        private (Coordinates startPos, Coordinates endPos) _coordinates;
         private List<Property> _properties;
 
-        public PlotOfLand(int registerNumber, string description, Tuple<Coordinates,Coordinates> coordinates, List<Property> properties) 
+        public PlotOfLand(int registerNumber, string description, (Coordinates startPos, Coordinates endPos) coordinates, List<Property> properties) 
+            : base(registerNumber)
         {
             RegisterNumber = registerNumber;
             Description = description;
@@ -24,7 +24,7 @@ namespace QuadTree.GeoSystem
 
         public int RegisterNumber { get => _registerNumber; set => _registerNumber = value; }
         public string Description { get => _description; set => _description = value; }
-        internal Tuple<Coordinates, Coordinates> Coordinates { get => _coordinates; set => _coordinates = value; }
+        internal (Coordinates startPos, Coordinates endPos) Coordinates { get => _coordinates; set => _coordinates = value; }
         internal List<Property> Properties { get => _properties; set => _properties = value; }
     }
 }

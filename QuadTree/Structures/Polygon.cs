@@ -12,6 +12,7 @@ namespace QuadTree.Structures
 {
     public class Polygon: IEquatable<Polygon>, ISpatialObject
     {
+        private (MyPoint startP, MyPoint endP) borders;
         private List<MyPoint> _tops;
         public int _registerNumber { get; set; }
         // Calculate the center (centroid) of the polygon based on its vertices.
@@ -50,9 +51,9 @@ namespace QuadTree.Structures
         }
 
 
-        public Polygon(int id)
+        public Polygon(int registerNumber)
         {
-            _registerNumber = id;
+            _registerNumber = registerNumber;
             _tops = new List<MyPoint>();
         }
 

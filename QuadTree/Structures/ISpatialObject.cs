@@ -13,7 +13,6 @@ namespace QuadTree.Structures
         // Properties that are common to both points and polygons.
         public double _x { get; }
         public double _y { get; }
-        //public (K x, K y) suradnice { get; set; } 
         public int _registerNumber { get; set; }
 
         Quad FindQuad(Quad quad);

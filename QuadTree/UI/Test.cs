@@ -4,7 +4,7 @@ using QuadTree.test;
 
 namespace QuadTree
 {
-    public partial class Form1 : Form
+    public partial class Test : Form
     {
         Pen blkpen = new Pen(Color.FromArgb(255, 0, 155, 0), 1);
         Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 2);
@@ -19,7 +19,7 @@ namespace QuadTree
         int xk;
         int yk;
 
-        public Form1(QTreeTest test)
+        public Test(QTreeTest test)
         {
             InitializeComponent();
             _test = test;
