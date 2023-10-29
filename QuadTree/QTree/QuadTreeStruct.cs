@@ -357,7 +357,8 @@ namespace QuadTree.QTree
             //ak dvaja surodenci obsahuju bod tak ich necham tak
 
             var objectDelete = this.PointSearch(_object);
-
+            List<Quad> pathToObject = new List<Quad>();
+            pathToObject.Add(_root);
             if (objectDelete != null)
             {
                 Quad current = _root;
@@ -372,7 +373,8 @@ namespace QuadTree.QTree
 
                             if (parent != null)
                             {
-                                this.Rejoin(current, parent);
+                                //this.Rejoin(current, parent);
+                                this.RejoinUpdate(pathToObject);
                             }
                             
                             this._objectsCount--;
@@ -382,6 +384,7 @@ namespace QuadTree.QTree
                     //not in the current -> search childQuad
                     parent = current;
                     current = objectDelete.FindQuadUpdate(current);
+                    pathToObject.Add(current);
                 }
                 //notfound
                 return false;
@@ -437,6 +440,62 @@ namespace QuadTree.QTree
                     parent._objects = objectsToReinsert;
                 }
 
+            }
+        }
+
+        public void RejoinUpdate(List<Quad> pathToObject)
+        {
+            while (pathToObject.Count >= 2)
+            {
+                var current = pathToObject.ElementAt(pathToObject.Count-1);
+                var parent = pathToObject.ElementAt(pathToObject.Count - 2);
+
+                //joining of the split quad
+                if (current.getNW() == null)
+                {
+                    //spocitam objekty parentovych potomkov
+                    Queue<Quad> parentQuads = new Queue<Quad>();
+                    parentQuads.Enqueue(parent);
+                    var count = 0;
+                    List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+
+                    while (parentQuads.Count > 0)
+                    {
+
+                        Quad quad = parentQuads.Dequeue();
+                        count += quad._objects.Count;
+                        foreach (var item in quad._objects)
+                        {
+                            objectsToReinsert.Add(item);
+                        }
+
+                        if (quad._southEast != null)
+                        {
+                            parentQuads.Enqueue(quad.getNW());
+                            parentQuads.Enqueue(quad.getSW());
+                            parentQuads.Enqueue(quad.getNE());
+                            parentQuads.Enqueue(quad.getSE());
+                        }
+
+                    }
+                    if (count <= MAX_QUAD_CAPACITY)
+                    {
+                        parent._southWest = null;
+                        parent._northEast = null;
+                        parent._northWest = null;
+                        parent._southEast = null;
+
+                        parent._objects = objectsToReinsert;
+                    }
+
+                    pathToObject.RemoveAt(pathToObject.Count-1);
+                    
+                }
+
+                if (current.getNW() != null)
+                {
+                    break;
+                }
             }
         }
 

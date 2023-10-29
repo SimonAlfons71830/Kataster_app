@@ -54,6 +54,7 @@
             checkBoxInterference = new CheckBox();
             label1 = new Label();
             checkBoxSeed = new CheckBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
@@ -106,7 +107,6 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 11;
-            numericUpDown2.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // numericUpDown3
             // 
@@ -115,7 +115,6 @@
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(150, 27);
             numericUpDown3.TabIndex = 12;
-            numericUpDown3.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // label9
             // 
@@ -197,7 +196,7 @@
             numberOfObjects.Name = "numberOfObjects";
             numberOfObjects.Size = new Size(150, 27);
             numberOfObjects.TabIndex = 116;
-            numberOfObjects.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            numberOfObjects.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // maxDepth
             // 
@@ -215,7 +214,7 @@
             removeCount.Name = "removeCount";
             removeCount.Size = new Size(150, 27);
             removeCount.TabIndex = 121;
-            removeCount.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            removeCount.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // label15
             // 
@@ -308,11 +307,21 @@
             checkBoxSeed.Text = "fixed seed";
             checkBoxSeed.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(364, 233);
+            label4.Name = "label4";
+            label4.Size = new Size(50, 20);
+            label4.TabIndex = 130;
+            label4.Text = "label4";
+            // 
             // Test
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(label4);
             Controls.Add(checkBoxSeed);
             Controls.Add(label1);
             Controls.Add(checkBoxInterference);
@@ -380,5 +389,6 @@
         private CheckBox checkBoxInterference;
         private Label label1;
         private CheckBox checkBoxSeed;
+        private Label label4;
     }
 }
