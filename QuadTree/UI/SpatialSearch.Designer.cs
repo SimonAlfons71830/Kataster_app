@@ -52,6 +52,7 @@
             // StartLongitude
             // 
             StartLongitude.Location = new Point(14, 131);
+            StartLongitude.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             StartLongitude.Name = "StartLongitude";
             StartLongitude.Size = new Size(150, 27);
             StartLongitude.TabIndex = 0;
@@ -59,6 +60,7 @@
             // StartLatitude
             // 
             StartLatitude.Location = new Point(14, 223);
+            StartLatitude.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             StartLatitude.Name = "StartLatitude";
             StartLatitude.Size = new Size(150, 27);
             StartLatitude.TabIndex = 1;
@@ -121,6 +123,7 @@
             // EndLatitude
             // 
             EndLatitude.Location = new Point(205, 223);
+            EndLatitude.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             EndLatitude.Name = "EndLatitude";
             EndLatitude.Size = new Size(150, 27);
             EndLatitude.TabIndex = 7;
@@ -128,6 +131,7 @@
             // EndLongitude
             // 
             EndLongitude.Location = new Point(205, 131);
+            EndLongitude.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             EndLongitude.Name = "EndLongitude";
             EndLongitude.Size = new Size(150, 27);
             EndLongitude.TabIndex = 6;

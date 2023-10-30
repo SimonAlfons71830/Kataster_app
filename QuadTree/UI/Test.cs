@@ -12,7 +12,7 @@ namespace QuadTree
         QTreeTest _test;
         List<ISpatialObject> list = new List<ISpatialObject>();
         List<ISpatialObject> list2 = new List<ISpatialObject>();
-        Random rand = new Random(18);
+        Random rand = new Random();
         int counter = 0;
 
         int x0;
@@ -28,22 +28,22 @@ namespace QuadTree
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*if (checkBoxSeed.Checked)
+            if (checkBoxSeed.Checked)
             {
                 rand = new Random(0);
             }
             else
             {
                 rand = new Random();
-            }*/
+            }
 
-            if (counter == 18)
+            /*if (counter == 11)
             {
                 var pom = 0;
             }
             label4.Text = counter.ToString();
             rand = new Random(counter);
-            counter++;
+            counter++;*/
 
 
             if (radioButtonPoints.Checked || radioButtonPolygons.Checked || radioButtonBoth.Checked)
@@ -241,8 +241,6 @@ namespace QuadTree
                 }
             }
         }
-
-
 
         private void showFailedFind(List<ISpatialObject> failedPoints, PaintEventArgs e)
         {

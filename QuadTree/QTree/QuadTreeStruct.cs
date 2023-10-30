@@ -275,7 +275,7 @@ namespace QuadTree.QTree
             Queue<Quad> quads = new Queue<Quad>();
             //quads.Enqueue(_root);
 
-            if (boundaries.IntersectWith(_root))
+            if (boundaries.IntersectsWithArea(_root._boundaries))
             {
                 quads.Enqueue(_root);
                 while (quads.Count > 0) {
@@ -320,7 +320,7 @@ namespace QuadTree.QTree
             {
                 Quad current = _root;
                 Quad parent = null;
-                while (current != null) 
+                while (current != null)
                 {
                     foreach (var _obj in current._objects)
                     {
@@ -328,7 +328,7 @@ namespace QuadTree.QTree
                         {
                             current._objects.Remove(_obj);
 
-                            this.Rejoin(current,parent);
+                            this.Rejoin(current, parent);
 
                             this._objectsCount--;
                             return true;
@@ -401,7 +401,7 @@ namespace QuadTree.QTree
         /// </summary>
         /// <param name="current"></param>
         /// <param name="parent"></param>
-        public void Rejoin(Quad current, Quad parent) 
+        public void Rejoin(Quad current, Quad parent)
         {
             //joining of the split quad
             if (current.getNW() == null)

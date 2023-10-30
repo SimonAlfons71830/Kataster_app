@@ -169,7 +169,7 @@ namespace QuadTree.test
             //TODO: negenerovat to staitcky
 
             //generate a set of unique ID for objects inserted to the Qtree
-            while (uniqueNumbers.Count < 100000) 
+            /*while (uniqueNumbers.Count < 100000) 
             {
                 int number = random.Next(1, 10000000); // Generate random numbers between 1 and 10,000
 
@@ -179,7 +179,7 @@ namespace QuadTree.test
                 }
             }
             List<int> uniqueNumbersList = uniqueNumbers.ToList();
-
+            */
             for (int i = 0; i < (podielFind + podielRemove + podielInsert); i++)
             {
                 var rozmer = 0;
@@ -195,14 +195,14 @@ namespace QuadTree.test
 
                 if (this.generateOptions == 1)
                 {
-                    availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
+                    availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));// 0uniqueNumbersList.ElementAt(i)));
                 }
                 else if (this.generateOptions == 2)
                 {
                     var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
                     var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
 
-                    var _object = new Polygon(uniqueNumbers.ElementAt(i), (new MyPoint(startPosGen._x,startPosGen._y,startPosGen._registerNumber),new MyPoint(endPosGen._x,endPosGen._y,endPosGen._registerNumber)));
+                    var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x,startPosGen._y,startPosGen._registerNumber),new MyPoint(endPosGen._x,endPosGen._y,endPosGen._registerNumber)));
                    /*// _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
                     //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
                     var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
@@ -221,14 +221,14 @@ namespace QuadTree.test
                     if (chance > 0.5)
                     {
                         //point
-                        availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), uniqueNumbersList.ElementAt(i)));
+                        availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));
                     }
                     else
                     {
                         var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
                         var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
 
-                        var _object = new Polygon(uniqueNumbers.ElementAt(i), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+                        var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
 
                         /*//polygon
                         var _object = new Polygon(uniqueNumbers.ElementAt(i));

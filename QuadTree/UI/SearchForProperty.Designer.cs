@@ -68,6 +68,7 @@
             // numericUpDown1
             // 
             numericUpDown1.Location = new Point(134, 84);
+            numericUpDown1.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(150, 27);
             numericUpDown1.TabIndex = 3;
@@ -75,6 +76,7 @@
             // numericUpDown2
             // 
             numericUpDown2.Location = new Point(134, 160);
+            numericUpDown2.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(150, 27);
             numericUpDown2.TabIndex = 4;

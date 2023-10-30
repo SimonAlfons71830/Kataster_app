@@ -107,7 +107,7 @@ namespace QuadTree.QTree
             return true;
         }
 
-        public bool IntersectWith(Quad quad)
+        /*public bool IntersectWith(Quad quad)
         {
             // Check if any of the 4 points of the polygon are within the quad's boundaries.
             List<MyPoint> points = new List<MyPoint>();
@@ -174,7 +174,7 @@ namespace QuadTree.QTree
 
             // If no vertices or line segments intersect with the quad, the polygon does not intersect with the quad.
             return false;
-        }
+        }*/
 
         public bool IntersectsWithArea(Boundaries area) 
         {
