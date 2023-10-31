@@ -10,9 +10,9 @@ namespace QuadTree.GeoSystem
 {
     public class GeoApp
     {
-        public QuadTreeStruct _area;
+        public MyQuadTree _area;
 
-        public GeoApp(QuadTreeStruct area) 
+        public GeoApp(MyQuadTree area) 
         {
             //ked sa vytvori system, vytvori sa area zo zadanych suradnic od pouzivatela
             //naseeduju sa tu nejake parcely a nehnutelnosti do nich
@@ -22,7 +22,7 @@ namespace QuadTree.GeoSystem
 
         public void AddProperty(int registerNumber, string description, (Coordinates startPos, Coordinates endPos) coordinates)
         {
-            this._area.InsertUpdate(new Property(registerNumber, description, coordinates, new List<PlotOfLand>()));
+            this._area.Insert(new Property(registerNumber, description, coordinates, new List<PlotOfLand>()));
         }
 
         public List<Property> FindPropertiesGPS(Coordinates position) 

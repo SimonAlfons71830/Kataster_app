@@ -49,11 +49,14 @@
             radioButtonPoints = new RadioButton();
             radioButtonPolygons = new RadioButton();
             radioButtonBoth = new RadioButton();
-            label5 = new Label();
             checkBoxDrawing = new CheckBox();
             checkBoxInterference = new CheckBox();
             label1 = new Label();
             checkBoxSeed = new CheckBox();
+            groupBox1 = new GroupBox();
+            radioButtonQtree = new RadioButton();
+            radioButtonMyQtree = new RadioButton();
+            groupBox2 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)heigth_tree).BeginInit();
@@ -61,6 +64,8 @@
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maxDepth).BeginInit();
             ((System.ComponentModel.ISupportInitialize)removeCount).BeginInit();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // label2
@@ -83,7 +88,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(500, 233);
+            button1.Location = new Point(500, 228);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 8;
@@ -128,9 +133,9 @@
             // 
             // QuadPanel
             // 
-            QuadPanel.Location = new Point(711, 24);
+            QuadPanel.Location = new Point(698, 24);
             QuadPanel.Name = "QuadPanel";
-            QuadPanel.Size = new Size(535, 516);
+            QuadPanel.Size = new Size(548, 516);
             QuadPanel.TabIndex = 111;
             QuadPanel.Paint += QuadPanel_Paint;
             // 
@@ -230,7 +235,7 @@
             // 
             radioButtonPoints.AutoSize = true;
             radioButtonPoints.Checked = true;
-            radioButtonPoints.Location = new Point(500, 69);
+            radioButtonPoints.Location = new Point(6, 36);
             radioButtonPoints.Name = "radioButtonPoints";
             radioButtonPoints.Size = new Size(71, 24);
             radioButtonPoints.TabIndex = 122;
@@ -241,7 +246,7 @@
             // radioButtonPolygons
             // 
             radioButtonPolygons.AutoSize = true;
-            radioButtonPolygons.Location = new Point(500, 102);
+            radioButtonPolygons.Location = new Point(6, 72);
             radioButtonPolygons.Name = "radioButtonPolygons";
             radioButtonPolygons.Size = new Size(173, 24);
             radioButtonPolygons.TabIndex = 123;
@@ -251,28 +256,19 @@
             // radioButtonBoth
             // 
             radioButtonBoth.AutoSize = true;
-            radioButtonBoth.Location = new Point(500, 135);
+            radioButtonBoth.Location = new Point(6, 106);
             radioButtonBoth.Name = "radioButtonBoth";
             radioButtonBoth.Size = new Size(61, 24);
             radioButtonBoth.TabIndex = 124;
             radioButtonBoth.Text = "both";
             radioButtonBoth.UseVisualStyleBackColor = true;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(500, 37);
-            label5.Name = "label5";
-            label5.Size = new Size(113, 20);
-            label5.TabIndex = 125;
-            label5.Text = "Objects in quad";
-            // 
             // checkBoxDrawing
             // 
             checkBoxDrawing.AutoSize = true;
             checkBoxDrawing.Checked = true;
             checkBoxDrawing.CheckState = CheckState.Checked;
-            checkBoxDrawing.Location = new Point(500, 203);
+            checkBoxDrawing.Location = new Point(500, 197);
             checkBoxDrawing.Name = "checkBoxDrawing";
             checkBoxDrawing.Size = new Size(74, 24);
             checkBoxDrawing.TabIndex = 126;
@@ -308,19 +304,62 @@
             checkBoxSeed.Text = "fixed seed";
             checkBoxSeed.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(radioButtonBoth);
+            groupBox1.Controls.Add(radioButtonPolygons);
+            groupBox1.Controls.Add(radioButtonPoints);
+            groupBox1.Location = new Point(494, 24);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(182, 148);
+            groupBox1.TabIndex = 133;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Objects in box";
+            // 
+            // radioButtonQtree
+            // 
+            radioButtonQtree.AutoSize = true;
+            radioButtonQtree.Location = new Point(6, 36);
+            radioButtonQtree.Name = "radioButtonQtree";
+            radioButtonQtree.Size = new Size(68, 24);
+            radioButtonQtree.TabIndex = 134;
+            radioButtonQtree.TabStop = true;
+            radioButtonQtree.Text = "QTree";
+            radioButtonQtree.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonMyQtree
+            // 
+            radioButtonMyQtree.AutoSize = true;
+            radioButtonMyQtree.Location = new Point(6, 69);
+            radioButtonMyQtree.Name = "radioButtonMyQtree";
+            radioButtonMyQtree.Size = new Size(87, 24);
+            radioButtonMyQtree.TabIndex = 135;
+            radioButtonMyQtree.TabStop = true;
+            radioButtonMyQtree.Text = "MyQtree";
+            radioButtonMyQtree.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(radioButtonMyQtree);
+            groupBox2.Controls.Add(radioButtonQtree);
+            groupBox2.Location = new Point(360, 24);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(121, 148);
+            groupBox2.TabIndex = 136;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Struct";
+            // 
             // Test
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
             Controls.Add(checkBoxSeed);
             Controls.Add(label1);
             Controls.Add(checkBoxInterference);
             Controls.Add(checkBoxDrawing);
-            Controls.Add(label5);
-            Controls.Add(radioButtonBoth);
-            Controls.Add(radioButtonPolygons);
-            Controls.Add(radioButtonPoints);
             Controls.Add(removeCount);
             Controls.Add(label15);
             Controls.Add(label13);
@@ -349,6 +388,10 @@
             ((System.ComponentModel.ISupportInitialize)numberOfObjects).EndInit();
             ((System.ComponentModel.ISupportInitialize)maxDepth).EndInit();
             ((System.ComponentModel.ISupportInitialize)removeCount).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -375,10 +418,13 @@
         private RadioButton radioButtonPoints;
         private RadioButton radioButtonPolygons;
         private RadioButton radioButtonBoth;
-        private Label label5;
         private CheckBox checkBoxDrawing;
         private CheckBox checkBoxInterference;
         private Label label1;
         private CheckBox checkBoxSeed;
+        private GroupBox groupBox1;
+        private RadioButton radioButtonQtree;
+        private RadioButton radioButtonMyQtree;
+        private GroupBox groupBox2;
     }
 }

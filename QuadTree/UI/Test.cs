@@ -28,6 +28,7 @@ namespace QuadTree
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             if (checkBoxSeed.Checked)
             {
                 rand = new Random(0);
@@ -37,17 +38,17 @@ namespace QuadTree
                 rand = new Random();
             }
 
-            /*if (counter == 11)
-            {
-                var pom = 0;
-            }
-            label4.Text = counter.ToString();
-            rand = new Random(counter);
-            counter++;*/
-
-
             if (radioButtonPoints.Checked || radioButtonPolygons.Checked || radioButtonBoth.Checked)
             {
+                if (radioButtonMyQtree.Checked)
+                {
+                    _test.changeStruct(new MyQuadTree(new Boundaries(0, 0, (double)width_tree.Value, (double)heigth_tree.Value), (int)maxDepth.Value, (int)numberOfObjects.Value));
+                }
+                else
+                {
+                    _test.changeStruct(new QuadTreeStruct(new Boundaries(0, 0, (double)width_tree.Value, (double)heigth_tree.Value), (int)maxDepth.Value, (int)numberOfObjects.Value));
+                }
+
                 if (radioButtonPoints.Checked)
                 {
                     _test.setGeneratingObjects(1);
@@ -75,9 +76,9 @@ namespace QuadTree
                 _test.SetPocetRemove((int)removeCount.Value);
 
                 //_test.SetSeed((int)numericUpDown4.Value);
-                _test.setSizeOfTree((double)width_tree.Value, (double)heigth_tree.Value);
-                _test.setMaxDepth((int)maxDepth.Value);
-                _test.setMaxObjects((int)numberOfObjects.Value);
+                //_test.setSizeOfTree((double)width_tree.Value, (double)heigth_tree.Value);
+                //_test.setMaxDepth((int)maxDepth.Value);
+                //_test.setMaxObjects((int)numberOfObjects.Value);
 
                 _test.TestInsertRemoveFind();
 
@@ -161,7 +162,7 @@ namespace QuadTree
             if (checkBoxDrawing.Checked)
             {
                 this.ClearPanel();
-                this.show(this._test.quadTree.GetRoot(), e);
+                this.show(this._test.quadTree._root, e);
                 this.showIntervalSearch(list, e);
                 //this.showIntervalSearchN(list2, e);
                 this.showFailedFind(_test.failedObj, e);

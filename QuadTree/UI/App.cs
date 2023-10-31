@@ -32,10 +32,10 @@ namespace QuadTree.UI
         {
             //initial seeding
             _app._area._dimension = new QTree.Boundaries(0, 0, 500, 500);
-            _app._area.GetRoot()._boundaries = _app._area._dimension;
+            _app._area._root._boundaries = _app._area._dimension;
             _app._area.MAX_QUAD_CAPACITY = 2;
             _app._area._maxDepth = 10;
-            _app._area.InsertUpdate(new Property(10000, "New Property", ((new Coordinates(20, 20, 0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
+            _app._area.Insert(new Property(10000, "New Property", ((new Coordinates(20, 20, 0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
 
             this.QuadPanel.Invalidate();
         }
@@ -87,7 +87,7 @@ namespace QuadTree.UI
             }
 
             Property property = new Property(registerNumber, description, coordinates, new List<PlotOfLand>());
-            _app._area.InsertUpdate(property);
+            _app._area.Insert(property);
 
             //plnenie zoznamu referencii pri pridani nehnutelnosti
             var pomList = _app._area.IntervalSearch(new Boundaries(property.Coordinates.x.Longitude,property.Coordinates.x.Latitude,property.Coordinates.y.Longitude, property.Coordinates.y.Latitude),true);
@@ -180,7 +180,7 @@ namespace QuadTree.UI
             if (checkBoxDrawing.Checked)
             {
                 this.ClearPanel();
-                this.show(this._app._area.GetRoot(), e);
+                this.show(this._app._area._root, e);
                 this.showIntervalSearch(list, e, coordinatesIS);
                 //this.showFailedFind(_test.failedObj, e);
             }

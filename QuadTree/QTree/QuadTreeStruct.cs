@@ -9,15 +9,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace QuadTree.QTree
 {
-    public class QuadTreeStruct
+    public class QuadTreeStruct: IQuadTree
     {
         public int _maxDepth { get; set; }
         public int _objectsCount { get; set; }
-        public int _objectsSearched = 0;
+        public int _objectsSearched { get; set; }
         public int MAX_QUAD_CAPACITY { get; set; }
         //rectangleF - stores 4 data in float that represents size and location of the rectangle
-        public Boundaries _dimension;
-        private Quad _root;
+        public Boundaries _dimension { get; set; }
+        public Quad _root { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuadTreeStruct"/> class with the specified boundaries and maximum depth.
@@ -124,7 +124,7 @@ namespace QuadTree.QTree
             return new MyPoint(midX, midY, -1);
         }
 
-        public void InsertUpdate(ISpatialObject spatialObject)
+        /*public void InsertUpdate(ISpatialObject spatialObject)
         {
             Quad current = _root;
             while (true)
@@ -175,7 +175,7 @@ namespace QuadTree.QTree
                 }
                 break;
             }
-        }
+        }*/
 
         /// <summary>
         /// Searches for a specific object within the quadtree based on its location.
@@ -232,7 +232,8 @@ namespace QuadTree.QTree
             quadsQ.Enqueue(_root);
 
 
-            while (quadsQ.Count > 0) { 
+            while (quadsQ.Count > 0)
+            {
                 Quad current = quadsQ.Dequeue();
 
                 if (boundaries.IntersectsWithArea(current._boundaries))
@@ -246,7 +247,7 @@ namespace QuadTree.QTree
                         }
                     }
 
-                    if (current.getNE()!= null)
+                    if (current.getNE() != null)
                     {
                         quadsQ.Enqueue(current.getNE());
                         quadsQ.Enqueue(current.getNW());
@@ -348,7 +349,7 @@ namespace QuadTree.QTree
 
         }
 
-        public bool RemoveObjectUpdate(ISpatialObject _object)
+        /*public bool RemoveObjectUpdate(ISpatialObject _object)
         {
             //find object
             //if quad that would containd P is empty return null
@@ -394,7 +395,7 @@ namespace QuadTree.QTree
                 return false;
             }
 
-        }
+        }*/
 
         /// <summary>
         /// Rejoining the split of the child quad if the conditions are met.
@@ -413,7 +414,6 @@ namespace QuadTree.QTree
 
                 while (parentQuads.Count > 0)
                 {
-
                     Quad quad = parentQuads.Dequeue();
                     count += quad._objects.Count;
                     foreach (var item in quad._objects)
@@ -428,7 +428,6 @@ namespace QuadTree.QTree
                         parentQuads.Enqueue(quad.getNE());
                         parentQuads.Enqueue(quad.getSE());
                     }
-
                 }
                 if (count <= MAX_QUAD_CAPACITY)
                 {
@@ -443,7 +442,7 @@ namespace QuadTree.QTree
             }
         }
 
-        public void RejoinUpdate(List<Quad> pathToObject)
+        /*public void RejoinUpdate(List<Quad> pathToObject)
         {
             while (pathToObject.Count >= 2)
             {
@@ -497,7 +496,7 @@ namespace QuadTree.QTree
                     break;
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// creates a new Root
@@ -510,7 +509,5 @@ namespace QuadTree.QTree
             _objectsCount = 0;
             _objectsSearched = 0;
         }
-
     }
-    
 }

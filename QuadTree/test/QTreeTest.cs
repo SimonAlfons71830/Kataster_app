@@ -34,7 +34,7 @@ namespace QuadTree.test
 
         public int generateOptions = 1; //1 - points 2 - polygons 3 - both
 
-        public QuadTreeStruct quadTree = new QuadTreeStruct(new Boundaries(0.0,0.0, 100.0,100.0),10,1);
+        public IQuadTree quadTree = new MyQuadTree(new Boundaries(0.0,0.0, 100.0,100.0),10,1);
         List<ISpatialObject> availableObjects = new List<ISpatialObject>();
         List<ISpatialObject> usedKeys = new List<ISpatialObject>();
         HashSet<int> uniqueNumbers = new HashSet<int>();
@@ -45,6 +45,12 @@ namespace QuadTree.test
         public int failed = 0;
 
         private static Random random = new Random(0);
+
+        public void changeStruct(IQuadTree selected_struct)
+        {
+            quadTree = selected_struct;
+        }
+
 
         public void TestInsertRemoveFind()
         {
@@ -82,7 +88,7 @@ namespace QuadTree.test
             ISpatialObject insertPoint = availableObjects[insertIndex];
             
             //quadTree.Insert(insertPoint);
-            quadTree.InsertUpdate(insertPoint);
+            quadTree.Insert(insertPoint);
             if (oldSize + 1 == this.quadTree._objectsCount)
             {
                 passedInsert++;
@@ -140,7 +146,7 @@ namespace QuadTree.test
             var exists = quadTree.PointSearch(removeObj);
             if (exists != null)
             {
-                var boolDel = quadTree.RemoveObjectUpdate(removeObj);
+                var boolDel = quadTree.RemoveObject(removeObj);
                 if (boolDel)
                 {
                     passedRemove++;
@@ -281,7 +287,7 @@ namespace QuadTree.test
                     }
                 }
                 
-                quadTree.InsertUpdate(_object);
+                quadTree.Insert(_object);
 
                 usedKeys.Add(_object);
                 availableObjects.RemoveAt(index);
@@ -406,7 +412,7 @@ namespace QuadTree.test
             this.passed = 0;
             this.failed = 0;
 
-            quadTree.ResetTree(quadTree.GetRoot());
+            quadTree.ResetTree(quadTree._root);
             failedObj = new List<ISpatialObject>();
 
 
