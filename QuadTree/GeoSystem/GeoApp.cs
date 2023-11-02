@@ -25,16 +25,22 @@ namespace QuadTree.GeoSystem
             this._area.Insert(new Property(registerNumber, description, coordinates, new List<PlotOfLand>()));
         }
 
-        public List<Property> FindPropertiesGPS(Coordinates position) 
+        public void AddPlot(int registerNumber, string description, (Coordinates startPos, Coordinates endPos) coordinates) 
         {
-            var listOfProp = new List<Property>();
-
-
-
-            return listOfProp;
+            this._area.Insert(new PlotOfLand(registerNumber, description, coordinates, new List<Property>()));
         }
 
-        public List<Property> FindPropertiesInterval((Coordinates startPos, Coordinates endPos) coordinates, bool interfere) 
+        public List<Polygon> FindInterval((Coordinates startPos, Coordinates endPos) coordinates) 
+        {
+            var listOfObj = _area.IntervalSearch(new Boundaries(coordinates.startPos.Longitude,coordinates.startPos.Latitude,
+                coordinates.endPos.Longitude, coordinates.endPos.Latitude) , true);
+
+            var returnList = listOfObj.OfType<Polygon>().ToList();
+
+            return returnList;
+        }
+
+        /*public List<Property> FindPropertiesInterval((Coordinates startPos, Coordinates endPos) coordinates, bool interfere) 
         {
             var foundObjects = new List<ISpatialObject>();
 
@@ -44,5 +50,35 @@ namespace QuadTree.GeoSystem
 
             return listOfProperties;
         }
+
+        public List<PlotOfLand> FindPlotsInterval((Coordinates startPos, Coordinates endPos) coordinates, bool interfere)
+        {
+            var foundObjects = new List<ISpatialObject>();
+
+            foundObjects = this._area.IntervalSearch(new Boundaries(coordinates.startPos.Longitude, coordinates.startPos.Latitude, coordinates.endPos.Longitude, coordinates.endPos.Latitude), interfere);
+            // Filter and cast the found objects to Property type
+            var listOfPlots = foundObjects.OfType<PlotOfLand>().ToList();
+
+            return listOfPlots;
+        }*/
+
+        public List<Polygon> FindOBJInterval((Coordinates startPos, Coordinates endPos) coordinates, bool interfere, bool properties)
+        {
+            var foundObjects = new List<ISpatialObject>();
+
+            foundObjects = this._area.IntervalSearch(new Boundaries(coordinates.startPos.Longitude, coordinates.startPos.Latitude, coordinates.endPos.Longitude, coordinates.endPos.Latitude), interfere);
+
+            if (properties)
+            {
+                var listOfProperties = foundObjects.OfType<Property>().Cast<Polygon>().ToList();
+                return listOfProperties;
+            }
+            else
+            {
+                var listOfPlots = foundObjects.OfType<PlotOfLand>().Cast<Polygon>().ToList();
+                return listOfPlots;
+            }
+        }
+
     }
 }

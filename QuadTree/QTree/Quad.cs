@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using QuadTree.Structures;
 
 namespace QuadTree.QTree
@@ -60,11 +61,11 @@ namespace QuadTree.QTree
         /// - South-West (Bottom-left) Quadrant
         /// </remarks>
         public void splitQuad() {
-            level++;
-            _northWest = new Quad(new Boundaries(_boundaries.X0, (_boundaries.Y0 + _boundaries.Yk) /2, (_boundaries.Xk + _boundaries.X0) /2 , _boundaries.Yk),level);
-            _northEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2, _boundaries.Xk,_boundaries.Yk), level);
-            _southEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2,_boundaries.Y0,_boundaries.Xk, (_boundaries.Yk + _boundaries.Y0) / 2), level);
-            _southWest = new Quad(new Boundaries(_boundaries.X0,_boundaries.Y0, (_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2), level);
+            int pom = level + 1;
+            _northWest = new Quad(new Boundaries(_boundaries.X0, (_boundaries.Y0 + _boundaries.Yk) /2, (_boundaries.Xk + _boundaries.X0) /2 , _boundaries.Yk),pom);
+            _northEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2, _boundaries.Xk,_boundaries.Yk), pom);
+            _southEast = new Quad(new Boundaries((_boundaries.Xk + _boundaries.X0) / 2,_boundaries.Y0,_boundaries.Xk, (_boundaries.Yk + _boundaries.Y0) / 2), pom);
+            _southWest = new Quad(new Boundaries(_boundaries.X0,_boundaries.Y0, (_boundaries.Xk + _boundaries.X0) / 2, (_boundaries.Yk + _boundaries.Y0) / 2), pom);
 
         }
 

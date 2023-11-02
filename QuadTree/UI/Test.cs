@@ -1,6 +1,9 @@
+using QuadTree.GeoSystem;
 using QuadTree.QTree;
 using QuadTree.Structures;
 using QuadTree.test;
+using QuadTree.UI;
+using System.Xml.Schema;
 
 namespace QuadTree
 {
@@ -15,15 +18,18 @@ namespace QuadTree
         Random rand = new Random();
         int counter = 0;
 
+        GeoApp _app;
+
         int x0;
         int y0;
         int xk;
         int yk;
 
-        public Test(QTreeTest test)
+        public Test(QTreeTest test, GeoApp app)
         {
             InitializeComponent();
             _test = test;
+            _app = app;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -256,6 +262,19 @@ namespace QuadTree
 
         }
 
+        private void setNewDepthButton_Click(object sender, EventArgs e)
+        {
+            _test.quadTree.SetNewDepth((int)maxDepth.Value);
+            _test.quadTree._maxDepth = (int)maxDepth.Value;
+            this.QuadPanel.Invalidate();
+        }
 
+        private void appbutton_Click(object sender, EventArgs e)
+        {
+            var appForm = new App(_test, _app);
+            this.Hide();
+            appForm.ShowDialog();
+
+        }
     }
 }

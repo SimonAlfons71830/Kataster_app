@@ -2,6 +2,7 @@ using QuadTree.GeoSystem;
 using QuadTree.QTree;
 using QuadTree.Structures;
 using QuadTree.test;
+using QuadTree.UI;
 using StackExchange.Profiling;
 using System.Diagnostics;
 
@@ -21,8 +22,8 @@ namespace QuadTree
             ApplicationConfiguration.Initialize();
             var test = new QTreeTest();
             var app = new GeoApp(new MyQuadTree(new Boundaries(0,0,0,0),0,0));
-            Application.Run(new Menu(test,app));
-
+            Application.Run(new Test(test,app));
+            //Application.Run(new GUI());
             
 
         }

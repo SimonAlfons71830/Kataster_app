@@ -23,5 +23,7 @@ namespace QuadTree.QTree
         public bool RemoveObject(ISpatialObject _object);
         public void ResetTree(Quad quad);
         public List<ISpatialObject> IntervalSearchN(Boundaries boundaries, bool interfere);
+        public void SetNewDepth(int newDepth);
+
     }
 }

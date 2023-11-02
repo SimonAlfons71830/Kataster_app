@@ -18,6 +18,7 @@ namespace QuadTree.QTree
         //rectangleF - stores 4 data in float that represents size and location of the rectangle
         public Boundaries _dimension { get; set; }
         public Quad _root { get; set; }
+        private int maxDepth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuadTreeStruct"/> class with the specified boundaries and maximum depth.
@@ -30,6 +31,7 @@ namespace QuadTree.QTree
             MAX_QUAD_CAPACITY = maxQuadCapacity;
             _dimension = dimension;
             _root = new Quad(_dimension,0);
+            maxDepth = 0;
         }
 
         /// <summary>
@@ -74,6 +76,13 @@ namespace QuadTree.QTree
                 while (NeedToSplit(current))
                 {
                     current.splitQuad();
+                    
+                    //pom
+                    if (current._northEast.level > maxDepth)
+                    {
+                        maxDepth = current._northEast.level;
+                    }
+
                     //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
                     Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(current._objects);
                     current._objects.Clear();
@@ -508,6 +517,121 @@ namespace QuadTree.QTree
             _root = new Quad(pom._boundaries,0);
             _objectsCount = 0;
             _objectsSearched = 0;
+        }
+
+        public void SetNewDepth(int newDepth)
+        {
+            //int maxDepth;
+            //Queue<Quad> quadsAtMaxDepth = GetQuadsAtMaxDepth(out maxDepth);
+
+            if (newDepth > maxDepth)
+            {
+                var list = GetQuadsAtDepth(maxDepth);
+                //tree has to grow
+                this.Grow(list, newDepth);
+            }
+            else
+            {
+                var quadsToShrink = this.GetQuadsAtDepth(newDepth);
+                //tree has to shrink
+                this.Shrink(quadsToShrink);
+            }
+            //else the depth stays the same
+        }
+
+        public Queue<Quad> GetQuadsAtDepth(int targetDepth)
+        {
+            Queue<Quad> allQuads = new Queue<Quad>();
+            Queue<Quad> quadQueue = new Queue<Quad>();
+
+            // Start from the root Quad
+            quadQueue.Enqueue(_root);
+
+            while (quadQueue.Count > 0)
+            {
+                // Dequeue the current Quad
+                Quad currentQuad = quadQueue.Dequeue();
+
+                // Check if the current Quad has the desired level
+                if (currentQuad.level == targetDepth)
+                {
+                    allQuads.Enqueue(currentQuad);
+                }
+
+                // Enqueue child quads if they exist
+                if (currentQuad.getNE() != null)
+                {
+                    quadQueue.Enqueue(currentQuad.getNE());
+                    quadQueue.Enqueue(currentQuad.getNW());
+                    quadQueue.Enqueue(currentQuad.getSW());
+                    quadQueue.Enqueue(currentQuad.getSE());
+                }
+            }
+
+            return allQuads;
+        }
+
+        public void Grow(Queue<Quad> growingQuads, int desiredDepth) 
+        {
+            while (growingQuads.Count > 0)
+            {
+                Quad current = growingQuads.Dequeue();
+                if (current._objects.Count > 0)
+                {
+                    //if it has to grow i just need to take the quads from list that has the same level as the newDepth and split them until the level is reached
+                    current.splitQuad();
+                    //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
+                    Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(current._objects);
+                    current._objects.Clear();
+                    //pom to remember the last point's quad
+                    var pomC = current;
+
+                    while (reinsertObjects.Count > 0)
+                    {
+                        //find the right quad for objects
+                        var rObject = reinsertObjects.Dequeue();
+                        Quad? rQuad = rObject.FindQuad(current);
+
+                        (rQuad ?? current)._objects.Add(rObject);
+
+                        pomC = rQuad;
+                        if (rQuad != null)
+                        {
+                            if (rQuad._objects.Count != 0 && rQuad.level < desiredDepth)
+                            {
+                                growingQuads.Enqueue(rQuad);
+                            }
+                            //otherwise we do not have to split more
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public void Shrink(Queue<Quad> shrinkingQuads) 
+        {
+            //if there is shrinking i need to take the all quads that has same or smaller level as newdepth and call rejoin method
+            while (shrinkingQuads.Count > 0) {
+                Quad current = shrinkingQuads.Dequeue();
+
+                //ak vsetky deti currenta su leaves - > rejoin
+                //inak tie ktore niesu leaves musim queuenut
+                if (current._northWest != null) //is leaf
+                {
+                    shrinkingQuads.Enqueue(current._northWest);
+                    shrinkingQuads.Enqueue(current._northEast);
+                    shrinkingQuads.Enqueue(current._southEast);
+                    shrinkingQuads.Enqueue(current._southWest);
+                }
+                else
+                {
+
+                    //Rejoin(current._northWest, current);
+                }
+
+            }
+
         }
     }
 }

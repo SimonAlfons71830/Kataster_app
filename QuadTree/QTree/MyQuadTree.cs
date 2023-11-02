@@ -316,5 +316,10 @@ namespace QuadTree.QTree
             _objectsCount = 0;
             _objectsSearched = 0;
         }
+
+        public void SetNewDepth(int newDepth)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
