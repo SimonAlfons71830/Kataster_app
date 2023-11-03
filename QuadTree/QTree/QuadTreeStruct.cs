@@ -324,8 +324,17 @@ namespace QuadTree.QTree
             //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
             //ak dvaja surodenci obsahuju bod tak ich necham tak
 
-            var objectDelete = this.PointSearch(_object);
+            var listOfObjectsOnThePositions = this.IntervalSearch(new Boundaries(_object._x, _object._y, _object._x, _object._y),true);
+            ISpatialObject objectDelete = null;
 
+            foreach (var _item in listOfObjectsOnThePositions) 
+            {
+                if (_item.Equals(_object))
+                {
+                    objectDelete = _item;
+                    break;
+                }
+            }
             if (objectDelete != null)
             {
                 Quad current = _root;

@@ -9,9 +9,9 @@ namespace QuadTree.GeoSystem
 {
     public class PlotOfLand : Polygon
     {
-        private string _description;
-        private (Coordinates startPos, Coordinates endPos) _coordinates;
-        private List<Property> _properties;
+        public string _description;
+        public (Coordinates startPos, Coordinates endPos) _coordinates;
+        public List<Property> _properties;
 
         public PlotOfLand(int registerNumber, string description, (Coordinates startPos, Coordinates endPos) coordinates, List<Property> properties) 
             : base(registerNumber, coordinates)
