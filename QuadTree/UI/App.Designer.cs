@@ -92,7 +92,8 @@
             PlotAddBtn = new Button();
             label18 = new Label();
             panelDelete = new Panel();
-            datagridOBJ = new DataGridView();
+            dataGridObj = new DataGridView();
+            showBtn = new Button();
             deleteBtn = new Button();
             label27 = new Label();
             menupanel.SuspendLayout();
@@ -118,7 +119,7 @@
             ((System.ComponentModel.ISupportInitialize)startPosPlotLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosPlotLong).BeginInit();
             panelDelete.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)datagridOBJ).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridObj).BeginInit();
             SuspendLayout();
             // 
             // QuadPanel
@@ -756,7 +757,8 @@
             // panelDelete
             // 
             panelDelete.BackColor = Color.DarkSalmon;
-            panelDelete.Controls.Add(datagridOBJ);
+            panelDelete.Controls.Add(dataGridObj);
+            panelDelete.Controls.Add(showBtn);
             panelDelete.Controls.Add(deleteBtn);
             panelDelete.Controls.Add(label27);
             panelDelete.Location = new Point(191, 0);
@@ -764,20 +766,29 @@
             panelDelete.Size = new Size(310, 679);
             panelDelete.TabIndex = 145;
             // 
-            // datagridOBJ
+            // dataGridObj
             // 
-            datagridOBJ.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            datagridOBJ.Location = new Point(17, 70);
-            datagridOBJ.Name = "datagridOBJ";
-            datagridOBJ.RowHeadersWidth = 51;
-            datagridOBJ.RowTemplate.Height = 29;
-            datagridOBJ.Size = new Size(268, 494);
-            datagridOBJ.TabIndex = 6;
-            datagridOBJ.CellContentClick += datagridOBJ_CellContentClick;
+            dataGridObj.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridObj.Location = new Point(17, 81);
+            dataGridObj.Name = "dataGridObj";
+            dataGridObj.RowHeadersWidth = 51;
+            dataGridObj.RowTemplate.Height = 29;
+            dataGridObj.Size = new Size(274, 425);
+            dataGridObj.TabIndex = 8;
+            // 
+            // showBtn
+            // 
+            showBtn.Location = new Point(36, 537);
+            showBtn.Name = "showBtn";
+            showBtn.Size = new Size(222, 58);
+            showBtn.TabIndex = 7;
+            showBtn.Text = "SHOW";
+            showBtn.UseVisualStyleBackColor = true;
+            showBtn.Click += showBtn_Click;
             // 
             // deleteBtn
             // 
-            deleteBtn.Location = new Point(40, 579);
+            deleteBtn.Location = new Point(36, 609);
             deleteBtn.Name = "deleteBtn";
             deleteBtn.Size = new Size(222, 58);
             deleteBtn.TabIndex = 5;
@@ -793,7 +804,6 @@
             label27.Size = new Size(59, 20);
             label27.TabIndex = 0;
             label27.Text = "DELETE";
-            label27.Click += label27_Click;
             // 
             // App
             // 
@@ -844,7 +854,7 @@
             ((System.ComponentModel.ISupportInitialize)startPosPlotLong).EndInit();
             panelDelete.ResumeLayout(false);
             panelDelete.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)datagridOBJ).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridObj).EndInit();
             ResumeLayout(false);
         }
 
@@ -929,6 +939,7 @@
         private NumericUpDown numericUpDown4;
         private Button deleteBtn;
         private Label label27;
-        private DataGridView datagridOBJ;
+        private Button showBtn;
+        private DataGridView dataGridObj;
     }
 }

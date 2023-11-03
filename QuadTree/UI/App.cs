@@ -20,6 +20,8 @@ namespace QuadTree.UI
         List<Polygon> list = new List<Polygon>();
         Polygon selectedObject;
 
+        private System.Data.DataTable dataObjToRemove = new System.Data.DataTable();
+
 
         (Coordinates start, Coordinates end) coordinatesIS = (new Coordinates(0, 0, 0), new Coordinates(0, 0, 0));
 
@@ -52,38 +54,15 @@ namespace QuadTree.UI
             panelAddPlot.Hide();
             panelDelete.Hide();
 
+            dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
+            dataObjToRemove.Columns.Add("S_x", typeof(int));
+            dataObjToRemove.Columns.Add("S_y", typeof(int));
+            dataObjToRemove.Columns.Add("E_x", typeof(int));
+            dataObjToRemove.Columns.Add("E_y", typeof(int));
+            dataObjToRemove.Columns.Add("Type");
+
             this.QuadPanel.Invalidate();
         }
-
-        /*private void button3_Click(object sender, EventArgs e)
-        {
-            using (SpatialSearch spatialForm = new SpatialSearch())
-            {
-                if (spatialForm.ShowDialog() == DialogResult.OK)
-                {
-                    coordinatesIS = (new Coordinates(spatialForm.StartLongitudeValue, spatialForm.StartLatitudeValue, 0),
-                        new Coordinates(spatialForm.EndLongitudeValue, spatialForm.EndLatitudeValue, 0));
-
-                }
-            }
-
-            gpsLabel.Text = "<" + coordinatesIS.start.Longitude + ", " + coordinatesIS.start.Latitude + ">" + "<" + coordinatesIS.end.Longitude + ", " + coordinatesIS.end.Latitude + ">";
-
-            list = _app.FindPropertiesInterval(coordinatesIS, true); //zasahuju -> true
-
-            listView1.Clear();
-            foreach (var property in list)
-            {
-                var listViewItem = new ListViewItem(property.RegisterNumber.ToString());
-                listViewItem.SubItems.Add(property.Description);
-                listViewItem.SubItems.Add(property.Coordinates.x.ToString());
-                listViewItem.SubItems.Add(property.Coordinates.y.ToString());
-                listView1.Items.Add(listViewItem);
-            }
-
-            this.QuadPanel.Invalidate();
-
-        }*/
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -164,6 +143,12 @@ namespace QuadTree.UI
 
             }
         }
+
+        private void showWantToDelete(Polygon obj) 
+        { 
+            //zvyraznit    
+        }
+
 
         private void showIntervalSearch(List<Polygon> properties, PaintEventArgs e, (Coordinates start, Coordinates end) rectangleSearch)
         {
@@ -370,11 +355,6 @@ namespace QuadTree.UI
             panelAddPlot.Show();
         }
 
-        private void label27_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void deletePropButton_Click(object sender, EventArgs e)
         {
             panelSearchForProp.Hide();
@@ -384,7 +364,32 @@ namespace QuadTree.UI
             //naplnit datagrid objektami
             var list = _app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
                 new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0)));
-            datagridOBJ.DataSource = list;
+            dataObjToRemove.Rows.Clear();
+            foreach (var item in list)
+            {
+                DataRow row = dataObjToRemove.NewRow();
+                row[0] = item._registerNumber;
+                if (item is Property)
+                {
+                    row[1] = ((Property)item).Coordinates.x._x;
+                    row[2] = ((Property)item).Coordinates.x._y;
+                    row[3] = ((Property)item).Coordinates.y._x;
+                    row[4] = ((Property)item).Coordinates.y._y;
+                    //QuadTree.GeoSystem.Property
+                    row[5] = ((Property)item).GetType().ToString().Substring(19,8);
+                }
+                else
+                {
+                    row[1] = ((PlotOfLand)item).Coordinates.startPos._x;
+                    row[2] = ((PlotOfLand)item).Coordinates.startPos._y;
+                    row[3] = ((PlotOfLand)item).Coordinates.endPos._x;
+                    row[4] = ((PlotOfLand)item).Coordinates.endPos._y;
+                    row[5] = item.GetType().ToString().Substring(19,10);
+                }
+                dataObjToRemove.Rows.Add(row);
+            }
+
+            dataGridObj.DataSource = dataObjToRemove;
 
             panelDelete.Show();
 
@@ -392,49 +397,36 @@ namespace QuadTree.UI
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            // Attach the cell click event handler.
-            if (datagridOBJ.SelectedRows.Count > 0)
-            {
-                // Get the selected row(s) from the DataGridView.
-                foreach (DataGridViewRow row in datagridOBJ.SelectedRows)
-                {
-                    // Access the data from the selected row. Adjust column indexes based on your DataGridView's structure.
-                   
-                    var id = row.Cells[0].Value.ToString();
-                    var x_true = int.TryParse(row.Cells[1].Value.ToString(), out int x);
-                    var y_true = int.TryParse(row.Cells[2].Value.ToString(), out int y);
-
-                    
-                    // Access other columns as needed.
-
-                    // Now you have the data from the selected row.
-                    // You can perform deletion or other actions with this data.
-                }
-            }
+            
 
         }
 
-        private void datagridOBJ_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void showBtn_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
+            var numberInGrid = dataGridObj.SelectedCells.Count;
+            // Attach the cell click event handler.
+            if (dataGridObj.SelectedCells.Count > 0) //at least 1 cell is selected
             {
-                DataGridViewRow selectedRow = datagridOBJ.Rows[e.RowIndex];
+                //which row is selected
+                //get the obj in that row
+                var obj = dataGridObj.SelectedRows[0];
 
-                // Access the data from the selected row. Adjust column indexes based on your DataGridView's structure.
-                var id = selectedRow.Cells[0].Value.ToString();
-                var x_true = int.TryParse(selectedRow.Cells[1].Value.ToString(), out int x);
-                var y_true = int.TryParse(selectedRow.Cells[2].Value.ToString(), out int y);
-                // Access other columns as needed.
+                int regNum = (int)obj.Cells[0].Value; //id
+                int startX = (int)obj.Cells[1].Value; //startPos x
+                int startY = (int)obj.Cells[2].Value;
+                int endX = (int)obj.Cells[3].Value;
+                int endY = (int)obj.Cells[4].Value;
 
-                // Now you have access to the data from the clicked row (object).
-                // You can perform actions with this data as needed.
-                // For example, you can pass it to your quad tree for drawing or other actions.
-                //_app.(id, description);
-                //DRAW THE CLICKED OBJECT
-                list = _app.FindOBJInterval((new Coordinates(x, y, 0), new Coordinates(x, y, 0)), true, true);
-                this.QuadPanel.Invalidate();
+                if (obj.Cells[5].Value.Equals("Property"))
+                {
+                    //showToRemove(sender, (PaintEventArgs)e, startX, startY, endX, endY);
+                }
             }
+        }
 
+        private void showToRemove(object sender, PaintEventArgs e, int x0, int y0, int xk, int yk) 
+        {
+            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 0), 2), x0, y0, xk - x0, yk - y0);
         }
     }
 }
