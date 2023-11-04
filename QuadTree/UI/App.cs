@@ -98,6 +98,14 @@ namespace QuadTree.UI
             //naplnit datagrid objektami
             var list = _app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
                 new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0)));
+
+            this.redoGrids(list);
+
+            this.QuadPanel.Invalidate();
+        }
+
+        private void redoGrids(List<Polygon> list) 
+        {
             dataObjToRemove.Rows.Clear();
             foreach (var item in list)
             {
@@ -125,9 +133,8 @@ namespace QuadTree.UI
 
             dataGridObj.DataSource = dataObjToRemove;
             dataGridObj2.DataSource = dataObjToRemove;
-
-            this.QuadPanel.Invalidate();
         }
+
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -785,7 +792,12 @@ namespace QuadTree.UI
         {
             wasSeeded = true;
             _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, (int)CountNo.Value, (int)DepthNo.Value);
+            this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
+                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));
             panelSeedApp.Hide();
+
+
+
             this.QuadPanel.Invalidate();
         }
 
@@ -801,7 +813,8 @@ namespace QuadTree.UI
         {
             
             this._app.ChangeDepth((int)newDepthNum.Value);
-            
+            this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
+                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));
             panelDepth.Hide();
             this.QuadPanel.Invalidate();
         }
