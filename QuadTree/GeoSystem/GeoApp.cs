@@ -87,6 +87,30 @@ namespace QuadTree.GeoSystem
             }
         }
 
+        public List<string> LoadLandNames(string filePath)
+        {
+            List<string> landNames = new List<string>();
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        landNames.Add(line);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+
+            return landNames;
+        }
+
+
         public void seedApp(int widthOfTree, int lengthOfTree, int numberOfProp, int numberOfPlot, int max_quad_cap, int max_depth) 
         {
             _area.ResetTree(_area._root);
@@ -98,13 +122,18 @@ namespace QuadTree.GeoSystem
             _area.MAX_QUAD_CAPACITY = max_quad_cap;
             _area._maxDepth = max_depth;
 
+            var listofPropertyNames = this.LoadLandNames("PropNames.txt");
+            var listofPlotNames = this.LoadLandNames("PlotNames.txt");
+
             for (int i = 0; i < numberOfProp; i++)
             {
                 //nechat ako double ???
                 double startPosX = _random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk);
                 double startPosY = _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk);
 
-                this.AddProperty(i, "This is Property description.", (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));
+                string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count-1));
+
+                this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));
             }
 
             for (int i = 0; i < numberOfPlot; i++)
@@ -122,9 +151,11 @@ namespace QuadTree.GeoSystem
                 var startPosGen = new MyPoint(_random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk - rozmer), _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk - rozmer), _random.Next(1000000));
                 var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, _random.Next(100000));
 
-               // var _object = new Polygon(_random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+                string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
 
-                this.AddPlot(numberOfProp + i, "This is Plot description.", (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
+                // var _object = new Polygon(_random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+
+                this.AddPlot(numberOfProp + i, desc , (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
 
             }
 

@@ -449,41 +449,46 @@ namespace QuadTree.UI
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            // Get the first selected row (if you allow multiple selections, you may iterate through them).
-            DataGridViewRow selectedRow = dataGridObj.SelectedRows[0];
-
-            // Access data from specific cells within the selected row.
-            var regNumb = selectedRow.Cells[0].Value;
-            var startPosX = selectedRow.Cells[1].Value;
-            var startPosY = selectedRow.Cells[2].Value;
-            var endPosX = selectedRow.Cells[3].Value;
-            var endPosY = selectedRow.Cells[4].Value;
-            var typeOfObj = selectedRow.Cells[5].Value.ToString();
-
-
-            if (typeOfObj.Equals("Property"))
+            if (dataGridObj.SelectedRows.Count > 0 )
             {
-                if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
+
+
+                // Get the first selected row (if you allow multiple selections, you may iterate through them).
+                DataGridViewRow selectedRow = dataGridObj.SelectedRows[0];
+
+                // Access data from specific cells within the selected row.
+                var regNumb = selectedRow.Cells[0].Value;
+                var startPosX = selectedRow.Cells[1].Value;
+                var startPosY = selectedRow.Cells[2].Value;
+                var endPosX = selectedRow.Cells[3].Value;
+                var endPosY = selectedRow.Cells[4].Value;
+                var typeOfObj = selectedRow.Cells[5].Value.ToString();
+
+
+                if (typeOfObj.Equals("Property"))
                 {
-                    //remove from grid
-                    dataGridObj.Rows.Remove(selectedRow);
-                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-                    //dataGridObj2.Rows.Remove(selectedRow);
+                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
+                    {
+                        //remove from grid
+                        dataGridObj.Rows.Remove(selectedRow);
+                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                        //dataGridObj2.Rows.Remove(selectedRow);
+                    }
+
+                }
+                else
+                {
+                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
+                    {
+                        //removefrom grid
+                        dataGridObj.Rows.Remove(selectedRow);
+                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                        //dataGridObj2.Rows.Remove(selectedRow);
+                    }
                 }
 
+                this.QuadPanel.Invalidate();
             }
-            else
-            {
-                if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
-                {
-                    //removefrom grid
-                    dataGridObj.Rows.Remove(selectedRow);
-                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-                    //dataGridObj2.Rows.Remove(selectedRow);
-                }
-            }
-
-            this.QuadPanel.Invalidate();
 
         }
 
@@ -554,68 +559,71 @@ namespace QuadTree.UI
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            // Get the first selected row (if you allow multiple selections, you may iterate through them).
-            DataGridViewRow selectedRow = dataGridObj2.SelectedRows[0];
-            selectedRowProp = selectedRow;
-
-            // Access data from specific cells within the selected row.
-            var regNumb = selectedRow.Cells[0].Value;
-            var startPosX = selectedRow.Cells[1].Value;
-            var startPosY = selectedRow.Cells[2].Value;
-            var endPosX = selectedRow.Cells[3].Value;
-            var endPosY = selectedRow.Cells[4].Value;
-            var typeOfObj = selectedRow.Cells[5].Value.ToString();
-
-
-
-            if (typeOfObj.Equals("Property"))
+            if (dataGridObj2.SelectedRows.Count > 0)
             {
-                //new panel
-                panelPlot.Hide();
-                panelProp.Show();
+                // Get the first selected row (if you allow multiple selections, you may iterate through them).
+                DataGridViewRow selectedRow = dataGridObj2.SelectedRows[0];
+                selectedRowProp = selectedRow;
 
-                originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
+                // Access data from specific cells within the selected row.
+                var regNumb = selectedRow.Cells[0].Value;
+                var startPosX = selectedRow.Cells[1].Value;
+                var startPosY = selectedRow.Cells[2].Value;
+                var endPosX = selectedRow.Cells[3].Value;
+                var endPosY = selectedRow.Cells[4].Value;
+                var typeOfObj = selectedRow.Cells[5].Value.ToString();
 
-                if (originalProp != null)
+
+
+                if (typeOfObj.Equals("Property"))
                 {
-                    rnPropEdit.Text = originalProp._registerNumber.ToString();
-                    XcoordProp.Value = (decimal)originalProp._x;
-                    YCoordProp.Value = (decimal)originalProp._y;
-                    descBoxEditProp.Text = (originalProp)._description.ToString();
+                    //new panel
+                    panelPlot.Hide();
+                    panelProp.Show();
 
-                    originalPROPDescription = descBoxEditProp.Text;
-                    originalPROPRegisterNumber = originalProp._registerNumber;
-                    originalPROPXCoordinate = originalProp._x;
-                    originalPROPYCoordinate = originalProp._y;
+                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
+
+                    if (originalProp != null)
+                    {
+                        rnPropEdit.Text = originalProp._registerNumber.ToString();
+                        XcoordProp.Value = (decimal)originalProp._x;
+                        YCoordProp.Value = (decimal)originalProp._y;
+                        descBoxEditProp.Text = (originalProp)._description.ToString();
+
+                        originalPROPDescription = descBoxEditProp.Text;
+                        originalPROPRegisterNumber = originalProp._registerNumber;
+                        originalPROPXCoordinate = originalProp._x;
+                        originalPROPYCoordinate = originalProp._y;
+
+                    }
 
                 }
-
-            }
-            else
-            {
-                //new panel
-                panelProp.Hide();
-                panelPlot.Show();
-
-                originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
-
-                if (originalPlot != null)
+                else
                 {
-                    rnPlotEdit.Text = originalPlot._registerNumber.ToString();
-                    startPosEditPlotX.Value = (decimal)originalPlot._coordinates.startPos._x;
-                    startPosEditPlotY.Value = (decimal)originalPlot._coordinates.startPos._y;
-                    endPosEditPlotX.Value = (decimal)originalPlot._coordinates.endPos._x;
-                    endPosEditPlotY.Value = (decimal)originalPlot._coordinates.endPos._y;
-                    descEditPlot.Text = originalPlot._description.ToString();
+                    //new panel
+                    panelProp.Hide();
+                    panelPlot.Show();
 
-                    originalPLOTRegisterNumber = originalPlot._registerNumber;
-                    originalPLOTXCoordinateStart = (double)startPosEditPlotX.Value;
-                    originalPLOTYCoordinateStart = (double)startPosEditPlotY.Value;
-                    originalPLOTXCoordinateEnd = (double)endPosEditPlotX.Value;
-                    originalPLOTYCoordinateEnd = (double)endPosEditPlotY.Value;
-                    originalPLOTDescription = descEditPlot.Text;
+                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
+
+                    if (originalPlot != null)
+                    {
+                        rnPlotEdit.Text = originalPlot._registerNumber.ToString();
+                        startPosEditPlotX.Value = (decimal)originalPlot._coordinates.startPos._x;
+                        startPosEditPlotY.Value = (decimal)originalPlot._coordinates.startPos._y;
+                        endPosEditPlotX.Value = (decimal)originalPlot._coordinates.endPos._x;
+                        endPosEditPlotY.Value = (decimal)originalPlot._coordinates.endPos._y;
+                        descEditPlot.Text = originalPlot._description.ToString();
+
+                        originalPLOTRegisterNumber = originalPlot._registerNumber;
+                        originalPLOTXCoordinateStart = (double)startPosEditPlotX.Value;
+                        originalPLOTYCoordinateStart = (double)startPosEditPlotY.Value;
+                        originalPLOTXCoordinateEnd = (double)endPosEditPlotX.Value;
+                        originalPLOTYCoordinateEnd = (double)endPosEditPlotY.Value;
+                        originalPLOTDescription = descEditPlot.Text;
 
 
+                    }
                 }
             }
         }
