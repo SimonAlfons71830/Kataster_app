@@ -1,6 +1,6 @@
 ﻿namespace QuadTree.UI
 {
-    partial class App
+    partial class resetBtn
     {
         /// <summary>
         /// Required designer variable.
@@ -31,6 +31,7 @@
             QuadPanel = new Panel();
             testbutton = new Button();
             menupanel = new Panel();
+            settingsButton = new Button();
             editButton = new Button();
             addPlotButton = new Button();
             addPropButton = new Button();
@@ -138,6 +139,11 @@
             rnPlotEdit = new TextBox();
             label40 = new Label();
             label41 = new Label();
+            panelSettings = new Panel();
+            resetAppBtn = new Button();
+            importBtn = new Button();
+            exportBtn = new Button();
+            label45 = new Label();
             menupanel.SuspendLayout();
             panelSearchForProp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)latitudeNum).BeginInit();
@@ -179,6 +185,7 @@
             groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).BeginInit();
+            panelSettings.SuspendLayout();
             SuspendLayout();
             // 
             // QuadPanel
@@ -202,6 +209,7 @@
             // menupanel
             // 
             menupanel.BackColor = Color.PapayaWhip;
+            menupanel.Controls.Add(settingsButton);
             menupanel.Controls.Add(editButton);
             menupanel.Controls.Add(addPlotButton);
             menupanel.Controls.Add(addPropButton);
@@ -215,10 +223,21 @@
             menupanel.Size = new Size(191, 679);
             menupanel.TabIndex = 140;
             // 
+            // settingsButton
+            // 
+            settingsButton.FlatStyle = FlatStyle.Flat;
+            settingsButton.Location = new Point(0, 574);
+            settingsButton.Name = "settingsButton";
+            settingsButton.Size = new Size(191, 59);
+            settingsButton.TabIndex = 149;
+            settingsButton.Text = "SETTINGS";
+            settingsButton.UseVisualStyleBackColor = true;
+            settingsButton.Click += settingsButton_Click;
+            // 
             // editButton
             // 
             editButton.FlatStyle = FlatStyle.Flat;
-            editButton.Location = new Point(0, 399);
+            editButton.Location = new Point(0, 350);
             editButton.Name = "editButton";
             editButton.Size = new Size(191, 59);
             editButton.TabIndex = 148;
@@ -251,7 +270,7 @@
             // deletePropButton
             // 
             deletePropButton.FlatStyle = FlatStyle.Flat;
-            deletePropButton.Location = new Point(0, 539);
+            deletePropButton.Location = new Point(0, 420);
             deletePropButton.Name = "deletePropButton";
             deletePropButton.Size = new Size(191, 59);
             deletePropButton.TabIndex = 146;
@@ -1282,11 +1301,63 @@
             label41.TabIndex = 0;
             label41.Text = "Plot";
             // 
-            // App
+            // panelSettings
+            // 
+            panelSettings.BackColor = Color.DarkSalmon;
+            panelSettings.Controls.Add(resetAppBtn);
+            panelSettings.Controls.Add(importBtn);
+            panelSettings.Controls.Add(exportBtn);
+            panelSettings.Controls.Add(label45);
+            panelSettings.Location = new Point(191, 0);
+            panelSettings.Name = "panelSettings";
+            panelSettings.Size = new Size(310, 679);
+            panelSettings.TabIndex = 158;
+            // 
+            // resetAppBtn
+            // 
+            resetAppBtn.Location = new Point(36, 400);
+            resetAppBtn.Name = "resetAppBtn";
+            resetAppBtn.Size = new Size(222, 58);
+            resetAppBtn.TabIndex = 7;
+            resetAppBtn.Text = "Reset app";
+            resetAppBtn.UseVisualStyleBackColor = true;
+            resetAppBtn.Click += resetAppBtn_Click;
+            // 
+            // importBtn
+            // 
+            importBtn.Location = new Point(36, 492);
+            importBtn.Name = "importBtn";
+            importBtn.Size = new Size(222, 58);
+            importBtn.TabIndex = 6;
+            importBtn.Text = "Import data";
+            importBtn.UseVisualStyleBackColor = true;
+            importBtn.Click += button1_Click;
+            // 
+            // exportBtn
+            // 
+            exportBtn.Location = new Point(36, 574);
+            exportBtn.Name = "exportBtn";
+            exportBtn.Size = new Size(222, 58);
+            exportBtn.TabIndex = 5;
+            exportBtn.Text = "Export data";
+            exportBtn.UseVisualStyleBackColor = true;
+            exportBtn.Click += exportBtn_Click;
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new Point(113, 38);
+            label45.Name = "label45";
+            label45.Size = new Size(62, 20);
+            label45.TabIndex = 0;
+            label45.Text = "Settings";
+            // 
+            // resetBtn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(panelSettings);
             Controls.Add(panelPlot);
             Controls.Add(panelProp);
             Controls.Add(panelEdit);
@@ -1298,9 +1369,9 @@
             Controls.Add(panelSearchForProp);
             Controls.Add(menupanel);
             Controls.Add(QuadPanel);
-            Name = "App";
+            Name = "resetBtn";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "App";
+            Text = "Reset Tree";
             Load += App_Load;
             menupanel.ResumeLayout(false);
             panelSearchForProp.ResumeLayout(false);
@@ -1359,6 +1430,8 @@
             groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotY).EndInit();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).EndInit();
+            panelSettings.ResumeLayout(false);
+            panelSettings.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1486,5 +1559,11 @@
         private TextBox rnPlotEdit;
         private Label label40;
         private Label label41;
+        private Button settingsButton;
+        private Panel panelSettings;
+        private Button exportBtn;
+        private Label label45;
+        private Button importBtn;
+        private Button resetAppBtn;
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace QuadTree.UI
 {
-    public partial class App : Form
+    public partial class resetBtn : Form
     {
         //List<Property> list = new List<Property>();
         List<Polygon> list = new List<Polygon>();
@@ -53,7 +53,7 @@ namespace QuadTree.UI
         private GeoApp _app;
         QTreeTest _test;
 
-        public App(QTreeTest test, GeoApp app)
+        public resetBtn(QTreeTest test, GeoApp app)
         {
             InitializeComponent();
             _app = app;
@@ -82,6 +82,7 @@ namespace QuadTree.UI
             panelDelete.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
 
             dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
             dataObjToRemove.Columns.Add("S_x", typeof(int));
@@ -328,6 +329,7 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelGiveRange.Show();
         }
 
@@ -375,6 +377,7 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelSearchForProp.Show();
         }
 
@@ -401,6 +404,7 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelAddProp.Show();
         }
 
@@ -426,6 +430,7 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelAddPlot.Show();
         }
 
@@ -438,6 +443,7 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelDelete.Show();
 
         }
@@ -529,6 +535,7 @@ namespace QuadTree.UI
             panelDelete.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSettings.Hide();
             panelEdit.Show();
 
         }
@@ -603,7 +610,7 @@ namespace QuadTree.UI
 
         private void editbtnPlot_Click(object sender, EventArgs e)
         {
-            bool keyAttrChanged = 
+            bool keyAttrChanged =
                 (decimal)originalPLOTXCoordinateStart != startPosEditPlotX.Value ||
                 (decimal)originalPLOTYCoordinateStart != startPosEditPlotY.Value ||
                 (decimal)originalPLOTXCoordinateEnd != endPosEditPlotX.Value ||
@@ -657,15 +664,15 @@ namespace QuadTree.UI
             {
                 originalProp._description = descBoxEditProp.Text;
                 originalProp._registerNumber = rn;
-                selectedRowProp.Cells[0].Value = rn;    
+                selectedRowProp.Cells[0].Value = rn;
                 dataGridObj.Refresh();
             }
             else if (keyAttrChanged)
             {
-                if (_app.RemoveObj(new Property(originalProp.RegisterNumber,originalProp.Description,originalProp.suradnice,null)))
+                if (_app.RemoveObj(new Property(originalProp.RegisterNumber, originalProp.Description, originalProp.suradnice, null)))
                 {
                     dataGridObj2.Rows.Remove(selectedRowProp);
-                    _app.AddProperty(rn,descBoxEditProp.Text,(new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value,0), new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value, 0)));
+                    _app.AddProperty(rn, descBoxEditProp.Text, (new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value, 0), new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value, 0)));
                     DataRow newRow = dataObjToRemove.NewRow();
                     newRow[0] = rn;
                     newRow[1] = XcoordProp.Value;
@@ -678,7 +685,66 @@ namespace QuadTree.UI
 
                     dataGridObj2.Refresh();
                 }
-            } 
+            }
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            panelSearchForProp.Hide();
+            panelGiveRange.Hide();
+            panelAddProp.Hide();
+            panelAddPlot.Hide();
+            panelDelete.Hide();
+            panelPlot.Hide();
+            panelProp.Hide();
+            panelEdit.Hide();
+            panelSettings.Show();
+        }
+
+        private void exportBtn_Click(object sender, EventArgs e)
+        {
+            this._app.WriteToFiles();
+            MessageBox.Show("Export Finished.");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Choose a Properties.txt");
+            String filepath = String.Empty;
+            String fileExt = string.Empty;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                filepath = openFileDialog.FileName;
+                fileExt = Path.GetExtension(filepath);
+
+                this._app.ReadProperties(filepath);
+                MessageBox.Show("Import of Properties is completed.");
+
+            }
+            MessageBox.Show("Choose a Plots.txt");
+            String filepathPoi = String.Empty;
+            String fileExtPoi = string.Empty;
+            OpenFileDialog openFileD = new OpenFileDialog();
+            if (openFileD.ShowDialog() == DialogResult.OK)
+            {
+                filepathPoi = openFileD.FileName;
+                fileExt = Path.GetExtension(filepathPoi);
+
+                this._app.ReadPlots(filepathPoi);
+
+                MessageBox.Show("Import of Plots is completed.");
+            }
+
+            this.QuadPanel.Invalidate();
+        }
+
+        private void resetAppBtn_Click(object sender, EventArgs e)
+        {
+            this._app._area.ResetTree(this._app._area._root);
+            this.QuadPanel.Invalidate();
         }
     }
 }

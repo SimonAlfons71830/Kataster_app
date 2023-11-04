@@ -271,7 +271,7 @@ namespace QuadTree
 
         private void appbutton_Click(object sender, EventArgs e)
         {
-            var appForm = new App(_test, _app);
+            var appForm = new resetBtn(_test, _app);
             this.Hide();
             appForm.ShowDialog();
 
