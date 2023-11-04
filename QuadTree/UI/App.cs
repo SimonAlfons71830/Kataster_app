@@ -68,6 +68,14 @@ namespace QuadTree.UI
             max_depth = 10;
 
             _app.seedApp(500, 500, 20, 10, max_quad_cap, max_depth);
+            if (_app._area.wasOptimalized)
+            {
+                this.improveLBL.Text = _app._area.improvement.ToString();
+            }
+            else
+            {
+                this.improveLBL.Text = "NOT\nYET";
+            }
 
             /* _app._area._dimension = new QTree.Boundaries(0, 0, 500, 500);
              _app._area._root._boundaries = _app._area._dimension;
@@ -101,10 +109,12 @@ namespace QuadTree.UI
 
             this.redoGrids(list);
 
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+
             this.QuadPanel.Invalidate();
         }
 
-        private void redoGrids(List<Polygon> list) 
+        private void redoGrids(List<Polygon> list)
         {
             dataObjToRemove.Rows.Clear();
             foreach (var item in list)
@@ -216,12 +226,6 @@ namespace QuadTree.UI
             }
         }
 
-        private void showWantToDelete(Polygon obj)
-        {
-            //zvyraznit    
-        }
-
-
         private void showIntervalSearch(List<Polygon> properties, PaintEventArgs e, (Coordinates start, Coordinates end) rectangleSearch)
         {
             e.Graphics.DrawRectangle(redpen,
@@ -257,32 +261,6 @@ namespace QuadTree.UI
             //this.showFailedFind(_test.failedObj, e);
 
         }
-
-        /*private void button2_Click(object sender, EventArgs e)
-        {
-            using (SearchForProperty searchForm = new SearchForProperty())
-            {
-                if (searchForm.ShowDialog() == DialogResult.OK)
-                {
-                    coordinatesIS = (new Coordinates(searchForm.LongitudeValue, searchForm.LatitudeValue, 0),
-                        new Coordinates(searchForm.LongitudeValue, searchForm.LatitudeValue, 0));
-                }
-            }
-
-            list = _app.FindPropertiesInterval(coordinatesIS, true); //zasahuju -> true
-
-            listView1.Clear();
-            foreach (var property in list)
-            {
-                var listViewItem = new ListViewItem(property.RegisterNumber.ToString());
-                listViewItem.SubItems.Add(property.Description);
-                listViewItem.SubItems.Add(property.Coordinates.x.ToString());
-                listViewItem.SubItems.Add(property.Coordinates.y.ToString());
-                listView1.Items.Add(listViewItem);
-            }
-
-            this.QuadPanel.Invalidate();
-        }*/
 
         private void appbutton_Click(object sender, EventArgs e)
         {
@@ -404,6 +382,7 @@ namespace QuadTree.UI
             }
 
             _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLong.Value, (double)posLat.Value, 0)));
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             this.QuadPanel.Invalidate(true);
 
         }
@@ -433,6 +412,7 @@ namespace QuadTree.UI
             }
 
             _app.AddPlot(registerNumber, PlotDesc.Text, (new Coordinates((double)startPosPlotLong.Value, (double)startPosPlotLat.Value, 0), new Coordinates((double)endPosPlotLong.Value, (double)endPosPlotLat.Value, 0)));
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             this.QuadPanel.Invalidate(true);
         }
 
@@ -487,6 +467,7 @@ namespace QuadTree.UI
                 {
                     //remove from grid
                     dataGridObj.Rows.Remove(selectedRow);
+                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
                     //dataGridObj2.Rows.Remove(selectedRow);
                 }
 
@@ -497,6 +478,7 @@ namespace QuadTree.UI
                 {
                     //removefrom grid
                     dataGridObj.Rows.Remove(selectedRow);
+                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
                     //dataGridObj2.Rows.Remove(selectedRow);
                 }
             }
@@ -542,6 +524,15 @@ namespace QuadTree.UI
         {
             wasSeeded = true;
             _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, max_quad_cap, max_depth);
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            if (_app._area.wasOptimalized)
+            {
+                this.improveLBL.Text = _app._area.improvement.ToString();
+            }
+            else
+            {
+                this.improveLBL.Text = "NOT\nYET";
+            }
             this.QuadPanel.Invalidate();
         }
 
@@ -664,7 +655,7 @@ namespace QuadTree.UI
                     newRow[4] = endPosEditPlotY.Value;
                     newRow[5] = "PlotOfLand";
                     dataObjToRemove.Rows.Add(newRow);
-
+                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
                     dataGridObj2.Refresh();
                 }
             }
@@ -702,7 +693,7 @@ namespace QuadTree.UI
                     newRow[4] = YCoordProp.Value;
                     newRow[5] = "Property";
                     dataObjToRemove.Rows.Add(newRow);
-
+                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
 
                     dataGridObj2.Refresh();
                 }
@@ -749,6 +740,7 @@ namespace QuadTree.UI
                 fileExt = Path.GetExtension(filepath);
 
                 this._app.ReadProperties(filepath);
+                healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
                 MessageBox.Show("Import of Properties is completed.");
 
             }
@@ -762,7 +754,7 @@ namespace QuadTree.UI
                 fileExt = Path.GetExtension(filepathPoi);
 
                 this._app.ReadPlots(filepathPoi);
-
+                healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
                 MessageBox.Show("Import of Plots is completed.");
             }
 
@@ -795,6 +787,15 @@ namespace QuadTree.UI
             this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
                 new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));
             panelSeedApp.Hide();
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            if (_app._area.wasOptimalized)
+            {
+                this.improveLBL.Text = _app._area.improvement.ToString();
+            }
+            else
+            {
+                this.improveLBL.Text = "NOT\nYET";
+            }
 
 
 
@@ -811,7 +812,7 @@ namespace QuadTree.UI
 
         private void chngDepthBtn_Click(object sender, EventArgs e)
         {
-            
+
             this._app.ChangeDepth((int)newDepthNum.Value);
             this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
                 new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));

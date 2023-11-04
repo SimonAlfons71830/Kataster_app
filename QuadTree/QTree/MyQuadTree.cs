@@ -11,6 +11,9 @@ namespace QuadTree.QTree
     public class MyQuadTree : IQuadTree
     {
         public Health TreeHealth { get; set; } = new Health();
+        public bool wasOptimalized = false;
+        public double improvement = 0;
+
 
         public int _maxDepth { get ; set ; }
         public int _objectsCount { get ; set; }
@@ -92,6 +95,11 @@ namespace QuadTree.QTree
             if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level >= _maxDepth)
             {
                 this.TreeHealth.CalculateNewHealthObjCountInQuad(quad._objects.Count, MAX_QUAD_CAPACITY);
+
+                if(this.TreeHealth.Value < 50)
+                {
+                    this.Optimize();
+                }
             }
 
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
@@ -354,6 +362,9 @@ namespace QuadTree.QTree
             _objectsCount = 0;
             _objectsSearched = 0;
             maxDepth = 0;
+            TreeHealth.Reset();
+            wasOptimalized = false;
+            improvement = 0;
         }
 
         public void SetNewDepth(int newDepth)
@@ -545,6 +556,49 @@ namespace QuadTree.QTree
             }
             return null;
 
+        }
+
+
+        public void Optimize()
+        {
+            wasOptimalized = true;
+            var oldHealth = TreeHealth.Value;
+            //zvysenie hlbky stromu
+            //na vsetkych kde su maxdepth aktualna sa vezmu a ak je tam viac objektov ako max obj tak sa splitnu
+            //prerata sa health
+
+            Queue<Quad> quadsToBeOptimized = this.GetQuadsAtDepth(maxDepth);
+
+            while (quadsToBeOptimized.Count > 0)
+            {
+                var quad = quadsToBeOptimized.Dequeue();
+
+                if (quad._objects.Count > MAX_QUAD_CAPACITY)
+                {
+                    quad.splitQuadUpdate(this.findCentroid(quad._objects));
+
+                    Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(quad._objects);
+                    quad._objects.Clear();
+                    
+                    if (quad._northEast.level > maxDepth)
+                    {
+                        maxDepth = quad._northEast.level;
+                    }
+
+                    while (reinsertObjects.Count > 0)
+                    {
+                        //find the right quad for objects
+                        var rObject = reinsertObjects.Dequeue();
+                        Quad? rQuad = rObject.FindQuadUpdate(quad);
+
+                        (rQuad ?? quad)._objects.Add(rObject);
+                    }
+
+                    TreeHealth.ReverseHealth(quad._objects.Count, MAX_QUAD_CAPACITY);
+                }
+            }
+
+            improvement = TreeHealth.Value - oldHealth;
         }
     }
 }

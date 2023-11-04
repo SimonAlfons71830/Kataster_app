@@ -16,5 +16,24 @@ namespace QuadTree.Optimalization
         { 
             Value -= (actualObjCount - maxObjCount) * HEALTH_KOEF;
         }
+
+        public void Reset()
+        {
+            Value = 100;
+        }
+
+        public void ReverseHealth(int actualObjCount, int maxObjCount) 
+        {
+            // Calculate the change in actualObjCount
+
+            /*if (actualObjCount <= maxObjCount)
+            {*/
+                int change = Math.Abs(actualObjCount - maxObjCount);
+
+                // Reverse the health adjustment
+                Value += change * HEALTH_KOEF;
+            //}
+
+        }
     }
 }
