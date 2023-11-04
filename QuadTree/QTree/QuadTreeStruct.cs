@@ -542,9 +542,9 @@ namespace QuadTree.QTree
             }
             else
             {
-                var quadsToShrink = this.GetQuadsAtDepth(newDepth);
+                //var quadsToShrink = this.GetQuadsAtDepth(newDepth);
                 //tree has to shrink
-                this.Shrink(quadsToShrink);
+                this.Shrink(newDepth);
                 this.maxDepth = newDepth;
             }
             //else the depth stays the same
@@ -620,7 +620,7 @@ namespace QuadTree.QTree
         }
 
 
-        public void Shrink(Queue<Quad> shrinkingQuads) 
+        public void Shrink(int desiredDepth) 
         {
             // maxDepth - je aktualna level stromu
             //zoberiem vsetky objekty z quadov od <maxDept, newDepth-1> //nemusim ist uplne po spodok ak je maxDepth mensia
