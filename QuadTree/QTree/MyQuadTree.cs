@@ -1,4 +1,5 @@
-﻿using QuadTree.Structures;
+﻿using QuadTree.Optimalization;
+using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace QuadTree.QTree
 {
     public class MyQuadTree : IQuadTree
     {
-        
+        public Health TreeHealth { get; set; } = new Health();
+
         public int _maxDepth { get ; set ; }
         public int _objectsCount { get ; set; }
         public int _objectsSearched { get; set; }
@@ -87,7 +89,14 @@ namespace QuadTree.QTree
 
         public bool NeedToSplit(Quad quad)
         {
+            if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level >= _maxDepth)
+            {
+                this.TreeHealth.CalculateNewHealthObjCountInQuad(quad._objects.Count, MAX_QUAD_CAPACITY);
+            }
+
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
+
+            
         }
 
         public MyPoint findCentroid(List<ISpatialObject> _objects)
@@ -358,6 +367,7 @@ namespace QuadTree.QTree
                 //tree has to grow
                 this.Grow(list, newDepth);
                 this.maxDepth = newDepth;
+                this._maxDepth = newDepth;    
             }
             else
             {
@@ -365,6 +375,7 @@ namespace QuadTree.QTree
                 //tree has to shrink
                 this.Shrink(newDepth);
                 this.maxDepth = newDepth;
+                this._maxDepth = newDepth;
             }
             //else the depth stays the same
         }

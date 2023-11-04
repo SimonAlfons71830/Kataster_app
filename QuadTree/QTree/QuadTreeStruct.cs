@@ -539,6 +539,7 @@ namespace QuadTree.QTree
                 //tree has to grow
                 this.Grow(list, newDepth);
                 this.maxDepth = newDepth;
+                this._maxDepth = newDepth;
             }
             else
             {
@@ -546,6 +547,7 @@ namespace QuadTree.QTree
                 //tree has to shrink
                 this.Shrink(newDepth);
                 this.maxDepth = newDepth;
+                this._maxDepth = newDepth;
             }
             //else the depth stays the same
         }
