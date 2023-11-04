@@ -538,12 +538,14 @@ namespace QuadTree.QTree
                 var list = GetQuadsAtDepth(maxDepth);
                 //tree has to grow
                 this.Grow(list, newDepth);
+                this.maxDepth = newDepth;
             }
             else
             {
                 var quadsToShrink = this.GetQuadsAtDepth(newDepth);
                 //tree has to shrink
                 this.Shrink(quadsToShrink);
+                this.maxDepth = newDepth;
             }
             //else the depth stays the same
         }
@@ -620,27 +622,74 @@ namespace QuadTree.QTree
 
         public void Shrink(Queue<Quad> shrinkingQuads) 
         {
-            //if there is shrinking i need to take the all quads that has same or smaller level as newdepth and call rejoin method
-            while (shrinkingQuads.Count > 0) {
-                Quad current = shrinkingQuads.Dequeue();
+            // maxDepth - je aktualna level stromu
+            //zoberiem vsetky objekty z quadov od <maxDept, newDepth-1> //nemusim ist uplne po spodok ak je maxDepth mensia
+            //jednotlivym objektom najdem kvad na newdepth a vlozim ich do neho
 
-                //ak vsetky deti currenta su leaves - > rejoin
-                //inak tie ktore niesu leaves musim queuenut
-                if (current._northWest != null) //is leaf
-                {
-                    shrinkingQuads.Enqueue(current._northWest);
-                    shrinkingQuads.Enqueue(current._northEast);
-                    shrinkingQuads.Enqueue(current._southEast);
-                    shrinkingQuads.Enqueue(current._southWest);
-                }
-                else
-                {
 
-                    //Rejoin(current._northWest, current);
-                }
-
+            List<ISpatialObject> reinsertObj = new List<ISpatialObject>();
+            Queue<Quad> quadsAtDesiredDepth = GetQuadsAtDepth(desiredDepth);
+            bool isRoot = desiredDepth == 0 ? true : false;
+            Queue<Quad> parentsOfDesiredDepthQuads;
+            if (isRoot)
+            {
+                parentsOfDesiredDepthQuads = null;
+            }
+            else
+            {
+                parentsOfDesiredDepthQuads = GetQuadsAtDepth(desiredDepth - 1);
             }
 
+
+
+            //prehladat vsetky quads z nizsich levelov ako je desired depth 
+            //ulozit si ich objekty do listu
+            for (int i = maxDepth; i > desiredDepth; i--)
+            {
+                Queue<Quad> quadsFromMaxD = this.GetQuadsAtDepth(i);
+
+                foreach (Quad quad in quadsFromMaxD)
+                {
+                    reinsertObj.AddRange(quad._objects);
+                }
+            }
+
+
+            //ak je root tak zoberiem vsetky objekty a vlozim ich do roota inak ->
+            if (isRoot)
+            {
+                _root._objects.AddRange(reinsertObj);
+            }
+            else
+            {
+                //pre ulozzene objekty najst prislusny quad z desired depth
+                //mam funkciu find quad - kde z parenta najde najvhodnejsieho childQuada - tymi budu desiredDepth quady
+                foreach (var _object in reinsertObj)
+                {
+                    foreach (var quad in parentsOfDesiredDepthQuads)
+                    {
+                        Quad pomQ = _object.FindQuadUpdate(quad);
+
+                        if (pomQ != null && quadsAtDesiredDepth.Contains(pomQ))
+                        {
+                            pomQ._objects.Add(_object);
+                        }
+                    }
+                }
+            }
+
+            //pre vsetkych desired depth vymazat potomkov - GC
+            foreach (var quad in quadsAtDesiredDepth)
+            {
+                if (quad.getNE() != null)
+                {
+                    quad._northEast = null;
+                    quad._northWest = null;
+                    quad._southEast = null;
+                    quad._southWest = null;
+
+                }
+            }
         }
     }
 }

@@ -81,7 +81,9 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelDelete.Hide();
             panelPlot.Hide();
+            panelDepth.Hide();
             panelProp.Hide();
+            panelSeedApp.Hide();
             panelSettings.Hide();
 
             dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
@@ -329,6 +331,8 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSeedApp.Hide();
+            panelDepth.Hide();
             panelSettings.Hide();
             panelGiveRange.Show();
         }
@@ -378,6 +382,8 @@ namespace QuadTree.UI
             panelPlot.Hide();
             panelProp.Hide();
             panelSettings.Hide();
+            panelDepth.Hide();
+            panelSeedApp.Hide();
             panelSearchForProp.Show();
         }
 
@@ -404,7 +410,9 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSeedApp.Hide();
             panelSettings.Hide();
+            panelDepth.Hide();
             panelAddProp.Show();
         }
 
@@ -430,7 +438,9 @@ namespace QuadTree.UI
             panelEdit.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSeedApp.Hide();
             panelSettings.Hide();
+            panelDepth.Hide();
             panelAddPlot.Show();
         }
 
@@ -442,8 +452,10 @@ namespace QuadTree.UI
             panelAddPlot.Hide();
             panelEdit.Hide();
             panelPlot.Hide();
+            panelSeedApp.Hide();
             panelProp.Hide();
             panelSettings.Hide();
+            panelDepth.Hide();
             panelDelete.Show();
 
         }
@@ -536,6 +548,8 @@ namespace QuadTree.UI
             panelPlot.Hide();
             panelProp.Hide();
             panelSettings.Hide();
+            panelSeedApp.Hide();
+            panelDepth.Hide();
             panelEdit.Show();
 
         }
@@ -697,18 +711,25 @@ namespace QuadTree.UI
             panelDelete.Hide();
             panelPlot.Hide();
             panelProp.Hide();
+            panelSeedApp.Hide();
             panelEdit.Hide();
+            panelDepth.Hide();
             panelSettings.Show();
         }
 
         private void exportBtn_Click(object sender, EventArgs e)
         {
+            panelDepth.Hide();
+            panelSeedApp.Hide();
             this._app.WriteToFiles();
             MessageBox.Show("Export Finished.");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            panelDepth.Hide();
+            panelSeedApp.Hide();
+
             MessageBox.Show("Choose a Properties.txt");
             String filepath = String.Empty;
             String fileExt = string.Empty;
@@ -743,7 +764,45 @@ namespace QuadTree.UI
 
         private void resetAppBtn_Click(object sender, EventArgs e)
         {
+            panelDepth.Hide();
+            panelSeedApp.Hide();
             this._app._area.ResetTree(this._app._area._root);
+            this.QuadPanel.Invalidate();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            panelDepth.Hide();
+            panelSeedApp.Show();
+        }
+
+        private void label23_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void seedBtn2_Click(object sender, EventArgs e)
+        {
+            wasSeeded = true;
+            _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, (int)CountNo.Value, (int)DepthNo.Value);
+            panelSeedApp.Hide();
+            this.QuadPanel.Invalidate();
+        }
+
+        private void changeDepthBtn_Click(object sender, EventArgs e)
+        {
+
+            panelSeedApp.Hide();
+            panelDepth.Show();
+            depthLabel.Text = this._app._area.maxDepth.ToString();
+        }
+
+        private void chngDepthBtn_Click(object sender, EventArgs e)
+        {
+            
+            this._app.ChangeDepth((int)newDepthNum.Value);
+            
+            panelDepth.Hide();
             this.QuadPanel.Invalidate();
         }
     }

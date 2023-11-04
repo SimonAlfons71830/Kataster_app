@@ -283,5 +283,12 @@ namespace QuadTree.GeoSystem
                 reader.Close();
             }
         }
+
+        public void ChangeDepth(int newDepth) 
+        {
+            this._area.SetNewDepth(newDepth);
+        }
+
+
     }
 }

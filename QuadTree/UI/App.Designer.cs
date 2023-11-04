@@ -96,16 +96,6 @@
             showBtn = new Button();
             deleteBtn = new Button();
             label27 = new Label();
-            widthOfTree = new NumericUpDown();
-            LengthOfTree = new NumericUpDown();
-            label28 = new Label();
-            label29 = new Label();
-            label30 = new Label();
-            label31 = new Label();
-            plotNo = new NumericUpDown();
-            PropNo = new NumericUpDown();
-            groupBox8 = new GroupBox();
-            seedBtn = new Button();
             panelEdit = new Panel();
             dataGridObj2 = new DataGridView();
             editBtn = new Button();
@@ -140,10 +130,38 @@
             label40 = new Label();
             label41 = new Label();
             panelSettings = new Panel();
+            changeDepthBtn = new Button();
+            seedAppBtn = new Button();
             resetAppBtn = new Button();
             importBtn = new Button();
             exportBtn = new Button();
             label45 = new Label();
+            panelSeedApp = new Panel();
+            groupBox6 = new GroupBox();
+            label22 = new Label();
+            label23 = new Label();
+            plotNo = new NumericUpDown();
+            PropNo = new NumericUpDown();
+            groupBox7 = new GroupBox();
+            label46 = new Label();
+            label47 = new Label();
+            CountNo = new NumericUpDown();
+            DepthNo = new NumericUpDown();
+            label24 = new Label();
+            label25 = new Label();
+            LengthOfTree = new NumericUpDown();
+            widthOfTree = new NumericUpDown();
+            label26 = new Label();
+            seedBtn2 = new Button();
+            label48 = new Label();
+            panelDepth = new Panel();
+            newDepthNum = new NumericUpDown();
+            label29 = new Label();
+            depthLabel = new Label();
+            label28 = new Label();
+            label51 = new Label();
+            chngDepthBtn = new Button();
+            label52 = new Label();
             menupanel.SuspendLayout();
             panelSearchForProp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)latitudeNum).BeginInit();
@@ -168,11 +186,6 @@
             ((System.ComponentModel.ISupportInitialize)startPosPlotLong).BeginInit();
             panelDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridObj).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)widthOfTree).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LengthOfTree).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)plotNo).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PropNo).BeginInit();
-            groupBox8.SuspendLayout();
             panelEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridObj2).BeginInit();
             panelProp.SuspendLayout();
@@ -186,13 +199,24 @@
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).BeginInit();
             panelSettings.SuspendLayout();
+            panelSeedApp.SuspendLayout();
+            groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)plotNo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropNo).BeginInit();
+            groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CountNo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DepthNo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LengthOfTree).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)widthOfTree).BeginInit();
+            panelDepth.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)newDepthNum).BeginInit();
             SuspendLayout();
             // 
             // QuadPanel
             // 
             QuadPanel.Location = new Point(521, 12);
             QuadPanel.Name = "QuadPanel";
-            QuadPanel.Size = new Size(712, 565);
+            QuadPanel.Size = new Size(712, 655);
             QuadPanel.TabIndex = 112;
             QuadPanel.Paint += QuadPanel_Paint;
             // 
@@ -873,113 +897,6 @@
             label27.TabIndex = 0;
             label27.Text = "DELETE";
             // 
-            // widthOfTree
-            // 
-            widthOfTree.Location = new Point(104, 27);
-            widthOfTree.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            widthOfTree.Name = "widthOfTree";
-            widthOfTree.Size = new Size(150, 27);
-            widthOfTree.TabIndex = 146;
-            widthOfTree.TextAlign = HorizontalAlignment.Right;
-            widthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
-            // 
-            // LengthOfTree
-            // 
-            LengthOfTree.Location = new Point(104, 61);
-            LengthOfTree.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            LengthOfTree.Name = "LengthOfTree";
-            LengthOfTree.Size = new Size(150, 27);
-            LengthOfTree.TabIndex = 147;
-            LengthOfTree.TextAlign = HorizontalAlignment.Right;
-            LengthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Location = new Point(17, 34);
-            label28.Name = "label28";
-            label28.Size = new Size(49, 20);
-            label28.TabIndex = 148;
-            label28.Text = "Width";
-            // 
-            // label29
-            // 
-            label29.AutoSize = true;
-            label29.Location = new Point(17, 68);
-            label29.Name = "label29";
-            label29.Size = new Size(54, 20);
-            label29.TabIndex = 149;
-            label29.Text = "Length";
-            // 
-            // label30
-            // 
-            label30.AutoSize = true;
-            label30.Location = new Point(346, 68);
-            label30.Name = "label30";
-            label30.Size = new Size(41, 20);
-            label30.TabIndex = 153;
-            label30.Text = "Plots";
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Location = new Point(346, 34);
-            label31.Name = "label31";
-            label31.Size = new Size(76, 20);
-            label31.TabIndex = 152;
-            label31.Text = "Properties";
-            // 
-            // plotNo
-            // 
-            plotNo.Location = new Point(433, 61);
-            plotNo.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            plotNo.Name = "plotNo";
-            plotNo.Size = new Size(150, 27);
-            plotNo.TabIndex = 151;
-            plotNo.TextAlign = HorizontalAlignment.Right;
-            plotNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
-            plotNo.ValueChanged += numericUpDown7_ValueChanged;
-            // 
-            // PropNo
-            // 
-            PropNo.Location = new Point(433, 27);
-            PropNo.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            PropNo.Name = "PropNo";
-            PropNo.Size = new Size(150, 27);
-            PropNo.TabIndex = 150;
-            PropNo.TextAlign = HorizontalAlignment.Right;
-            PropNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
-            // 
-            // groupBox8
-            // 
-            groupBox8.Controls.Add(seedBtn);
-            groupBox8.Controls.Add(label30);
-            groupBox8.Controls.Add(label31);
-            groupBox8.Controls.Add(plotNo);
-            groupBox8.Controls.Add(PropNo);
-            groupBox8.Controls.Add(label29);
-            groupBox8.Controls.Add(label28);
-            groupBox8.Controls.Add(LengthOfTree);
-            groupBox8.Controls.Add(widthOfTree);
-            groupBox8.Location = new Point(521, 583);
-            groupBox8.Name = "groupBox8";
-            groupBox8.Size = new Size(712, 95);
-            groupBox8.TabIndex = 154;
-            groupBox8.TabStop = false;
-            groupBox8.Text = "Seed";
-            // 
-            // seedBtn
-            // 
-            seedBtn.BackColor = Color.LightSalmon;
-            seedBtn.FlatStyle = FlatStyle.Flat;
-            seedBtn.Location = new Point(604, 26);
-            seedBtn.Name = "seedBtn";
-            seedBtn.Size = new Size(91, 58);
-            seedBtn.TabIndex = 154;
-            seedBtn.Text = "Seed";
-            seedBtn.UseVisualStyleBackColor = false;
-            seedBtn.Click += seedBtn_Click;
-            // 
             // panelEdit
             // 
             panelEdit.BackColor = Color.DarkSalmon;
@@ -1304,6 +1221,8 @@
             // panelSettings
             // 
             panelSettings.BackColor = Color.DarkSalmon;
+            panelSettings.Controls.Add(changeDepthBtn);
+            panelSettings.Controls.Add(seedAppBtn);
             panelSettings.Controls.Add(resetAppBtn);
             panelSettings.Controls.Add(importBtn);
             panelSettings.Controls.Add(exportBtn);
@@ -1312,6 +1231,26 @@
             panelSettings.Name = "panelSettings";
             panelSettings.Size = new Size(310, 679);
             panelSettings.TabIndex = 158;
+            // 
+            // changeDepthBtn
+            // 
+            changeDepthBtn.Location = new Point(36, 221);
+            changeDepthBtn.Name = "changeDepthBtn";
+            changeDepthBtn.Size = new Size(222, 58);
+            changeDepthBtn.TabIndex = 9;
+            changeDepthBtn.Text = "Change depth";
+            changeDepthBtn.UseVisualStyleBackColor = true;
+            changeDepthBtn.Click += changeDepthBtn_Click;
+            // 
+            // seedAppBtn
+            // 
+            seedAppBtn.Location = new Point(36, 310);
+            seedAppBtn.Name = "seedAppBtn";
+            seedAppBtn.Size = new Size(222, 58);
+            seedAppBtn.TabIndex = 8;
+            seedAppBtn.Text = "Seed app";
+            seedAppBtn.UseVisualStyleBackColor = true;
+            seedAppBtn.Click += button1_Click_1;
             // 
             // resetAppBtn
             // 
@@ -1352,16 +1291,280 @@
             label45.TabIndex = 0;
             label45.Text = "Settings";
             // 
+            // panelSeedApp
+            // 
+            panelSeedApp.BackColor = Color.AntiqueWhite;
+            panelSeedApp.Controls.Add(groupBox6);
+            panelSeedApp.Controls.Add(groupBox7);
+            panelSeedApp.Controls.Add(label26);
+            panelSeedApp.Controls.Add(seedBtn2);
+            panelSeedApp.Controls.Add(label48);
+            panelSeedApp.Location = new Point(510, 81);
+            panelSeedApp.Name = "panelSeedApp";
+            panelSeedApp.Size = new Size(236, 421);
+            panelSeedApp.TabIndex = 158;
+            // 
+            // groupBox6
+            // 
+            groupBox6.Controls.Add(label22);
+            groupBox6.Controls.Add(label23);
+            groupBox6.Controls.Add(plotNo);
+            groupBox6.Controls.Add(PropNo);
+            groupBox6.Location = new Point(11, 251);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new Size(215, 104);
+            groupBox6.TabIndex = 15;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "Objects generation";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(27, 71);
+            label22.Name = "label22";
+            label22.Size = new Size(41, 20);
+            label22.TabIndex = 7;
+            label22.Text = "Plots";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(2, 30);
+            label23.Name = "label23";
+            label23.Size = new Size(76, 20);
+            label23.TabIndex = 6;
+            label23.Text = "Properties";
+            label23.Click += label23_Click;
+            // 
+            // plotNo
+            // 
+            plotNo.Location = new Point(81, 64);
+            plotNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            plotNo.Name = "plotNo";
+            plotNo.Size = new Size(125, 27);
+            plotNo.TabIndex = 4;
+            plotNo.TextAlign = HorizontalAlignment.Right;
+            plotNo.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
+            // PropNo
+            // 
+            PropNo.Location = new Point(81, 26);
+            PropNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            PropNo.Name = "PropNo";
+            PropNo.Size = new Size(125, 27);
+            PropNo.TabIndex = 3;
+            PropNo.TextAlign = HorizontalAlignment.Right;
+            PropNo.Value = new decimal(new int[] { 70, 0, 0, 0 });
+            // 
+            // groupBox7
+            // 
+            groupBox7.Controls.Add(label46);
+            groupBox7.Controls.Add(label47);
+            groupBox7.Controls.Add(CountNo);
+            groupBox7.Controls.Add(DepthNo);
+            groupBox7.Controls.Add(label24);
+            groupBox7.Controls.Add(label25);
+            groupBox7.Controls.Add(LengthOfTree);
+            groupBox7.Controls.Add(widthOfTree);
+            groupBox7.Location = new Point(9, 44);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(215, 195);
+            groupBox7.TabIndex = 14;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "Tree settings";
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(14, 155);
+            label46.Name = "label46";
+            label46.Size = new Size(48, 20);
+            label46.TabIndex = 11;
+            label46.Text = "Count";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(14, 119);
+            label47.Name = "label47";
+            label47.Size = new Size(50, 20);
+            label47.TabIndex = 10;
+            label47.Text = "Depth";
+            // 
+            // CountNo
+            // 
+            CountNo.Location = new Point(77, 151);
+            CountNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            CountNo.Name = "CountNo";
+            CountNo.Size = new Size(125, 27);
+            CountNo.TabIndex = 9;
+            CountNo.TextAlign = HorizontalAlignment.Right;
+            CountNo.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // DepthNo
+            // 
+            DepthNo.Location = new Point(77, 113);
+            DepthNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            DepthNo.Name = "DepthNo";
+            DepthNo.Size = new Size(125, 27);
+            DepthNo.TabIndex = 8;
+            DepthNo.TextAlign = HorizontalAlignment.Right;
+            DepthNo.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(18, 68);
+            label24.Name = "label24";
+            label24.Size = new Size(54, 20);
+            label24.TabIndex = 7;
+            label24.Text = "Length";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(19, 28);
+            label25.Name = "label25";
+            label25.Size = new Size(49, 20);
+            label25.TabIndex = 6;
+            label25.Text = "Width";
+            // 
+            // LengthOfTree
+            // 
+            LengthOfTree.Location = new Point(81, 64);
+            LengthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            LengthOfTree.Name = "LengthOfTree";
+            LengthOfTree.Size = new Size(125, 27);
+            LengthOfTree.TabIndex = 4;
+            LengthOfTree.TextAlign = HorizontalAlignment.Right;
+            LengthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            // 
+            // widthOfTree
+            // 
+            widthOfTree.Location = new Point(81, 26);
+            widthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            widthOfTree.Name = "widthOfTree";
+            widthOfTree.Size = new Size(125, 27);
+            widthOfTree.TabIndex = 3;
+            widthOfTree.TextAlign = HorizontalAlignment.Right;
+            widthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new Point(14, 207);
+            label26.Name = "label26";
+            label26.Size = new Size(0, 20);
+            label26.TabIndex = 12;
+            // 
+            // seedBtn2
+            // 
+            seedBtn2.Location = new Point(17, 364);
+            seedBtn2.Name = "seedBtn2";
+            seedBtn2.Size = new Size(198, 26);
+            seedBtn2.TabIndex = 9;
+            seedBtn2.Text = "SEED";
+            seedBtn2.UseVisualStyleBackColor = true;
+            seedBtn2.Click += seedBtn2_Click;
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Location = new Point(57, 11);
+            label48.Name = "label48";
+            label48.Size = new Size(111, 20);
+            label48.TabIndex = 0;
+            label48.Text = "Reset and Seed";
+            // 
+            // panelDepth
+            // 
+            panelDepth.BackColor = Color.AntiqueWhite;
+            panelDepth.Controls.Add(newDepthNum);
+            panelDepth.Controls.Add(label29);
+            panelDepth.Controls.Add(depthLabel);
+            panelDepth.Controls.Add(label28);
+            panelDepth.Controls.Add(label51);
+            panelDepth.Controls.Add(chngDepthBtn);
+            panelDepth.Controls.Add(label52);
+            panelDepth.Location = new Point(510, 81);
+            panelDepth.Name = "panelDepth";
+            panelDepth.Size = new Size(236, 421);
+            panelDepth.TabIndex = 159;
+            // 
+            // newDepthNum
+            // 
+            newDepthNum.Location = new Point(27, 169);
+            newDepthNum.Name = "newDepthNum";
+            newDepthNum.Size = new Size(150, 27);
+            newDepthNum.TabIndex = 16;
+            newDepthNum.TextAlign = HorizontalAlignment.Right;
+            newDepthNum.Value = new decimal(new int[] { 5, 0, 0, 0 });
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(27, 132);
+            label29.Name = "label29";
+            label29.Size = new Size(120, 20);
+            label29.TabIndex = 15;
+            label29.Text = "Enter new depth:";
+            // 
+            // depthLabel
+            // 
+            depthLabel.AutoSize = true;
+            depthLabel.Location = new Point(138, 70);
+            depthLabel.Name = "depthLabel";
+            depthLabel.Size = new Size(58, 20);
+            depthLabel.TabIndex = 14;
+            depthLabel.Text = "label29";
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Location = new Point(21, 70);
+            label28.Name = "label28";
+            label28.Size = new Size(53, 20);
+            label28.TabIndex = 13;
+            label28.Text = "Depth:";
+            // 
+            // label51
+            // 
+            label51.AutoSize = true;
+            label51.Location = new Point(14, 207);
+            label51.Name = "label51";
+            label51.Size = new Size(0, 20);
+            label51.TabIndex = 12;
+            // 
+            // chngDepthBtn
+            // 
+            chngDepthBtn.Location = new Point(17, 364);
+            chngDepthBtn.Name = "chngDepthBtn";
+            chngDepthBtn.Size = new Size(198, 26);
+            chngDepthBtn.TabIndex = 9;
+            chngDepthBtn.Text = "CHANGE";
+            chngDepthBtn.UseVisualStyleBackColor = true;
+            chngDepthBtn.Click += chngDepthBtn_Click;
+            // 
+            // label52
+            // 
+            label52.AutoSize = true;
+            label52.Location = new Point(66, 11);
+            label52.Name = "label52";
+            label52.Size = new Size(102, 20);
+            label52.TabIndex = 0;
+            label52.Text = "Change depth";
+            // 
             // resetBtn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
+            Controls.Add(panelDepth);
+            Controls.Add(panelSeedApp);
             Controls.Add(panelSettings);
             Controls.Add(panelPlot);
             Controls.Add(panelProp);
             Controls.Add(panelEdit);
-            Controls.Add(groupBox8);
             Controls.Add(panelDelete);
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
@@ -1407,12 +1610,6 @@
             panelDelete.ResumeLayout(false);
             panelDelete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridObj).EndInit();
-            ((System.ComponentModel.ISupportInitialize)widthOfTree).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LengthOfTree).EndInit();
-            ((System.ComponentModel.ISupportInitialize)plotNo).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PropNo).EndInit();
-            groupBox8.ResumeLayout(false);
-            groupBox8.PerformLayout();
             panelEdit.ResumeLayout(false);
             panelEdit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridObj2).EndInit();
@@ -1432,6 +1629,21 @@
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).EndInit();
             panelSettings.ResumeLayout(false);
             panelSettings.PerformLayout();
+            panelSeedApp.ResumeLayout(false);
+            panelSeedApp.PerformLayout();
+            groupBox6.ResumeLayout(false);
+            groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)plotNo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropNo).EndInit();
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)CountNo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DepthNo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LengthOfTree).EndInit();
+            ((System.ComponentModel.ISupportInitialize)widthOfTree).EndInit();
+            panelDepth.ResumeLayout(false);
+            panelDepth.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)newDepthNum).EndInit();
             ResumeLayout(false);
         }
 
@@ -1507,7 +1719,6 @@
         private Label label23;
         private Label label24;
         private RichTextBox richTextBox1;
-        private TextBox textBox1;
         private GroupBox groupBox7;
         private Label label25;
         private NumericUpDown numericUpDown3;
@@ -1519,14 +1730,8 @@
         private DataGridView dataGridObj;
         private NumericUpDown widthOfTree;
         private NumericUpDown LengthOfTree;
-        private Label label28;
-        private Label label29;
-        private Label label30;
-        private Label label31;
         private NumericUpDown plotNo;
         private NumericUpDown PropNo;
-        private GroupBox groupBox8;
-        private Button seedBtn;
         private Panel panelEdit;
         private DataGridView dataGridObj2;
         private Button editBtn;
@@ -1565,5 +1770,22 @@
         private Label label45;
         private Button importBtn;
         private Button resetAppBtn;
+        private Button seedAppBtn;
+        private Panel panelSeedApp;
+        private Button seedBtn2;
+        private Label label48;
+        private Label label46;
+        private Label label47;
+        private NumericUpDown CountNo;
+        private NumericUpDown DepthNo;
+        private Button changeDepthBtn;
+        private Panel panelDepth;
+        private NumericUpDown newDepthNum;
+        private Label label29;
+        private Label depthLabel;
+        private Label label28;
+        private Label label51;
+        private Button chngDepthBtn;
+        private Label label52;
     }
 }
