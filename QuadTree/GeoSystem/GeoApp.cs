@@ -3,6 +3,7 @@ using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,10 +54,85 @@ namespace QuadTree.GeoSystem
 
         public bool RemoveObj(Polygon obj) 
         {
-            return _area.RemoveObject(obj);
 
-            //aj z listu ich referencii odstranich samu seba
+            //need to find object to remove it from list
+            //same as editing and deleting 
+            //find objects on same gps
+            //if equals -> delete it from references in lists
 
+            //ak sa podari vymazat obj ak je to prop tak najdem vsetky ploty ktore sa nachadzaju v ramci 
+
+            if (obj is Property)
+            {
+                //sear for plots
+                var list = FindInterval((new Coordinates(((Property)obj)._borders.startP._x, ((Property)obj)._borders.startP._y, 0), new Coordinates(((Property)obj)._borders.endP._x, ((Property)obj)._borders.endP._y, 0)));
+
+                var potentialObjList = list.OfType<Property>().ToList();
+                Property obj_to_rem = null;
+
+                foreach (var potObj in potentialObjList)
+                {
+                    if (((Property)potObj).Equals(((Property)obj)))
+                    {
+                        obj_to_rem = potObj;
+                        break;
+                    }
+                }
+
+                if (obj_to_rem != null)
+                {
+                    //list of plots interfering with obj coordinates
+                    var plotList = list.OfType<PlotOfLand>().ToList();
+                    foreach (var item in plotList)
+                    {
+                        ((PlotOfLand)item)._properties.Remove((Property)obj_to_rem);
+                    }
+                    //now its possible to remove
+                    return _area.RemoveObject(obj);
+
+
+                }
+            }
+            else
+            {
+                //search for properties v ramci plotu
+                var list = FindInterval((new Coordinates(((PlotOfLand)obj)._coordinates.startPos._x, ((PlotOfLand)obj)._coordinates.startPos._y, 0), new Coordinates(((PlotOfLand)obj)._coordinates.endPos._x, ((PlotOfLand)obj)._coordinates.endPos._y, 0)));
+
+                var potentialPlotList = list.OfType<PlotOfLand>().ToList();
+                PlotOfLand plot_to_rem = null;
+
+                foreach (var potPlot in potentialPlotList)
+                {
+                    if (((PlotOfLand)potPlot).Equals(((PlotOfLand)obj)))
+                    {
+                        plot_to_rem = potPlot;
+                        break;
+                    }
+                }
+
+
+                if (plot_to_rem != null)
+                {
+
+                    //list of properties that plot needs to be removed
+                    var propList = list.OfType<Property>().ToList();
+
+                    foreach (var item in propList)
+                    {
+                        ((Property)item)._lands.Remove((PlotOfLand)plot_to_rem);
+                    }
+
+                    return _area.RemoveObject(obj);
+
+                }
+                else
+                {
+                    var debug = 0;
+                }
+
+            }
+            return false;
+            
         }
 
         public List<Polygon> FindInterval((Coordinates startPos, Coordinates endPos) coordinates) 

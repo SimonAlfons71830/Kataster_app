@@ -288,6 +288,7 @@ namespace QuadTree.QTree
                             int oldCount = current._objects.Count;
 
                             current._objects.Remove(_obj);
+                            
 
                             //HEALTH CHECK
                             if (oldCount > MAX_QUAD_CAPACITY && current._objects.Count <= MAX_QUAD_CAPACITY)
@@ -306,6 +307,7 @@ namespace QuadTree.QTree
                             }
 
                             this._objectsCount--;
+                            
                             return true;
                         }
                     }
@@ -315,14 +317,103 @@ namespace QuadTree.QTree
                     pathToObject.Add(current);
                 }
                 //notfound
+                
                 return false;
             }
             else
             {
+                
                 return false;
             }
 
         }
+
+        /*public ISpatialObject RemoveObjectReturn(ISpatialObject _object)
+        {
+            //find object
+            //if quad that would containd P is empty return null
+            //else remove P change to empty
+            //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
+            //ak dvaja surodenci obsahuju bod tak ich necham tak
+
+            var listOfObjectsOnThePositions = this.IntervalSearch(new Boundaries(_object._x, _object._y, _object._x, _object._y), true);
+            ISpatialObject objectDelete = null;
+
+            foreach (ISpatialObject _item in listOfObjectsOnThePositions)
+            {
+                if (_object is Polygon && _item is Polygon)
+                {
+                    if (((Polygon)_object).Equals((Polygon)_item))
+                    {
+                        objectDelete = _item;
+                        break;
+                    }
+                }
+                else if (_object is MyPoint && _item is MyPoint)
+                {
+                    if (((MyPoint)_object).Equals((MyPoint)_item))
+                    {
+                        objectDelete = _item;
+                        break;
+                    }
+                }
+            }
+
+            List<Quad> pathToObject = new List<Quad>();
+            pathToObject.Add(_root);
+            if (objectDelete != null)
+            {
+                Quad current = _root;
+                Quad parent = null;
+                while (current != null)
+                {
+                    foreach (var _obj in current._objects)
+                    {
+                        if (_obj == objectDelete)
+                        {
+                            int oldCount = current._objects.Count;
+
+                            current._objects.Remove(_obj);
+
+
+                            //HEALTH CHECK
+                            if (oldCount > MAX_QUAD_CAPACITY && current._objects.Count <= MAX_QUAD_CAPACITY)
+                            {
+                                if (TreeHealth.Value < 100)
+                                {
+                                    TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
+                                }
+
+                            }
+
+                            if (parent != null)
+                            {
+                                //this.Rejoin(current, parent);
+                                this.RejoinUpdate(pathToObject);
+                            }
+
+                            this._objectsCount--;
+                            return _obj;
+                            //return true;
+                        }
+                    }
+                    //not in the current -> search childQuad
+                    parent = current;
+                    current = objectDelete.FindQuadUpdate(current);
+                    pathToObject.Add(current);
+                }
+                //notfound
+                return null;
+                //return false;
+            }
+            else
+            {
+                return null;
+                //return false;
+            }
+
+        }*/
+
 
         public void RejoinUpdate(List<Quad> pathToObject)
         {
