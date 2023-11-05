@@ -280,7 +280,7 @@ namespace QuadTree.UI
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            coordinatesIS = (new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0), new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0));
+            coordinatesIS = (new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0), new Coordinates((double)longitudeNum.Value + 1, (double)latitudeNum.Value + 1, 0));
             list = _app.FindOBJInterval(coordinatesIS, true, rbProp.Checked);
 
             propInfo.Clear();
@@ -478,7 +478,7 @@ namespace QuadTree.UI
 
                 if (typeOfObj.Equals("Property"))
                 {
-                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
+                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null)))
                     {
                         //remove from grid
                         dataGridObj.Rows.Remove(selectedRow);
@@ -489,7 +489,7 @@ namespace QuadTree.UI
                 }
                 else
                 {
-                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null)))
+                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null)))
                     {
                         //removefrom grid
                         dataGridObj.Rows.Remove(selectedRow);
@@ -620,7 +620,7 @@ namespace QuadTree.UI
                     panelProp.Hide();
                     panelPlot.Show();
 
-                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
+                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
 
                     if (originalPlot != null)
                     {

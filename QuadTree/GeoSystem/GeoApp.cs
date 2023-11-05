@@ -274,8 +274,8 @@ namespace QuadTree.GeoSystem
                             double coordX = double.Parse(numericPartX);
 
                             //double coordY = double.Parse(parts[3]);
-                            string rawCoordY = parts[2];
-                            string numericPartY = new string(rawCoordX.Reverse().SkipWhile(char.IsLetter).Reverse().ToArray());
+                            string rawCoordY = parts[3];
+                            string numericPartY = new string(rawCoordY.Reverse().SkipWhile(char.IsLetter).Reverse().ToArray());
                             double coordY = double.Parse(numericPartY);
 
                             string description = parts[4];
