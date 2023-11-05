@@ -311,73 +311,45 @@ namespace QuadTree.QTree
             return null;
         }
 
-        /// <summary>
-        /// Removing the object from QuadTree.
-        /// </summary>
-        /// <param name="_object"></param>
-        /// <returns></returns>
-        public bool RemoveObject(ISpatialObject _object)
+        
+       /* public bool RemoveObject(ISpatialObject _object)
         {
             //find object
             //if quad that would containd P is empty return null
             //else remove P change to empty
             //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
             //ak dvaja surodenci obsahuju bod tak ich necham tak
+            
 
+            //vyhladanie objektu podla vstupneho parametra, ktorym je objekt s rovnakymi atributami
             var listOfObjectsOnThePositions = this.IntervalSearch(new Boundaries(_object._x, _object._y, _object._x, _object._y),true);
             ISpatialObject objectDelete = null;
 
-            foreach (var _item in listOfObjectsOnThePositions) 
+            foreach (ISpatialObject _item in listOfObjectsOnThePositions) 
             {
-                if (_item.Equals(_object))
+                if (_object is Polygon && _item is Polygon)
                 {
-                    objectDelete = _item;
-                    break;
-                }
-            }
-            if (objectDelete != null)
-            {
-                Quad current = _root;
-                Quad parent = null;
-                while (current != null)
-                {
-                    foreach (var _obj in current._objects)
+                    if (((Polygon)_object).Equals(((Polygon)_item)))
                     {
-                        if (_obj == _object)
-                        {
-                            current._objects.Remove(_obj);
-
-                            this.Rejoin(current, parent);
-
-                            this._objectsCount--;
-                            return true;
-                        }
+                        objectDelete = _item;
+                        break;
                     }
-                    //not in the current -> search childQuad
-                    parent = current;
-                    current = objectDelete.FindQuad(current);
                 }
-                //notfound
-                return false;
+                else if (_object is MyPoint && _item is MyPoint)
+                {
+                    if (((MyPoint)_object).Equals((MyPoint)_item))
+                    {
+                        objectDelete = _item;
+                        break;
+                    }
+                }
+
+
             }
-            else
-            {
-                return false;
-            }
 
-        }
-
-        /*public bool RemoveObjectUpdate(ISpatialObject _object)
-        {
-            //find object
-            //if quad that would containd P is empty return null
-            //else remove P change to empty
-            //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
-            //ak dvaja surodenci obsahuju bod tak ich necham tak
-
-            var objectDelete = this.PointSearch(_object);
             List<Quad> pathToObject = new List<Quad>();
             pathToObject.Add(_root);
+
             if (objectDelete != null)
             {
                 Quad current = _root;
@@ -396,13 +368,14 @@ namespace QuadTree.QTree
                                 this.RejoinUpdate(pathToObject);
                             }
                             
+
                             this._objectsCount--;
                             return true;
                         }
                     }
                     //not in the current -> search childQuad
                     parent = current;
-                    current = objectDelete.FindQuadUpdate(current);
+                    current = objectDelete.FindQuad(current);
                     pathToObject.Add(current);
                 }
                 //notfound
@@ -415,12 +388,7 @@ namespace QuadTree.QTree
 
         }*/
 
-        /// <summary>
-        /// Rejoining the split of the child quad if the conditions are met.
-        /// </summary>
-        /// <param name="current"></param>
-        /// <param name="parent"></param>
-        public void Rejoin(Quad current, Quad parent)
+        /*public void Rejoin(Quad current, Quad parent)
         {
             //joining of the split quad
             if (current.getNW() == null)
@@ -459,12 +427,185 @@ namespace QuadTree.QTree
 
             }
         }
+*/
+        /// <summary>
+        /// Removing the object from QuadTree.
+        /// </summary>
+        /// <param name="_object"></param>
+        /// <returns></returns>
+        public bool RemoveObject(ISpatialObject _object)
+        {
+            //find object
+            //if quad that would containd P is empty return null
+            //else remove P change to empty
+            //ak max jeden z childnodov ma nejaky bod tak zucim tieto childnody
+            //ak dvaja surodenci obsahuju bod tak ich necham tak
+
+
+            //vyhladanie objektu podla vstupneho parametra, ktorym je objekt s rovnakymi atributami
+            var listOfObjectsOnThePositions = this.IntervalSearch(new Boundaries(_object._x, _object._y, _object._x, _object._y), true);
+            ISpatialObject objectDelete = null;
+
+            foreach (ISpatialObject _item in listOfObjectsOnThePositions)
+            {
+                if (_object is Polygon && _item is Polygon)
+                {
+                    if (((Polygon)_object).Equals(((Polygon)_item)))
+                    {
+                        objectDelete = _item;
+                        break;
+                    }
+                }
+                else if (_object is MyPoint && _item is MyPoint)
+                {
+                    if (((MyPoint)_object).Equals((MyPoint)_item))
+                    {
+                        objectDelete = _item;
+                        break;
+                    }
+                }
+
+
+            }
+
+
+            List<Quad> pathToObjectQ = new List<Quad>();
+            pathToObjectQ.Add(_root);
+
+            if (objectDelete != null)
+            {
+                Quad current = _root;
+                while (current != null)
+                {
+                    foreach (var _obj in current._objects)
+                    {
+                        if (_obj == _object)
+                        {
+                            current._objects.Remove(_obj);
+                            this._objectsCount--;
+                            //this.Rejoin(current, parent);
+                            this.Rejoin(pathToObjectQ);
+                            
+                            
+                            return true;
+                        }
+                    }
+                    //not in the current -> search childQuad
+                    current = objectDelete.FindQuad(current);
+                    pathToObjectQ.Add(current);
+                }
+                //notfound
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// Rejoining the split of the child quad if the conditions are met.
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="parent"></param>
+        public void Rejoin(List<Quad> pathToObject)
+        {
+            //objekt mazany z roota
+            if (pathToObject.Count == 1)
+            {
+                if (_objectsCount < MAX_QUAD_CAPACITY)
+                {
+                    //root je posledny quad
+                    Queue<Quad> q = new Queue<Quad>();
+                    q.Enqueue(pathToObject.ElementAt(0));
+                    List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+
+                    while (q.Count > 0)
+                    {
+                        var quad = q.Dequeue();
+                        objectsToReinsert.AddRange(quad._objects);
+                        quad._objects.Clear();
+                        if (quad._southEast != null)
+                        {
+                            q.Enqueue(quad._southEast);
+                            q.Enqueue(quad._northEast);
+                            q.Enqueue(quad._southWest);
+                            q.Enqueue(quad._northWest);
+                        }
+                    }
+
+                    if (objectsToReinsert.Count < MAX_QUAD_CAPACITY)
+                    {
+                        _root._objects.AddRange(objectsToReinsert);
+
+                        _root._northEast = null;
+                        _root._northWest = null;
+                        _root._southEast = null;
+                        _root._southWest = null;
+
+                    }
+                }
+            }
+
+            while (pathToObject.Count > 1)
+            {
+                //posledny quad kde bol mazany objekt
+                var current = pathToObject.ElementAt(pathToObject.Count - 1);
+                var parent = pathToObject.ElementAt(pathToObject.Count - 2);
+
+                //joining of the split quad
+                //if (current.getNW() == null)
+                //{
+                    //spocitam objekty parentovych potomkov
+                    Queue<Quad> parentQuads = new Queue<Quad>();
+                    parentQuads.Enqueue(parent);
+                    var count = 0;
+                    List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
+
+                    while (parentQuads.Count > 0)
+                    {
+
+                        Quad quad = parentQuads.Dequeue();
+                        count += quad._objects.Count;
+
+                        objectsToReinsert.AddRange(quad._objects);
+
+                        if (quad._southEast != null)
+                        {
+                            parentQuads.Enqueue(quad.getNW());
+                            parentQuads.Enqueue(quad.getSW());
+                            parentQuads.Enqueue(quad.getNE());
+                            parentQuads.Enqueue(quad.getSE());
+                        }
+
+                    }
+                    if (count <= MAX_QUAD_CAPACITY)
+                    {
+                        parent._southWest = null;
+                        parent._northEast = null;
+                        parent._northWest = null;
+                        parent._southEast = null;
+
+                        parent._objects = objectsToReinsert;
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    pathToObject.RemoveAt(pathToObject.Count - 1);
+
+             }
+        }
+
+
 
         /*public void RejoinUpdate(List<Quad> pathToObject)
         {
             while (pathToObject.Count >= 2)
             {
-                var current = pathToObject.ElementAt(pathToObject.Count-1);
+                var current = pathToObject.ElementAt(pathToObject.Count - 1);
                 var parent = pathToObject.ElementAt(pathToObject.Count - 2);
 
                 //joining of the split quad
@@ -505,8 +646,8 @@ namespace QuadTree.QTree
                         parent._objects = objectsToReinsert;
                     }
 
-                    pathToObject.RemoveAt(pathToObject.Count-1);
-                    
+                    pathToObject.RemoveAt(pathToObject.Count - 1);
+
                 }
 
                 if (current.getNW() != null)
