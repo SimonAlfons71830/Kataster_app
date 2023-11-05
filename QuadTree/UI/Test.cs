@@ -34,7 +34,7 @@ namespace QuadTree
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            
             if (checkBoxSeed.Checked)
             {
                 rand = new Random(0);
@@ -49,6 +49,7 @@ namespace QuadTree
                 if (radioButtonMyQtree.Checked)
                 {
                     _test.changeStruct(new MyQuadTree(new Boundaries(0, 0, (double)width_tree.Value, (double)heigth_tree.Value), (int)maxDepth.Value, (int)numberOfObjects.Value));
+                    ((MyQuadTree)_test.quadTree).wantOptimizing = checkBoxWantOpt.Checked;
                 }
                 else
                 {
@@ -149,6 +150,10 @@ namespace QuadTree
                     richTextBox1.Text += "\n" + _test.failedObj.ElementAt(i)._x + " , " + _test.failedObj.ElementAt(i)._y;
                 }
 
+                if (_test.quadTree is MyQuadTree)
+                {
+                    healtCheck.Text = ((MyQuadTree)_test.quadTree).TreeHealth.Value.ToString();
+                }
 
                 //redraws the panel
                 this.QuadPanel.Invalidate();
@@ -259,13 +264,20 @@ namespace QuadTree
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (_test.quadTree is MyQuadTree)
+            {
+                healtCheck.Text = ((MyQuadTree)_test.quadTree).TreeHealth.Value.ToString();
+            }
         }
 
         private void setNewDepthButton_Click(object sender, EventArgs e)
         {
             _test.quadTree.SetNewDepth((int)maxDepth.Value);
             _test.quadTree._maxDepth = (int)maxDepth.Value;
+            if (_test.quadTree is MyQuadTree)
+            {
+                healtCheck.Text = ((MyQuadTree)_test.quadTree).TreeHealth.Value.ToString();
+            }
             this.QuadPanel.Invalidate();
         }
 

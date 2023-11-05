@@ -127,35 +127,70 @@ namespace QuadTree.GeoSystem
 
             for (int i = 0; i < numberOfProp; i++)
             {
+                double X0 = (int)_area._dimension.X0;
+                double Xk = (int)_area._dimension.Xk;
+
+                double Y0 = (int)_area._dimension.Y0;
+                double Yk = (int)_area._dimension.Yk;
+
                 //nechat ako double ???
-                double startPosX = _random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk);
-                double startPosY = _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk);
+                /*double startPosX = _random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk);
+                double startPosY = _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk);.
+                string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count - 1));
+                this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));*/
 
-                string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count-1));
+                double startPosX = _random.NextDouble() * (Xk - X0) + X0;
+                double startPosY = _random.NextDouble() * (Yk - Y0) + Y0;
 
+                string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count - 1));
                 this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));
+
             }
 
             for (int i = 0; i < numberOfPlot; i++)
             {
-                var rozmer = 0;
+                /* var rozmer = 0;
+                 if ((this._area._dimension.Xk - this._area._dimension.X0) > (this._area._dimension.Yk - this._area._dimension.Y0))
+                 {
+                     rozmer = _random.Next(1, (int)(this._area._dimension.Yk - this._area._dimension.Y0) / 5);
+                 }
+                 else
+                 {
+                     rozmer = _random.Next(1, (int)(this._area._dimension.Xk - this._area._dimension.X0) / 5);
+                 }
+
+                 var startPosGen = new MyPoint(_random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk - rozmer), _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk - rozmer), _random.Next(1000000));
+                 var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, _random.Next(100000));
+
+                 string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
+
+                 // var _object = new Polygon(_random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+
+                 this.AddPlot(numberOfProp + i, desc , (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
+ */
+                var rozmer = 0.0; // Change the data type to double
                 if ((this._area._dimension.Xk - this._area._dimension.X0) > (this._area._dimension.Yk - this._area._dimension.Y0))
                 {
-                    rozmer = _random.Next(1, (int)(this._area._dimension.Yk - this._area._dimension.Y0) / 5);
+                    rozmer = _random.NextDouble() * ((this._area._dimension.Yk - this._area._dimension.Y0) / 5.0);
                 }
                 else
                 {
-                    rozmer = _random.Next(1, (int)(this._area._dimension.Xk - this._area._dimension.X0) / 5);
+                    rozmer = _random.NextDouble() * ((this._area._dimension.Xk - this._area._dimension.X0) / 5.0);
                 }
 
-                var startPosGen = new MyPoint(_random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk - rozmer), _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk - rozmer), _random.Next(1000000));
-                var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, _random.Next(100000));
+                var startPosGen = new MyPoint(
+                    _random.NextDouble() * (this._area._dimension.Xk - rozmer) + this._area._dimension.X0,
+                    _random.NextDouble() * (this._area._dimension.Yk - rozmer) + this._area._dimension.Y0,
+                    _random.Next(1000000));
+
+                var endPosGen = new MyPoint(
+                    startPosGen._x + rozmer,
+                    startPosGen._y + rozmer,
+                    _random.Next(100000));
 
                 string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
 
-                // var _object = new Polygon(_random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
-
-                this.AddPlot(numberOfProp + i, desc , (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
+                this.AddPlot(numberOfProp + i, desc, (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
 
             }
 

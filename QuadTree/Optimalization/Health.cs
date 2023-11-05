@@ -14,7 +14,12 @@ namespace QuadTree.Optimalization
 
         public void CalculateNewHealthObjCountInQuad(int actualObjCount, int maxObjCount) 
         { 
+            
             Value -= (actualObjCount - maxObjCount) * HEALTH_KOEF;
+            if (Value < 0)
+            {
+                Value = 0;
+            }
         }
 
         public void Reset()
@@ -26,14 +31,16 @@ namespace QuadTree.Optimalization
         {
             // Calculate the change in actualObjCount
 
-            /*if (actualObjCount <= maxObjCount)
-            {*/
-                int change = Math.Abs(actualObjCount - maxObjCount);
-
-                // Reverse the health adjustment
+            if (actualObjCount <= maxObjCount)
+            {
+                int change = 1;
                 Value += change * HEALTH_KOEF;
-            //}
-
+            }
+            else
+            {
+                //v opacnom pripade sa strom nezlepsil
+                int change = Math.Abs(actualObjCount - maxObjCount);
+            }
         }
     }
 }

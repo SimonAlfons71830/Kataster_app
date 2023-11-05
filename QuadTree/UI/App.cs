@@ -67,7 +67,14 @@ namespace QuadTree.UI
             max_quad_cap = 2;
             max_depth = 10;
 
+            _app._area.wantOptimizing = checkBoxWantOpt.Checked;
             _app.seedApp(500, 500, 20, 10, max_quad_cap, max_depth);
+
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            if (this._app._area.TreeHealth.Value < 20)
+            {
+                MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
+            }
             if (_app._area.wasOptimalized)
             {
                 this.improveLBL.Text = _app._area.improvement.ToString();
@@ -95,27 +102,29 @@ namespace QuadTree.UI
             panelSettings.Hide();
 
             dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
-            dataObjToRemove.Columns.Add("S_x", typeof(int));
-            dataObjToRemove.Columns.Add("S_y", typeof(int));
-            dataObjToRemove.Columns.Add("E_x", typeof(int));
-            dataObjToRemove.Columns.Add("E_y", typeof(int));
+            dataObjToRemove.Columns.Add("S_x", typeof(double));
+            dataObjToRemove.Columns.Add("S_y", typeof(double));
+            dataObjToRemove.Columns.Add("E_x", typeof(double));
+            dataObjToRemove.Columns.Add("E_y", typeof(double));
             dataObjToRemove.Columns.Add("Type");
 
 
 
             //naplnit datagrid objektami
-            var list = _app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
-                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0)));
 
-            this.redoGrids(list);
+
+            this.redoGrids();
 
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
 
             this.QuadPanel.Invalidate();
         }
 
-        private void redoGrids(List<Polygon> list)
+        private void redoGrids()
         {
+            var list = _app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
+                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0)));
+
             dataObjToRemove.Rows.Clear();
             foreach (var item in list)
             {
@@ -383,6 +392,7 @@ namespace QuadTree.UI
 
             _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLong.Value, (double)posLat.Value, 0)));
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.redoGrids();
             this.QuadPanel.Invalidate(true);
 
         }
@@ -413,6 +423,7 @@ namespace QuadTree.UI
 
             _app.AddPlot(registerNumber, PlotDesc.Text, (new Coordinates((double)startPosPlotLong.Value, (double)startPosPlotLat.Value, 0), new Coordinates((double)endPosPlotLong.Value, (double)endPosPlotLat.Value, 0)));
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.redoGrids();
             this.QuadPanel.Invalidate(true);
         }
 
@@ -449,7 +460,7 @@ namespace QuadTree.UI
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            if (dataGridObj.SelectedRows.Count > 0 )
+            if (dataGridObj.SelectedRows.Count > 0)
             {
 
 
@@ -530,9 +541,14 @@ namespace QuadTree.UI
             wasSeeded = true;
             _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, max_quad_cap, max_depth);
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            if (this._app._area.TreeHealth.Value < 20)
+            {
+                MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
+            }
             if (_app._area.wasOptimalized)
             {
                 this.improveLBL.Text = _app._area.improvement.ToString();
+
             }
             else
             {
@@ -581,7 +597,7 @@ namespace QuadTree.UI
                     panelPlot.Hide();
                     panelProp.Show();
 
-                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates((int)startPosX, (int)startPosY, 0), new Coordinates((int)endPosX, (int)endPosY, 0)), null));
+                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
 
                     if (originalProp != null)
                     {
@@ -706,6 +722,8 @@ namespace QuadTree.UI
                     dataGridObj2.Refresh();
                 }
             }
+
+
         }
 
         private void settingsButton_Click(object sender, EventArgs e)
@@ -731,6 +749,7 @@ namespace QuadTree.UI
             MessageBox.Show("Export Finished.");
         }
 
+        //import
         private void button1_Click(object sender, EventArgs e)
         {
             panelDepth.Hide();
@@ -791,11 +810,18 @@ namespace QuadTree.UI
         private void seedBtn2_Click(object sender, EventArgs e)
         {
             wasSeeded = true;
+
+            _app._area.wantOptimizing = checkBoxWantOpt.Checked;
+
             _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, (int)CountNo.Value, (int)DepthNo.Value);
-            this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
-                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));
+            this.redoGrids();
             panelSeedApp.Hide();
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            if (this._app._area.TreeHealth.Value < 20)
+            {
+                MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
+            }
+
             if (_app._area.wasOptimalized)
             {
                 this.improveLBL.Text = _app._area.improvement.ToString();
@@ -822,8 +848,7 @@ namespace QuadTree.UI
         {
 
             this._app.ChangeDepth((int)newDepthNum.Value);
-            this.redoGrids(_app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
-                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0))));
+            this.redoGrids();
             panelDepth.Hide();
             this.QuadPanel.Invalidate();
         }

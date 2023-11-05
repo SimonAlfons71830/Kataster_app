@@ -2,6 +2,7 @@
 using QuadTree.Structures;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace QuadTree.QTree
         public Health TreeHealth { get; set; } = new Health();
         public bool wasOptimalized = false;
         public double improvement = 0;
+        public Queue<Quad> needsToBeImproved = new Queue<Quad>();
+        public bool wantOptimizing = false;
+
 
 
         public int _maxDepth { get ; set ; }
@@ -92,15 +96,24 @@ namespace QuadTree.QTree
 
         public bool NeedToSplit(Quad quad)
         {
-            if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level >= _maxDepth)
+            if (wantOptimizing)
             {
-                this.TreeHealth.CalculateNewHealthObjCountInQuad(quad._objects.Count, MAX_QUAD_CAPACITY);
-
-                if(this.TreeHealth.Value < 50)
+                if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level >= _maxDepth)
                 {
-                    this.Optimize();
+                    this.TreeHealth.CalculateNewHealthObjCountInQuad(quad._objects.Count, MAX_QUAD_CAPACITY);
+
+                    if (this.TreeHealth.Value < 50)
+                    {
+                        this.Optimize();
+                    }
                 }
             }
+            /*if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth)
+            {
+                // nie su este uplne na max depth ktory sa rozdeluje neskor v optimalizacii
+
+                needsToBeImproved.Enqueue(quad);
+            }*/
 
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
 
@@ -272,7 +285,19 @@ namespace QuadTree.QTree
                     {
                         if (_obj == objectDelete)
                         {
+                            int oldCount = current._objects.Count;
+
                             current._objects.Remove(_obj);
+
+                            //HEALTH CHECK
+                            if (oldCount > MAX_QUAD_CAPACITY && current._objects.Count <= MAX_QUAD_CAPACITY)
+                            {
+                                if (TreeHealth.Value < 100)
+                                {
+                                    TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
+                                }
+                                
+                            }
 
                             if (parent != null)
                             {
@@ -430,6 +455,7 @@ namespace QuadTree.QTree
                 Quad current = growingQuads.Dequeue();
                 if (current._objects.Count > 0)
                 {
+                    int oldCurrentCount = current._objects.Count;
                     //if it has to grow i just need to take the quads from list that has the same level as the newDepth and split them until the level is reached
                     current.splitQuadUpdate(this.findCentroid(current._objects));
                     //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
@@ -449,12 +475,17 @@ namespace QuadTree.QTree
                         pomC = rQuad;
                         if (rQuad != null)
                         {
+                            //quad sa bude delit az kym nedosiahne desiredDepth ak su v nom nejake objekty
                             if (rQuad._objects.Count != 0 && rQuad.level < desiredDepth)
                             {
                                 growingQuads.Enqueue(rQuad);
                             }
                             //otherwise we do not have to split more
                         }
+                    }
+                    if (oldCurrentCount > MAX_QUAD_CAPACITY && oldCurrentCount > current._objects.Count && current._objects.Count < MAX_QUAD_CAPACITY)
+                    {
+                        TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
                     }
                 }
             }
@@ -598,7 +629,74 @@ namespace QuadTree.QTree
                 }
             }
 
-            improvement = TreeHealth.Value - oldHealth;
+            improvement += TreeHealth.Value - oldHealth;
+
+
+            /*//other quads
+            while (needsToBeImproved.Count > 0)
+            {
+                Quad current = needsToBeImproved.Dequeue();
+
+                var pomcentroid = findCentroid(current._objects);
+
+                if (!pomcentroid.Equals(new MyPoint(current._northEast._boundaries.X0, current._northEast._boundaries.Y0,-1)))
+                {
+                    //skusit to nanovo rozdelit
+
+                    //pozbierat vsetky objekty z potomkov
+                    List<ISpatialObject> objectsList = new List<ISpatialObject>();
+                    Queue<Quad> quadQueue = new Queue<Quad>();
+
+                    // Start with the current quad
+                    quadQueue.Enqueue(current);
+
+                    while (quadQueue.Count > 0)
+                    {
+                        Quad quad = quadQueue.Dequeue();
+                        objectsList.AddRange(quad._objects);
+
+                        // Enqueue child quads
+                        if (quad.getNE() != null)
+                        {
+                            quadQueue.Enqueue(quad.getNE());
+                            quadQueue.Enqueue(quad.getNW());
+                            quadQueue.Enqueue(quad.getSW());
+                            quadQueue.Enqueue(quad.getSE());
+                        }
+                    }
+
+                    //remove the references to childs
+                    current._northEast = null;
+                    current._northWest= null;
+                    current._southEast = null;
+                    current._southWest = null;
+
+
+                    if (current._northEast.level > maxDepth)
+                    {
+                        maxDepth = current._northEast.level;
+                    }
+
+                    while (objectsList.Count > 0)
+                    {
+                        //find the right quad for objects
+                        var rObject = objectsList.ElementAt(0);
+                        objectsList.RemoveAt(0);
+
+                        Quad? rQuad = rObject.FindQuadUpdate(current);
+
+                        (rQuad ?? current)._objects.Add(rObject);
+
+                    }
+
+                }
+                else
+                {
+                    //centroid sa nezmenil - nepomoze nam split
+                    var debug = 0;
+                }
+            }*/
+            
         }
     }
 }

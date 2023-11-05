@@ -130,6 +130,7 @@
             label40 = new Label();
             label41 = new Label();
             panelSettings = new Panel();
+            checkBoxWantOpt = new CheckBox();
             changeDepthBtn = new Button();
             seedAppBtn = new Button();
             resetAppBtn = new Button();
@@ -1300,6 +1301,7 @@
             // panelSettings
             // 
             panelSettings.BackColor = Color.DarkSalmon;
+            panelSettings.Controls.Add(checkBoxWantOpt);
             panelSettings.Controls.Add(changeDepthBtn);
             panelSettings.Controls.Add(seedAppBtn);
             panelSettings.Controls.Add(resetAppBtn);
@@ -1311,6 +1313,17 @@
             panelSettings.Name = "panelSettings";
             panelSettings.Size = new Size(271, 509);
             panelSettings.TabIndex = 158;
+            // 
+            // checkBoxWantOpt
+            // 
+            checkBoxWantOpt.AutoSize = true;
+            checkBoxWantOpt.Location = new Point(93, 92);
+            checkBoxWantOpt.Margin = new Padding(3, 2, 3, 2);
+            checkBoxWantOpt.Name = "checkBoxWantOpt";
+            checkBoxWantOpt.Size = new Size(72, 19);
+            checkBoxWantOpt.TabIndex = 164;
+            checkBoxWantOpt.Text = "optimize";
+            checkBoxWantOpt.UseVisualStyleBackColor = true;
             // 
             // changeDepthBtn
             // 
@@ -1525,6 +1538,7 @@
             // 
             // LengthOfTree
             // 
+            LengthOfTree.DecimalPlaces = 5;
             LengthOfTree.Location = new Point(71, 48);
             LengthOfTree.Margin = new Padding(3, 2, 3, 2);
             LengthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
@@ -1536,6 +1550,7 @@
             // 
             // widthOfTree
             // 
+            widthOfTree.DecimalPlaces = 5;
             widthOfTree.Location = new Point(71, 20);
             widthOfTree.Margin = new Padding(3, 2, 3, 2);
             widthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
@@ -1944,5 +1959,6 @@
         private Label label31;
         private Label improveLBL;
         private Panel panel1;
+        private CheckBox checkBoxWantOpt;
     }
 }

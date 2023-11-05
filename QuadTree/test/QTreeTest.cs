@@ -188,36 +188,73 @@ namespace QuadTree.test
             */
             for (int i = 0; i < (podielFind + podielRemove + podielInsert); i++)
             {
-                var rozmer = 0;
+                /* var rozmer = 0;
+                 if ((this.quadTree._dimension.Xk - this.quadTree._dimension.X0) > (this.quadTree._dimension.Yk - this.quadTree._dimension.Y0))
+                 {
+                     rozmer = random.Next(1, (int)(this.quadTree._dimension.Yk - this.quadTree._dimension.Y0) / 5);
+                 }
+                 else
+                 {
+                     rozmer = random.Next(1, (int)(this.quadTree._dimension.Xk - this.quadTree._dimension.X0) / 5);
+                 }
+
+                 if (this.generateOptions == 1)
+                 {
+                     availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));// 0uniqueNumbersList.ElementAt(i)));
+                 }
+                 else if (this.generateOptions == 2)
+                 {
+                     var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
+                     var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+
+                     var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x,startPosGen._y,startPosGen._registerNumber),new MyPoint(endPosGen._x,endPosGen._y,endPosGen._registerNumber)));
+
+                     availableObjects.Add(_object);
+                 }
+                 else
+                 {
+                     var chance = random.NextDouble();
+                     if (chance > 0.5)
+                     {
+                         //point
+                         availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));
+                     }
+                     else
+                     {
+                         var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
+                         var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+
+                         var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
+
+                         availableObjects.Add(_object);
+                     }
+                 }*/
+
+                //generovanie rozmeru plotu
+                var rozmer = 0.0; // Change the data type to double
                 if ((this.quadTree._dimension.Xk - this.quadTree._dimension.X0) > (this.quadTree._dimension.Yk - this.quadTree._dimension.Y0))
                 {
-                    rozmer = random.Next(1, (int)(this.quadTree._dimension.Yk - this.quadTree._dimension.Y0)/5);
+                    rozmer = random.NextDouble() * ((this.quadTree._dimension.Yk - this.quadTree._dimension.Y0) / 5.0);
                 }
                 else
                 {
-                    rozmer = random.Next(1, (int)(this.quadTree._dimension.Xk - this.quadTree._dimension.X0)/5);
+                    rozmer = random.NextDouble() * ((this.quadTree._dimension.Xk - this.quadTree._dimension.X0) / 5.0);
                 }
-
 
                 if (this.generateOptions == 1)
                 {
-                    availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));// 0uniqueNumbersList.ElementAt(i)));
+                    double startX = random.NextDouble() * (quadTree._dimension.Xk - quadTree._dimension.X0) + quadTree._dimension.X0;
+                    double startY = random.NextDouble() * (quadTree._dimension.Yk - quadTree._dimension.Y0) + quadTree._dimension.Y0;
+                    availableObjects.Add(new MyPoint(startX, startY, random.Next(10000)));
                 }
                 else if (this.generateOptions == 2)
                 {
-                    var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
-                    var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+                    double startX = random.NextDouble() * (quadTree._dimension.Xk - quadTree._dimension.X0 - rozmer) + quadTree._dimension.X0;
+                    double startY = random.NextDouble() * (quadTree._dimension.Yk - quadTree._dimension.Y0 - rozmer) + quadTree._dimension.Y0;
+                    double endX = startX + rozmer;
+                    double endY = startY + rozmer;
 
-                    var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x,startPosGen._y,startPosGen._registerNumber),new MyPoint(endPosGen._x,endPosGen._y,endPosGen._registerNumber)));
-                   /*// _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
-                    //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
-                    var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                    var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                    var top4 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y, random.Next(100000));
-
-                    _object.AddTop(top2);
-                    _object.AddTop(top3);
-                    _object.AddTop(top4);*/
+                    var _object = new Polygon(random.Next(10000), (new MyPoint(startX, startY, random.Next(1000000)), new MyPoint(endX, endY, random.Next(100000))));
 
                     availableObjects.Add(_object);
                 }
@@ -226,32 +263,23 @@ namespace QuadTree.test
                     var chance = random.NextDouble();
                     if (chance > 0.5)
                     {
-                        //point
-                        availableObjects.Add(new MyPoint(random.Next(0, (int)(quadTree._dimension.Xk - quadTree._dimension.X0)), random.Next(0, (int)(quadTree._dimension.Yk - quadTree._dimension.Y0)), random.Next(10000)));
+                        double startX = random.NextDouble() * (quadTree._dimension.Xk - quadTree._dimension.X0) + quadTree._dimension.X0;
+                        double startY = random.NextDouble() * (quadTree._dimension.Yk - quadTree._dimension.Y0) + quadTree._dimension.Y0;
+                        availableObjects.Add(new MyPoint(startX, startY, random.Next(10000)));
                     }
                     else
                     {
-                        var startPosGen = new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000));
-                        var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, random.Next(100000));
+                        double startX = random.NextDouble() * (quadTree._dimension.Xk - quadTree._dimension.X0 - rozmer) + quadTree._dimension.X0;
+                        double startY = random.NextDouble() * (quadTree._dimension.Yk - quadTree._dimension.Y0 - rozmer) + quadTree._dimension.Y0;
+                        double endX = startX + rozmer;
+                        double endY = startY + rozmer;
 
-                        var _object = new Polygon(random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
-
-                        /*//polygon
-                        var _object = new Polygon(uniqueNumbers.ElementAt(i));
-                        _object.AddTop(new MyPoint(random.Next((int)quadTree._dimension.X0, (int)quadTree._dimension.Xk - rozmer), random.Next((int)quadTree._dimension.Y0, (int)quadTree._dimension.Yk - rozmer), random.Next(1000000)));
-                        //vygeneruje prvy vrchol obdlznika a od neho ostatne budu +5
-                        var top2 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                        var top3 = new MyPoint(_object.GetTops().ElementAt(0)._x, _object.GetTops().ElementAt(0)._y + rozmer, random.Next(100000));
-                        var top4 = new MyPoint(_object.GetTops().ElementAt(0)._x + rozmer, _object.GetTops().ElementAt(0)._y, random.Next(100000));
-
-                        _object.AddTop(top2);
-                        _object.AddTop(top3);
-                        _object.AddTop(top4);*/
+                        var _object = new Polygon(random.Next(10000), (new MyPoint(startX, startY, random.Next(1000000)), new MyPoint(endX, endY, random.Next(100000))));
 
                         availableObjects.Add(_object);
                     }
                 }
-                
+
 
 
             }
