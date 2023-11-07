@@ -19,15 +19,15 @@ namespace QuadTree.QTree
 
 
 
-        public int _maxDepth { get ; set ; }
-        public int _objectsCount { get ; set; }
+        public int _maxDepth { get; set; }
+        public int _objectsCount { get; set; }
         public int _objectsSearched { get; set; }
         public int MAX_QUAD_CAPACITY { get; set; }
-        public Boundaries _dimension { get ; set ; }
+        public Boundaries _dimension { get; set; }
         public Quad _root { get; set; }
         public int maxDepth;
 
-        public MyQuadTree(Boundaries dimension,int maxDepth, int max_cap)
+        public MyQuadTree(Boundaries dimension, int maxDepth, int max_cap)
         {
             _maxDepth = maxDepth;
             MAX_QUAD_CAPACITY = max_cap;
@@ -117,7 +117,7 @@ namespace QuadTree.QTree
 
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
 
-            
+
         }
 
         public MyPoint findCentroid(List<ISpatialObject> _objects)
@@ -263,7 +263,7 @@ namespace QuadTree.QTree
                         break;
                     }
                 }
-                else if (_object is MyPoint && _item is MyPoint) 
+                else if (_object is MyPoint && _item is MyPoint)
                 {
                     if (((MyPoint)_object).Equals((MyPoint)_item))
                     {
@@ -296,10 +296,10 @@ namespace QuadTree.QTree
                                 {
                                     TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
                                 }
-                            }                            
-                                //this.Rejoin(current, parent);
-                                this.RejoinUpdate(pathToObject);
-                            
+                            }
+                            //this.Rejoin(current, parent);
+                            this.RejoinUpdate(pathToObject);
+
                             return true;
                         }
                     }
@@ -308,12 +308,12 @@ namespace QuadTree.QTree
                     pathToObject.Add(current);
                 }
                 //notfound
-                
+
                 return false;
             }
             else
             {
-                
+
                 return false;
             }
 
@@ -514,11 +514,11 @@ namespace QuadTree.QTree
                 //tree has to grow
                 this.Grow(list, newDepth);
                 this.maxDepth = newDepth;
-                this._maxDepth = newDepth;    
+                this._maxDepth = newDepth;
             }
             else
             {
-               // var quadsToShrink = this.GetQuadsAtDepth(newDepth);
+                // var quadsToShrink = this.GetQuadsAtDepth(newDepth);
                 //tree has to shrink
                 this.Shrink(newDepth);
                 this.maxDepth = newDepth;
@@ -594,7 +594,7 @@ namespace QuadTree.QTree
                             //otherwise we do not have to split more
                         }
                     }
-                    if (oldCurrentCount > MAX_QUAD_CAPACITY && oldCurrentCount > current._objects.Count && current._objects.Count < MAX_QUAD_CAPACITY)
+                    if (oldCurrentCount > MAX_QUAD_CAPACITY && oldCurrentCount > current._objects.Count && current._objects.Count <= MAX_QUAD_CAPACITY)
                     {
                         TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
                     }
@@ -609,7 +609,7 @@ namespace QuadTree.QTree
             //zoberiem vsetky objekty z quadov od <maxDept, newDepth-1> //nemusim ist uplne po spodok ak je maxDepth mensia
             //jednotlivym objektom najdem kvad na newdepth a vlozim ich do neho
 
- 
+
             List<ISpatialObject> reinsertObj = new List<ISpatialObject>();
             Queue<Quad> quadsAtDesiredDepth = GetQuadsAtDepth(desiredDepth);
             bool isRoot = desiredDepth == 0 ? true : false;
@@ -622,7 +622,7 @@ namespace QuadTree.QTree
             {
                 parentsOfDesiredDepthQuads = GetQuadsAtDepth(desiredDepth - 1);
             }
-            
+
 
 
             //prehladat vsetky quads z nizsich levelov ako je desired depth 
@@ -631,7 +631,7 @@ namespace QuadTree.QTree
             {
                 Queue<Quad> quadsFromMaxD = this.GetQuadsAtDepth(i);
 
-                foreach (Quad quad in quadsFromMaxD) 
+                foreach (Quad quad in quadsFromMaxD)
                 {
                     reinsertObj.AddRange(quad._objects);
                 }
@@ -656,6 +656,11 @@ namespace QuadTree.QTree
                         if (pomQ != null && quadsAtDesiredDepth.Contains(pomQ))
                         {
                             pomQ._objects.Add(_object);
+
+                            if (pomQ._objects.Count > MAX_QUAD_CAPACITY)
+                            {
+                                TreeHealth.CalculateNewHealthObjCountInQuad(pomQ._objects.Count, MAX_QUAD_CAPACITY);
+                            }
                         }
                     }
                 }
@@ -674,7 +679,7 @@ namespace QuadTree.QTree
             }
         }
 
-        public ISpatialObject ShowObject(ISpatialObject _obj) 
+        public ISpatialObject ShowObject(ISpatialObject _obj)
         {
             var foundObj = this.IntervalSearch(new Boundaries(_obj._x, _obj._y, _obj._x, _obj._y), true);
             ISpatialObject objectEdit = null;
@@ -721,7 +726,7 @@ namespace QuadTree.QTree
 
                     Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(quad._objects);
                     quad._objects.Clear();
-                    
+
                     if (quad._northEast.level > maxDepth)
                     {
                         maxDepth = quad._northEast.level;
@@ -807,7 +812,7 @@ namespace QuadTree.QTree
                     var debug = 0;
                 }
             }*/
-            
+
         }
     }
 }

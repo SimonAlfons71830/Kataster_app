@@ -14,23 +14,23 @@ using System.Windows.Forms;
 
 namespace QuadTree.UI
 {
-    public partial class resetBtn : Form
+    public partial class App : Form
     {
-        //List<Property> list = new List<Property>();
         List<Polygon> list = new List<Polygon>();
-        Polygon selectedObject;
 
         private System.Data.DataTable dataObjToRemove = new System.Data.DataTable();
+        private System.Data.DataTable dataWithRangeSearch = new System.Data.DataTable();
 
         public bool wasSeeded = false;
         public int max_quad_cap;
         public int max_depth;
 
-
         //for editing
         private int originalPROPRegisterNumber;
-        private double originalPROPXCoordinate;
-        private double originalPROPYCoordinate;
+        private double originalPROPXCoordinateStart;
+        private double originalPROPYCoordinateStart;
+        private double originalPROPXCoordinateEnd;
+        private double originalPROPYCoordinateEnd;
         private string originalPROPDescription;
         private Property originalProp;
         DataGridViewRow selectedRowProp;
@@ -44,33 +44,36 @@ namespace QuadTree.UI
         private PlotOfLand originalPlot;
         DataGridViewRow selectedRowPlot;
 
-
         (Coordinates start, Coordinates end) coordinatesIS = (new Coordinates(0, 0, 0), new Coordinates(0, 0, 0));
 
+        //DRAWING
         Pen blkpen = new Pen(Color.FromArgb(255, 0, 155, 0), 1);
         Pen redpen = new Pen(Color.FromArgb(255, 155, 0, 0), 2);
         Pen failedPen = new Pen(Color.FromArgb(255, 155, 0, 0), 5);
+
         private GeoApp _app;
         QTreeTest _test;
 
-        public resetBtn(QTreeTest test, GeoApp app)
+        public App(QTreeTest test, GeoApp app)
         {
             InitializeComponent();
             _app = app;
             _test = test;
-
         }
 
         private void App_Load(object sender, EventArgs e)
         {
-            //initial seeding
+            //initial seeding u can change here
             max_quad_cap = 2;
             max_depth = 10;
+            int num_prop = 100;
+            int num_plot = 100;
 
             _app._area.wantOptimizing = checkBoxWantOpt.Checked;
-            _app.seedApp(500, 500, 20, 10, max_quad_cap, max_depth);
+            _app.seedApp(0, 0, 500, 500, num_prop, num_plot, max_quad_cap, max_depth);
 
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+
             if (this._app._area.TreeHealth.Value < 20)
             {
                 MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
@@ -84,40 +87,44 @@ namespace QuadTree.UI
                 this.improveLBL.Text = "NOT\nYET";
             }
 
-            /* _app._area._dimension = new QTree.Boundaries(0, 0, 500, 500);
-             _app._area._root._boundaries = _app._area._dimension;
-             _app._area.MAX_QUAD_CAPACITY = 2;
-             _app._area.Insert(new Property(10000, "New Property", ((new Coordinates(20, 20, 0)), new Coordinates(20, 20, 0)), new List<PlotOfLand>()));
- */
-            panelSearchForProp.Hide();
-            panelGiveRange.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelEdit.Hide();
-            panelDelete.Hide();
-            panelPlot.Hide();
-            panelDepth.Hide();
-            panelProp.Hide();
-            panelSeedApp.Hide();
-            panelSettings.Hide();
+            this.HidePanels();
 
+            //setting columns of the grids
             dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
             dataObjToRemove.Columns.Add("S_x", typeof(double));
             dataObjToRemove.Columns.Add("S_y", typeof(double));
             dataObjToRemove.Columns.Add("E_x", typeof(double));
             dataObjToRemove.Columns.Add("E_y", typeof(double));
             dataObjToRemove.Columns.Add("Type");
+            dataObjToRemove.Columns.Add("Name", typeof(string));
 
-
-
-            //naplnit datagrid objektami
-
+            //new Grid for interval search
+            dataWithRangeSearch.Columns.Add("Reg.Number", typeof(int));
+            dataWithRangeSearch.Columns.Add("DESC", typeof(string));
+            dataWithRangeSearch.Columns.Add("Type"); //PROP / PLOT
+            dataWithRangeSearch.Columns.Add("X0,Y0", typeof((double, double)));
+            dataWithRangeSearch.Columns.Add("Xk,Yk", typeof((double, double)));
 
             this.redoGrids();
 
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-
             this.QuadPanel.Invalidate();
+        }
+
+        /// <summary>
+        /// Hiding panels in GUI
+        /// </summary>
+        private void HidePanels()
+        {
+            panelSearchForProp.Hide();
+            panelGiveRange.Hide();
+            panelAddProp.Hide();
+            panelAddPlot.Hide();
+            panelPlot.Hide();
+            panelProp.Hide();
+            panelSeedApp.Hide();
+            panelDataEditDel.Hide();
+            panelDepth.Hide();
+            panelSettings.Hide();
         }
 
         private void redoGrids()
@@ -138,6 +145,7 @@ namespace QuadTree.UI
                     row[4] = ((Property)item).Coordinates.y._y;
                     //QuadTree.GeoSystem.Property
                     row[5] = ((Property)item).GetType().ToString().Substring(19, 8);
+                    row[6] = ((Property)item)._description;
                 }
                 else
                 {
@@ -146,16 +154,15 @@ namespace QuadTree.UI
                     row[3] = ((PlotOfLand)item).Coordinates.endPos._x;
                     row[4] = ((PlotOfLand)item).Coordinates.endPos._y;
                     row[5] = item.GetType().ToString().Substring(19, 10);
+                    row[6] = ((PlotOfLand)item)._description;
                 }
                 dataObjToRemove.Rows.Add(row);
             }
 
-            dataGridObj.DataSource = dataObjToRemove;
-            dataGridObj2.DataSource = dataObjToRemove;
         }
 
-
-        private void button4_Click(object sender, EventArgs e)
+        //???
+        /*private void button4_Click(object sender, EventArgs e)
         {
             int registerNumber = 0;
             string description = "";
@@ -184,9 +191,17 @@ namespace QuadTree.UI
                     property.Lands.Add((PlotOfLand)pl);
                 }
             }
+            this.redoGrids();
             this.QuadPanel.Invalidate();
-        }
+        }*/
 
+        //DRAWING ==============================================================================================================================================================
+        private void QuadPanel_Paint(object sender, PaintEventArgs e)
+        {
+            this.ClearPanel();
+            this.show(this._app._area._root, e);
+            this.showIntervalSearch(list, e, coordinatesIS);
+        }
 
         private void ClearPanel()
         {
@@ -195,7 +210,6 @@ namespace QuadTree.UI
                 g.Clear(QuadPanel.BackColor);
             }
         }
-
 
         private void show(Quad quad, PaintEventArgs e)
         {
@@ -208,7 +222,8 @@ namespace QuadTree.UI
             float xk = (float)quad._boundaries.Xk;
             float yk = (float)quad._boundaries.Yk;
 
-            e.Graphics.DrawRectangle(blkpen, x0, y0, xk - x0, yk - y0);
+            e.Graphics.DrawRectangle(blkpen, x0, y0, (xk - x0), (yk - y0));
+
             this.showPoints(quad._objects, e);
             if (quad.getNE() != null)
             {
@@ -230,8 +245,6 @@ namespace QuadTree.UI
                     (float)((Polygon)_object)._borders.startP._y,
                     ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x) == 0 ? 1 : ((float)((Polygon)_object)._borders.endP._x - (float)((Polygon)_object)._borders.startP._x),
                     (((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y) == 0) ? 1 : ((float)((Polygon)_object)._borders.endP._y - (float)((Polygon)_object)._borders.startP._y));
-                //e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 155), 2), (float)((Polygon)_object).suradnice.x.Longitude, (float)((Property)_object).suradnice.x.Latitude, (float)((Property)_object).suradnice.y.Longitude - (float)((Property)_object).suradnice.x.Longitude , (float)((Property)_object).suradnice.y.Latitude - (float)((Property)_object).suradnice.x.Latitude);
-
             }
         }
 
@@ -251,26 +264,9 @@ namespace QuadTree.UI
                 }
             }
         }
+        //============================================================================================================================
 
-        private void showFailedFind(List<ISpatialObject> failedPoints, PaintEventArgs e)
-        {
-
-            foreach (var point in failedPoints)
-            {
-                e.Graphics.DrawRectangle(failedPen, (float)point._x, (float)point._y, 2, 2);
-            }
-        }
-
-        private void QuadPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-            this.ClearPanel();
-            this.show(this._app._area._root, e);
-            this.showIntervalSearch(list, e, coordinatesIS);
-            //this.showFailedFind(_test.failedObj, e);
-
-        }
-
+        //reclick to testing window
         private void appbutton_Click(object sender, EventArgs e)
         {
             var test = new Test(_test, _app);
@@ -278,6 +274,7 @@ namespace QuadTree.UI
             test.ShowDialog();
         }
 
+        //standalone search
         private void button2_Click_1(object sender, EventArgs e)
         {
             coordinatesIS = (new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0), new Coordinates((double)longitudeNum.Value + 1, (double)latitudeNum.Value + 1, 0));
@@ -314,20 +311,10 @@ namespace QuadTree.UI
 
         }
 
-
-
+        //NEW RANGE SEARCH MENU BUTTON
         private void giveRangeButton_Click(object sender, EventArgs e)
         {
-            panelSearchForProp.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelDelete.Hide();
-            panelEdit.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSeedApp.Hide();
-            panelDepth.Hide();
-            panelSettings.Hide();
+            this.HidePanels();
             panelGiveRange.Show();
         }
 
@@ -336,48 +323,51 @@ namespace QuadTree.UI
             coordinatesIS = (new Coordinates((double)startPosLong.Value, (double)startPosLat.Value, 0), new Coordinates((double)endPosLong.Value, (double)endPosLat.Value, 0));
             list = _app.FindInterval(coordinatesIS);
 
-            objInfo.Clear();
-            foreach (var property in list)
-            {
-                if (property is Property)
-                {
-                    // Create a string to format the object's details.
-                    string objectDetails = $"PROPERTY\nID: {property._registerNumber}\n" +
-                                          $"Coordinates: ({((Property)property).Coordinates.x.Longitude}, {((Property)property).Coordinates.x.Latitude})\n" +
-                                          $"Description: {((Property)property).Description}\n\n";
+            fillTheGridWithActualData(list);
 
-                    // Append the formatted text to the RichTextBox.
-                    objInfo.AppendText(objectDetails);
+            panelDataEditDel.Show();
+            this.QuadPanel.Invalidate();
+        }
+
+        //NEW GRID WITH DATA FROM RANGE SEARCH
+        private void fillTheGridWithActualData(List<Polygon> objects)
+        {
+            //clear the dataTable binded to grid
+            dataWithRangeSearch.Rows.Clear();
+
+            foreach (var item in list)
+            {
+                DataRow row = dataWithRangeSearch.NewRow();
+                row[0] = item._registerNumber;
+                if (item is Property)
+                {
+                    row[1] = ((Property)item)._description;
+                    //QuadTree.GeoSystem.Property
+                    row[2] = ((Property)item).GetType().ToString().Substring(19, 8);
+                    row[3] = (((Property)item).Coordinates.x._x, ((Property)item).Coordinates.x._y);
+                    row[4] = (((Property)item).Coordinates.y._x, ((Property)item).Coordinates.y._y);
+
+
+
                 }
                 else
                 {
-                    // Create a string to format the object's details.
-                    string objectDetails = $"PLOT\nID: {property._registerNumber}\n" +
-                                          $"Coordinates: ({((PlotOfLand)property).Coordinates.startPos._x}, {((PlotOfLand)property).Coordinates.startPos._y})\n" +
-                                          $"                     ({((PlotOfLand)property).Coordinates.endPos._x}, {((PlotOfLand)property).Coordinates.endPos._y})\n" +
-                                          $"Description: {((PlotOfLand)property).Description}\n\n";
-
-                    // Append the formatted text to the RichTextBox.
-                    objInfo.AppendText(objectDetails);
+                    row[1] = ((PlotOfLand)item)._description;
+                    row[2] = item.GetType().ToString().Substring(19, 10);
+                    row[3] = (((PlotOfLand)item).Coordinates.startPos._x, ((PlotOfLand)item).Coordinates.startPos._y);
+                    row[4] = (((PlotOfLand)item).Coordinates.endPos._x, ((PlotOfLand)item).Coordinates.endPos._y);
 
                 }
-
-                this.QuadPanel.Invalidate();
+                dataWithRangeSearch.Rows.Add(row);
             }
+
+            dataGridEditDelete.DataSource = dataWithRangeSearch;
         }
 
+        //NEW SEARCH INDIVIDUALLY MENU BUTTON
         private void searchPropButton_Click(object sender, EventArgs e)
         {
-            panelGiveRange.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelDelete.Hide();
-            panelEdit.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSettings.Hide();
-            panelDepth.Hide();
-            panelSeedApp.Hide();
+            this.HidePanels();
             panelSearchForProp.Show();
         }
 
@@ -390,25 +380,17 @@ namespace QuadTree.UI
                 registerNumber = rand.Next(1000, 99999);//random number
             }
 
-            _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLong.Value, (double)posLat.Value, 0)));
+            _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLongEnd.Value, (double)posLatEnd.Value, 0)));
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             this.redoGrids();
             this.QuadPanel.Invalidate(true);
 
         }
 
+        //ADD PROP MENU BUTTON
         private void addPropButton_Click(object sender, EventArgs e)
         {
-            panelGiveRange.Hide();
-            panelSearchForProp.Hide();
-            panelAddPlot.Hide();
-            panelDelete.Hide();
-            panelEdit.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSeedApp.Hide();
-            panelSettings.Hide();
-            panelDepth.Hide();
+            this.HidePanels();
             panelAddProp.Show();
         }
 
@@ -427,37 +409,20 @@ namespace QuadTree.UI
             this.QuadPanel.Invalidate(true);
         }
 
+        //ADD PLOT MENU BUTTON
         private void addPlotButton_Click(object sender, EventArgs e)
         {
-            panelGiveRange.Hide();
-            panelSearchForProp.Hide();
-            panelAddProp.Hide();
-            panelDelete.Hide();
-            panelEdit.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSeedApp.Hide();
-            panelSettings.Hide();
-            panelDepth.Hide();
+            this.HidePanels();
             panelAddPlot.Show();
         }
 
         private void deletePropButton_Click(object sender, EventArgs e)
         {
-            panelSearchForProp.Hide();
-            panelGiveRange.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelEdit.Hide();
-            panelPlot.Hide();
-            panelSeedApp.Hide();
-            panelProp.Hide();
-            panelSettings.Hide();
-            panelDepth.Hide();
-            panelDelete.Show();
+            this.HidePanels();
 
         }
 
+        /*//OLD DELETE
         private void deleteBtn_Click(object sender, EventArgs e)
         {
             if (dataGridObj.SelectedRows.Count > 0)
@@ -501,17 +466,17 @@ namespace QuadTree.UI
                 this.QuadPanel.Invalidate();
             }
 
-        }
+        }*/
 
         private void showBtn_Click(object sender, EventArgs e)
         {
-            var numberInGrid = dataGridObj.SelectedCells.Count;
+            var numberInGrid = dataGridEditDelete.SelectedCells.Count;
             // Attach the cell click event handler.
-            if (dataGridObj.SelectedCells.Count > 0) //at least 1 cell is selected
+            if (dataGridEditDelete.SelectedCells.Count > 0) //at least 1 cell is selected
             {
                 //which row is selected
                 //get the obj in that row
-                var obj = dataGridObj.SelectedRows[0];
+                var obj = dataGridEditDelete.SelectedRows[0];
 
                 int regNum = (int)obj.Cells[0].Value; //id
                 int startX = (int)obj.Cells[1].Value; //startPos x
@@ -526,19 +491,18 @@ namespace QuadTree.UI
             }
         }
 
-        private void showToRemove(object sender, PaintEventArgs e, int x0, int y0, int xk, int yk)
-        {
-            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 155, 0, 0), 2), x0, y0, xk - x0, yk - y0);
-        }
-
-        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void seedBtn_Click(object sender, EventArgs e)
+        /*private void seedBtn_Click(object sender, EventArgs e)
         {
             wasSeeded = true;
+            if (this.checkBoxWantOpt.Checked)
+            {
+                _app._area.wantOptimizing = true;
+            }
+            else
+            {
+                _app._area.wantOptimizing = false;
+            }
+
             _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, max_quad_cap, max_depth);
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             if (this._app._area.TreeHealth.Value < 20)
@@ -554,31 +518,26 @@ namespace QuadTree.UI
             {
                 this.improveLBL.Text = "NOT\nYET";
             }
+
+            this.redoGrids();
             this.QuadPanel.Invalidate();
         }
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            panelSearchForProp.Hide();
-            panelGiveRange.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelDelete.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSettings.Hide();
-            panelSeedApp.Hide();
-            panelDepth.Hide();
+            this.redoGrids();
+            this.HidePanels();
             panelEdit.Show();
 
-        }
+        }*/
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            if (dataGridObj2.SelectedRows.Count > 0)
+            this.redoGrids();
+            if (dataGridEditDelete.SelectedRows.Count > 0)
             {
                 // Get the first selected row (if you allow multiple selections, you may iterate through them).
-                DataGridViewRow selectedRow = dataGridObj2.SelectedRows[0];
+                DataGridViewRow selectedRow = dataGridEditDelete.SelectedRows[0];
                 selectedRowProp = selectedRow;
 
                 // Access data from specific cells within the selected row.
@@ -602,15 +561,18 @@ namespace QuadTree.UI
                     if (originalProp != null)
                     {
                         rnPropEdit.Text = originalProp._registerNumber.ToString();
-                        XcoordProp.Value = (decimal)originalProp._x;
-                        YCoordProp.Value = (decimal)originalProp._y;
+                        editPropStartX.Value = (decimal)originalProp.suradnice.x._x;
+                        editPropStartY.Value = (decimal)originalProp.suradnice.x._y;
+                        editPropEndX.Value = (decimal)originalProp.suradnice.y._x;
+                        editPropEndY.Value = (decimal)originalProp.suradnice.y._y;
                         descBoxEditProp.Text = (originalProp)._description.ToString();
 
                         originalPROPDescription = descBoxEditProp.Text;
                         originalPROPRegisterNumber = originalProp._registerNumber;
-                        originalPROPXCoordinate = originalProp._x;
-                        originalPROPYCoordinate = originalProp._y;
-
+                        originalPROPXCoordinateStart = originalProp.suradnice.x.Longitude;
+                        originalPROPYCoordinateStart = originalProp.suradnice.x.Latitude;
+                        originalPROPXCoordinateEnd = originalProp.suradnice.y.Longitude;
+                        originalPROPYCoordinateEnd = originalProp.suradnice.y.Latitude;
                     }
 
                 }
@@ -662,34 +624,40 @@ namespace QuadTree.UI
                 originalPlot._description = descEditPlot.Text;
                 originalPlot._registerNumber = rn;
                 selectedRowProp.Cells[0].Value = rn;
+                selectedRowProp.Cells[1].Value = descEditPlot.Text;
 
-                dataGridObj.Refresh();
+                dataGridEditDelete.Refresh();
             }
             else if (keyAttrChanged)
             {
                 if (_app.RemoveObj(new PlotOfLand(originalPlot.RegisterNumber, originalPlot.Description, originalPlot.Coordinates, null)))
                 {
-                    dataGridObj2.Rows.Remove(selectedRowProp);
+                    dataGridEditDelete.Rows.Remove(selectedRowProp);
                     _app.AddPlot(rn, descEditPlot.Text, (new Coordinates((double)startPosEditPlotX.Value, (double)startPosEditPlotY.Value, 0), new Coordinates((double)endPosEditPlotX.Value, (double)endPosEditPlotY.Value, 0)));
-                    DataRow newRow = dataObjToRemove.NewRow();
+                    DataRow newRow = dataWithRangeSearch.NewRow();
                     newRow[0] = rn;
-                    newRow[1] = startPosEditPlotX.Value;
-                    newRow[2] = startPosEditPlotY.Value;
-                    newRow[3] = endPosEditPlotX.Value;
-                    newRow[4] = endPosEditPlotY.Value;
-                    newRow[5] = "PlotOfLand";
-                    dataObjToRemove.Rows.Add(newRow);
+                    newRow[1] = descEditPlot.Text;
+                    newRow[2] = "PlotOfLand";
+                    newRow[3] = ((double, double))(startPosEditPlotX.Value, startPosEditPlotY.Value);
+                    newRow[4] = ((double, double))(endPosEditPlotX.Value, endPosEditPlotY.Value);
+
+                    dataWithRangeSearch.Rows.Add(newRow);
                     healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-                    dataGridObj2.Refresh();
+                    dataGridEditDelete.Refresh();
                 }
             }
+
+            panelPlot.Hide();
         }
 
+        //NEW EDIT PROP BUTTON
         private void editBTNProp_Click(object sender, EventArgs e)
         {
-            bool keyAttrChanged = (decimal)originalPROPXCoordinate != XcoordProp.Value ||
-                (decimal)originalPROPYCoordinate != YCoordProp.Value;
-
+            //zmena klucoveho atributu
+            bool keyAttrChanged = (decimal)originalPROPXCoordinateStart != editPropStartX.Value ||
+                (decimal)originalPROPYCoordinateStart != editPropStartY.Value ||
+                (decimal)originalPROPXCoordinateEnd != editPropEndX.Value ||
+                (decimal)originalPROPYCoordinateEnd != editPropEndY.Value;
 
             var boolpom = int.TryParse(rnPropEdit.Text, out int rn);
 
@@ -701,46 +669,38 @@ namespace QuadTree.UI
                 originalProp._description = descBoxEditProp.Text;
                 originalProp._registerNumber = rn;
                 selectedRowProp.Cells[0].Value = rn;
-                dataGridObj.Refresh();
+                dataGridEditDelete.Refresh();
             }
             else if (keyAttrChanged)
             {
                 if (_app.RemoveObj(new Property(originalProp.RegisterNumber, originalProp.Description, originalProp.suradnice, null)))
                 {
-                    dataGridObj2.Rows.Remove(selectedRowProp);
-                    _app.AddProperty(rn, descBoxEditProp.Text, (new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value, 0), new Coordinates((double)XcoordProp.Value, (double)YCoordProp.Value, 0)));
-                    DataRow newRow = dataObjToRemove.NewRow();
+                    dataGridEditDelete.Rows.Remove(selectedRowProp);
+                    _app.AddProperty(rn, descBoxEditProp.Text, (new Coordinates((double)editPropStartX.Value, (double)editPropStartY.Value, 0), new Coordinates((double)editPropEndX.Value, (double)editPropEndY.Value, 0)));
+                    DataRow newRow = dataWithRangeSearch.NewRow();
                     newRow[0] = rn;
-                    newRow[1] = XcoordProp.Value;
-                    newRow[2] = YCoordProp.Value;
-                    newRow[3] = XcoordProp.Value;
-                    newRow[4] = YCoordProp.Value;
-                    newRow[5] = "Property";
-                    dataObjToRemove.Rows.Add(newRow);
+                    newRow[1] = descBoxEditProp.Text;
+                    newRow[2] = "Property";
+                    newRow[3] = ((double, double))(editPropStartX.Value, editPropStartY.Value);
+                    newRow[4] = ((double, double))(editPropEndX.Value, editPropEndY.Value);
+
+                    dataWithRangeSearch.Rows.Add(newRow);
+
                     healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
 
-                    dataGridObj2.Refresh();
+                    dataGridEditDelete.Refresh();
                 }
             }
-
-
+            panelProp.Hide();
         }
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-            panelSearchForProp.Hide();
-            panelGiveRange.Hide();
-            panelAddProp.Hide();
-            panelAddPlot.Hide();
-            panelDelete.Hide();
-            panelPlot.Hide();
-            panelProp.Hide();
-            panelSeedApp.Hide();
-            panelEdit.Hide();
-            panelDepth.Hide();
+            this.HidePanels();
             panelSettings.Show();
         }
 
+        //NEW EXPORT MENU BUTTON
         private void exportBtn_Click(object sender, EventArgs e)
         {
             panelDepth.Hide();
@@ -749,8 +709,8 @@ namespace QuadTree.UI
             MessageBox.Show("Export Finished.");
         }
 
-        //import
-        private void button1_Click(object sender, EventArgs e)
+        //NEW IMPORT MENU BUTTON
+        private void importBtn_Click(object sender, EventArgs e)
         {
             panelDepth.Hide();
             panelSeedApp.Hide();
@@ -788,6 +748,7 @@ namespace QuadTree.UI
             this.QuadPanel.Invalidate();
         }
 
+        //NEW RESET APP MENU BUTTON
         private void resetAppBtn_Click(object sender, EventArgs e)
         {
             panelDepth.Hide();
@@ -796,32 +757,42 @@ namespace QuadTree.UI
             this.QuadPanel.Invalidate();
         }
 
+        //NEW SEED APP MENU BUTTON
         private void button1_Click_1(object sender, EventArgs e)
         {
             panelDepth.Hide();
             panelSeedApp.Show();
         }
 
-        private void label23_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        //NEW SEEDING
         private void seedBtn2_Click(object sender, EventArgs e)
         {
             wasSeeded = true;
 
+            //get values from GUI
+            int max_depth = (int)DepthNo.Value;
+            int objects_count = (int)CountNo.Value;
+            double startX = (double)startCoordX.Value;
+            double startY = (double)startCoordY.Value;
+            double endX = (double)endCoordX.Value;
+            double endY = (double)endCoordY.Value;
+            int propNumber = (int)PropNo.Value;
+            int plotNumber = (int)plotNo.Value;
+
             _app._area.wantOptimizing = checkBoxWantOpt.Checked;
 
-            _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, (int)CountNo.Value, (int)DepthNo.Value);
+            _app.seedApp(startX, startY, endX, endY, propNumber, plotNumber, objects_count, max_depth);
+
             this.redoGrids();
+
             panelSeedApp.Hide();
+
+            //HEALTH
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             if (this._app._area.TreeHealth.Value < 20)
             {
                 MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
             }
-
             if (_app._area.wasOptimalized)
             {
                 this.improveLBL.Text = _app._area.improvement.ToString();
@@ -831,14 +802,12 @@ namespace QuadTree.UI
                 this.improveLBL.Text = "NOT\nYET";
             }
 
-
-
             this.QuadPanel.Invalidate();
         }
 
+        //NEW CHANGE DEPTH MENU BUTTON
         private void changeDepthBtn_Click(object sender, EventArgs e)
         {
-
             panelSeedApp.Hide();
             panelDepth.Show();
             depthLabel.Text = this._app._area.maxDepth.ToString();
@@ -849,8 +818,120 @@ namespace QuadTree.UI
 
             this._app.ChangeDepth((int)newDepthNum.Value);
             this.redoGrids();
+            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             panelDepth.Hide();
             this.QuadPanel.Invalidate();
+        }
+
+        //NEW EDIT
+        private void EditBtnRangeSearch_Click(object sender, EventArgs e)
+        {
+            if (dataGridEditDelete.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridEditDelete.SelectedRows[0];
+                selectedRowProp = selectedRow;
+
+                var regNumb = selectedRow.Cells[0].Value;
+                var desc = selectedRow.Cells[1].Value;
+                var typeOfObj = selectedRow.Cells[2].Value.ToString();
+                (double, double) startPos = ((double, double))selectedRow.Cells[3].Value;
+                (double, double) endPos = ((double, double))selectedRow.Cells[4].Value;
+
+                if (typeOfObj.Equals("Property"))
+                {
+                    //new panel
+                    panelPlot.Hide();
+                    panelProp.Show();
+
+                    //TODO: nepristupovat priamo na GUI k objektu
+                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+
+                    if (originalProp != null)
+                    {
+                        rnPropEdit.Text = originalProp._registerNumber.ToString();
+                        editPropStartX.Value = (decimal)((Property)originalProp).suradnice.x._x;
+                        editPropStartY.Value = (decimal)((Property)originalProp).suradnice.x._y;
+                        editPropEndX.Value = (decimal)((Property)originalProp).suradnice.y._x;
+                        editPropEndY.Value = (decimal)((Property)originalProp).suradnice.y._y;
+                        descBoxEditProp.Text = (originalProp)._description.ToString();
+
+                        originalPROPDescription = descBoxEditProp.Text;
+                        originalPROPRegisterNumber = originalProp._registerNumber;
+                        originalPROPXCoordinateStart = originalProp.suradnice.x.Longitude;
+                        originalPROPYCoordinateStart = originalProp.suradnice.x.Latitude;
+                        originalPROPXCoordinateStart = originalProp.suradnice.y.Longitude;
+                        originalPROPXCoordinateEnd = originalProp.suradnice.y.Latitude;
+
+                    }
+
+                }
+                else
+                {
+                    //new panel
+                    panelProp.Hide();
+                    panelPlot.Show();
+
+                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+
+                    if (originalPlot != null)
+                    {
+                        rnPlotEdit.Text = originalPlot._registerNumber.ToString();
+                        startPosEditPlotX.Value = (decimal)originalPlot._coordinates.startPos._x;
+                        startPosEditPlotY.Value = (decimal)originalPlot._coordinates.startPos._y;
+                        endPosEditPlotX.Value = (decimal)originalPlot._coordinates.endPos._x;
+                        endPosEditPlotY.Value = (decimal)originalPlot._coordinates.endPos._y;
+                        descEditPlot.Text = originalPlot._description.ToString();
+
+                        originalPLOTRegisterNumber = originalPlot._registerNumber;
+                        originalPLOTXCoordinateStart = (double)startPosEditPlotX.Value;
+                        originalPLOTYCoordinateStart = (double)startPosEditPlotY.Value;
+                        originalPLOTXCoordinateEnd = (double)endPosEditPlotX.Value;
+                        originalPLOTYCoordinateEnd = (double)endPosEditPlotY.Value;
+                        originalPLOTDescription = descEditPlot.Text;
+
+
+                    }
+                }
+            }
+        }
+
+        //NEW DELETE
+        private void DeleteBtnRangeSearch_Click(object sender, EventArgs e)
+        {
+            if (dataGridEditDelete.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridEditDelete.SelectedRows[0];
+
+                // Access data from specific cells within the selected row.
+                var regNumb = selectedRow.Cells[0].Value;
+                var desc = selectedRow.Cells[1].Value;
+                var typeOfObj = selectedRow.Cells[2].Value.ToString();
+                (double, double) startPos = ((double, double))selectedRow.Cells[3].Value;
+                (double, double) endPos = ((double, double))selectedRow.Cells[4].Value;
+
+
+                if (typeOfObj.Equals("Property"))
+                {
+                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null)))
+                    {
+                        //remove from grid
+                        dataGridEditDelete.Rows.Remove(selectedRow);
+                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                    }
+
+                }
+                else
+                {
+                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null)))
+                    {
+                        //removefrom grid
+                        dataGridEditDelete.Rows.Remove(selectedRow);
+                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                    }
+                }
+
+                this.QuadPanel.Invalidate();
+            }
         }
     }
 }

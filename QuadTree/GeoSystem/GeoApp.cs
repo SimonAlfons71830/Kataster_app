@@ -187,14 +187,19 @@ namespace QuadTree.GeoSystem
         }
 
 
-        public void seedApp(int widthOfTree, int lengthOfTree, int numberOfProp, int numberOfPlot, int max_quad_cap, int max_depth) 
+        public void seedApp(double startX, double startY, double endX, double endY, int numberOfProp, int numberOfPlot, int max_quad_cap, int max_depth) 
         {
             _area.ResetTree(_area._root);
 
-            _area._dimension.X0 = 0;
-            _area._dimension.Y0 = 0;
-            _area._dimension.Xk = _area._dimension.X0 + widthOfTree;
-            _area._dimension.Yk = _area._dimension.Y0 + lengthOfTree;
+
+            //10-1000 N -> (>0)
+            //30 - 15000 E -> (>0)
+
+            _area._dimension.X0 = startX;
+            _area._dimension.Y0 = startY;
+            _area._dimension.Xk = endX;
+            _area._dimension.Yk = endY;
+
             _area.MAX_QUAD_CAPACITY = max_quad_cap;
             _area._maxDepth = max_depth;
 
@@ -209,42 +214,26 @@ namespace QuadTree.GeoSystem
                 double Y0 = (int)_area._dimension.Y0;
                 double Yk = (int)_area._dimension.Yk;
 
-                //nechat ako double ???
-                /*double startPosX = _random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk);
-                double startPosY = _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk);.
-                string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count - 1));
-                this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));*/
-
+               //pri generovani property su to tie iste suradnice 
                 double startPosX = _random.NextDouble() * (Xk - X0) + X0;
                 double startPosY = _random.NextDouble() * (Yk - Y0) + Y0;
 
+                //new gen
+                double endPosX = startPosX + 1;
+                double endPosY = startPosY + 1;
+
+
                 string desc = listofPropertyNames.ElementAt(_random.Next(listofPropertyNames.Count - 1));
-                this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));
+                //this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(startPosX, startPosY, 0)));
+                this.AddProperty(i, desc, (new Coordinates(startPosX, startPosY, 0), new Coordinates(endPosX, endPosY, 0)));
 
             }
 
             for (int i = 0; i < numberOfPlot; i++)
             {
-                /* var rozmer = 0;
-                 if ((this._area._dimension.Xk - this._area._dimension.X0) > (this._area._dimension.Yk - this._area._dimension.Y0))
-                 {
-                     rozmer = _random.Next(1, (int)(this._area._dimension.Yk - this._area._dimension.Y0) / 5);
-                 }
-                 else
-                 {
-                     rozmer = _random.Next(1, (int)(this._area._dimension.Xk - this._area._dimension.X0) / 5);
-                 }
+                //generovanie rozmeru
+                var rozmer = 0.0;
 
-                 var startPosGen = new MyPoint(_random.Next((int)_area._dimension.X0, (int)_area._dimension.Xk - rozmer), _random.Next((int)_area._dimension.Y0, (int)_area._dimension.Yk - rozmer), _random.Next(1000000));
-                 var endPosGen = new MyPoint(startPosGen._x + rozmer, startPosGen._y + rozmer, _random.Next(100000));
-
-                 string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
-
-                 // var _object = new Polygon(_random.Next(10000), (new MyPoint(startPosGen._x, startPosGen._y, startPosGen._registerNumber), new MyPoint(endPosGen._x, endPosGen._y, endPosGen._registerNumber)));
-
-                 this.AddPlot(numberOfProp + i, desc , (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
- */
-                var rozmer = 0.0; // Change the data type to double
                 if ((this._area._dimension.Xk - this._area._dimension.X0) > (this._area._dimension.Yk - this._area._dimension.Y0))
                 {
                     rozmer = _random.NextDouble() * ((this._area._dimension.Yk - this._area._dimension.Y0) / 5.0);
@@ -253,6 +242,9 @@ namespace QuadTree.GeoSystem
                 {
                     rozmer = _random.NextDouble() * ((this._area._dimension.Xk - this._area._dimension.X0) / 5.0);
                 }
+
+                //pri generovani plotOfLand -> zadavam rozmer a suradnice sa prepocitaju
+                //rozmer = 0.001;
 
                 var startPosGen = new MyPoint(
                     _random.NextDouble() * (this._area._dimension.Xk - rozmer) + this._area._dimension.X0,
@@ -267,9 +259,7 @@ namespace QuadTree.GeoSystem
                 string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
 
                 this.AddPlot(numberOfProp + i, desc, (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
-
             }
-
         }
 
         public Polygon PickToEdit(Polygon obj) 
@@ -297,6 +287,9 @@ namespace QuadTree.GeoSystem
                         writerProp.WriteLine( obj.GetType().Name + ";" +   ((Property)obj)._registerNumber + ";" +
                             ((Property)obj).Coordinates.x.Longitude + ((Property)obj).Coordinates.x.LongHem + ";" + 
                             ((Property)obj).Coordinates.x.Latitude + ((Property)obj).Coordinates.x.LatHem + ";" +
+                            ((Property)obj).Coordinates.y.Longitude + ((Property)obj).Coordinates.y.LongHem + ";"+
+                            ((Property)obj).Coordinates.y.Latitude + ((Property)obj).Coordinates.y.LatHem + ";"+
+
                             ((Property)obj)._description);
                     }
                     else
@@ -338,7 +331,7 @@ namespace QuadTree.GeoSystem
                         // Split the line by semicolon to extract data
                         string[] parts = line.Split(';');
 
-                        if (parts.Length >= 5)
+                        if (parts.Length >= 7)
                         {
                             //Property;3;79E;491N;description
                             // Parse the relevant data from the line
@@ -354,9 +347,18 @@ namespace QuadTree.GeoSystem
                             string numericPartY = new string(rawCoordY.Reverse().SkipWhile(char.IsLetter).Reverse().ToArray());
                             double coordY = double.Parse(numericPartY);
 
-                            string description = parts[4];
+                            string rawCoordXE = parts[4];
+                            string numericPartXE = new string(rawCoordXE.Reverse().SkipWhile(char.IsLetter).Reverse().ToArray());
+                            double coordXE = double.Parse(numericPartXE);
 
-                            AddProperty(id, description, ((new Coordinates(coordX,coordY,0)),new Coordinates(coordX,coordY,0)));
+                            //double coordY = double.Parse(parts[3]);
+                            string rawCoordYE = parts[5];
+                            string numericPartYE = new string(rawCoordYE.Reverse().SkipWhile(char.IsLetter).Reverse().ToArray());
+                            double coordYE = double.Parse(numericPartYE);
+
+                            string description = parts[6];
+
+                            AddProperty(id, description, ((new Coordinates(coordX,coordY,0)),new Coordinates(coordXE, coordYE, 0)));
                         }
                     }
                 }

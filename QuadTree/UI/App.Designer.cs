@@ -1,6 +1,6 @@
 ﻿namespace QuadTree.UI
 {
-    partial class resetBtn
+    partial class App
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,8 @@
             testbutton = new Button();
             menupanel = new Panel();
             settingsButton = new Button();
-            editButton = new Button();
             addPlotButton = new Button();
             addPropButton = new Button();
-            deletePropButton = new Button();
             giveRangeButton = new Button();
             searchPropButton = new Button();
             panelSearchForProp = new Panel();
@@ -59,10 +57,14 @@
             startPosLat = new NumericUpDown();
             label10 = new Label();
             startPosLong = new NumericUpDown();
-            objInfo = new RichTextBox();
             searchRangeButton = new Button();
             label8 = new Label();
             panelAddProp = new Panel();
+            groupBox8 = new GroupBox();
+            label49 = new Label();
+            posLatEnd = new NumericUpDown();
+            label50 = new Label();
+            posLongEnd = new NumericUpDown();
             label7 = new Label();
             label1 = new Label();
             description = new RichTextBox();
@@ -91,23 +93,20 @@
             startPosPlotLong = new NumericUpDown();
             PlotAddBtn = new Button();
             label18 = new Label();
-            panelDelete = new Panel();
-            dataGridObj = new DataGridView();
-            showBtn = new Button();
-            deleteBtn = new Button();
-            label27 = new Label();
-            panelEdit = new Panel();
-            dataGridObj2 = new DataGridView();
-            editBtn = new Button();
-            label21 = new Label();
             panelProp = new Panel();
+            groupBox13 = new GroupBox();
+            label34 = new Label();
+            label35 = new Label();
+            editPropEndY = new NumericUpDown();
+            editPropEndX = new NumericUpDown();
+            groupBox14 = new GroupBox();
+            label53 = new Label();
+            label54 = new Label();
+            editPropStartY = new NumericUpDown();
+            editPropStartX = new NumericUpDown();
             editBTNProp = new Button();
             label36 = new Label();
-            label35 = new Label();
-            label34 = new Label();
             descBoxEditProp = new RichTextBox();
-            YCoordProp = new NumericUpDown();
-            XcoordProp = new NumericUpDown();
             rnPropEdit = new TextBox();
             label33 = new Label();
             label32 = new Label();
@@ -138,23 +137,29 @@
             exportBtn = new Button();
             label45 = new Label();
             panelSeedApp = new Panel();
+            groupBox12 = new GroupBox();
+            label24 = new Label();
+            label25 = new Label();
+            endCoordY = new NumericUpDown();
+            endCoordX = new NumericUpDown();
+            groupBox11 = new GroupBox();
+            label55 = new Label();
+            label56 = new Label();
+            startCoordY = new NumericUpDown();
+            startCoordX = new NumericUpDown();
             groupBox6 = new GroupBox();
             label22 = new Label();
             label23 = new Label();
             plotNo = new NumericUpDown();
             PropNo = new NumericUpDown();
+            label26 = new Label();
+            seedBtn2 = new Button();
+            label48 = new Label();
             groupBox7 = new GroupBox();
             label46 = new Label();
             label47 = new Label();
             CountNo = new NumericUpDown();
             DepthNo = new NumericUpDown();
-            label24 = new Label();
-            label25 = new Label();
-            LengthOfTree = new NumericUpDown();
-            widthOfTree = new NumericUpDown();
-            label26 = new Label();
-            seedBtn2 = new Button();
-            label48 = new Label();
             panelDepth = new Panel();
             newDepthNum = new NumericUpDown();
             label29 = new Label();
@@ -168,6 +173,10 @@
             label31 = new Label();
             improveLBL = new Label();
             panel1 = new Panel();
+            panelDataEditDel = new Panel();
+            DeleteBtnRangeSearch = new Button();
+            EditBtnRangeSearch = new Button();
+            dataGridEditDelete = new DataGridView();
             menupanel.SuspendLayout();
             panelSearchForProp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)latitudeNum).BeginInit();
@@ -180,6 +189,9 @@
             ((System.ComponentModel.ISupportInitialize)startPosLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosLong).BeginInit();
             panelAddProp.SuspendLayout();
+            groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)posLatEnd).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)posLongEnd).BeginInit();
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)posLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)posLong).BeginInit();
@@ -190,13 +202,13 @@
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)startPosPlotLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosPlotLong).BeginInit();
-            panelDelete.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridObj).BeginInit();
-            panelEdit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridObj2).BeginInit();
             panelProp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)YCoordProp).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)XcoordProp).BeginInit();
+            groupBox13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)editPropEndY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)editPropEndX).BeginInit();
+            groupBox14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)editPropStartY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)editPropStartX).BeginInit();
             panelPlot.SuspendLayout();
             groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)endPosEditPlotY).BeginInit();
@@ -206,17 +218,23 @@
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).BeginInit();
             panelSettings.SuspendLayout();
             panelSeedApp.SuspendLayout();
+            groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)endCoordY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)endCoordX).BeginInit();
+            groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)startCoordY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)startCoordX).BeginInit();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)plotNo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PropNo).BeginInit();
             groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CountNo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DepthNo).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LengthOfTree).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)widthOfTree).BeginInit();
             panelDepth.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)newDepthNum).BeginInit();
             panel1.SuspendLayout();
+            panelDataEditDel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridEditDelete).BeginInit();
             SuspendLayout();
             // 
             // QuadPanel
@@ -241,10 +259,8 @@
             // 
             menupanel.BackColor = Color.PapayaWhip;
             menupanel.Controls.Add(settingsButton);
-            menupanel.Controls.Add(editButton);
             menupanel.Controls.Add(addPlotButton);
             menupanel.Controls.Add(addPropButton);
-            menupanel.Controls.Add(deletePropButton);
             menupanel.Controls.Add(giveRangeButton);
             menupanel.Controls.Add(searchPropButton);
             menupanel.Controls.Add(testbutton);
@@ -264,17 +280,6 @@
             settingsButton.Text = "SETTINGS";
             settingsButton.UseVisualStyleBackColor = true;
             settingsButton.Click += settingsButton_Click;
-            // 
-            // editButton
-            // 
-            editButton.FlatStyle = FlatStyle.Flat;
-            editButton.Location = new Point(0, 349);
-            editButton.Name = "editButton";
-            editButton.Size = new Size(191, 59);
-            editButton.TabIndex = 148;
-            editButton.Text = "EDIT";
-            editButton.UseVisualStyleBackColor = true;
-            editButton.Click += editButton_Click;
             // 
             // addPlotButton
             // 
@@ -297,17 +302,6 @@
             addPropButton.Text = "ADD PROP";
             addPropButton.UseVisualStyleBackColor = true;
             addPropButton.Click += addPropButton_Click;
-            // 
-            // deletePropButton
-            // 
-            deletePropButton.FlatStyle = FlatStyle.Flat;
-            deletePropButton.Location = new Point(0, 420);
-            deletePropButton.Name = "deletePropButton";
-            deletePropButton.Size = new Size(191, 59);
-            deletePropButton.TabIndex = 146;
-            deletePropButton.Text = "DELETE";
-            deletePropButton.UseVisualStyleBackColor = true;
-            deletePropButton.Click += deletePropButton_Click;
             // 
             // giveRangeButton
             // 
@@ -401,7 +395,7 @@
             // 
             latitudeNum.DecimalPlaces = 5;
             latitudeNum.Location = new Point(77, 261);
-            latitudeNum.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            latitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             latitudeNum.Name = "latitudeNum";
             latitudeNum.Size = new Size(135, 27);
             latitudeNum.TabIndex = 3;
@@ -420,7 +414,7 @@
             // 
             longitudeNum.DecimalPlaces = 5;
             longitudeNum.Location = new Point(77, 193);
-            longitudeNum.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            longitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             longitudeNum.Name = "longitudeNum";
             longitudeNum.Size = new Size(135, 27);
             longitudeNum.TabIndex = 1;
@@ -440,12 +434,11 @@
             panelGiveRange.BackColor = Color.DarkSalmon;
             panelGiveRange.Controls.Add(groupBox2);
             panelGiveRange.Controls.Add(groupBox1);
-            panelGiveRange.Controls.Add(objInfo);
             panelGiveRange.Controls.Add(searchRangeButton);
             panelGiveRange.Controls.Add(label8);
             panelGiveRange.Location = new Point(191, 0);
             panelGiveRange.Name = "panelGiveRange";
-            panelGiveRange.Size = new Size(310, 679);
+            panelGiveRange.Size = new Size(313, 679);
             panelGiveRange.TabIndex = 142;
             // 
             // groupBox2
@@ -454,7 +447,7 @@
             groupBox2.Controls.Add(endPosLat);
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(endPosLong);
-            groupBox2.Location = new Point(155, 139);
+            groupBox2.Location = new Point(155, 143);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(141, 165);
             groupBox2.TabIndex = 12;
@@ -474,7 +467,7 @@
             // 
             endPosLat.DecimalPlaces = 5;
             endPosLat.Location = new Point(11, 121);
-            endPosLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosLat.Name = "endPosLat";
             endPosLat.Size = new Size(123, 27);
             endPosLat.TabIndex = 9;
@@ -493,7 +486,7 @@
             // 
             endPosLong.DecimalPlaces = 5;
             endPosLong.Location = new Point(11, 53);
-            endPosLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosLong.Name = "endPosLong";
             endPosLong.Size = new Size(123, 27);
             endPosLong.TabIndex = 7;
@@ -505,7 +498,7 @@
             groupBox1.Controls.Add(startPosLat);
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(startPosLong);
-            groupBox1.Location = new Point(9, 139);
+            groupBox1.Location = new Point(9, 143);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(141, 165);
             groupBox1.TabIndex = 11;
@@ -525,7 +518,7 @@
             // 
             startPosLat.DecimalPlaces = 5;
             startPosLat.Location = new Point(11, 121);
-            startPosLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             startPosLat.Name = "startPosLat";
             startPosLat.Size = new Size(123, 27);
             startPosLat.TabIndex = 9;
@@ -544,23 +537,15 @@
             // 
             startPosLong.DecimalPlaces = 5;
             startPosLong.Location = new Point(11, 53);
-            startPosLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             startPosLong.Name = "startPosLong";
             startPosLong.Size = new Size(123, 27);
             startPosLong.TabIndex = 7;
             startPosLong.TextAlign = HorizontalAlignment.Right;
             // 
-            // objInfo
-            // 
-            objInfo.Location = new Point(37, 436);
-            objInfo.Name = "objInfo";
-            objInfo.Size = new Size(222, 197);
-            objInfo.TabIndex = 6;
-            objInfo.Text = "";
-            // 
             // searchRangeButton
             // 
-            searchRangeButton.Location = new Point(37, 332);
+            searchRangeButton.Location = new Point(43, 396);
             searchRangeButton.Name = "searchRangeButton";
             searchRangeButton.Size = new Size(222, 59);
             searchRangeButton.TabIndex = 5;
@@ -580,6 +565,7 @@
             // panelAddProp
             // 
             panelAddProp.BackColor = Color.DarkSalmon;
+            panelAddProp.Controls.Add(groupBox8);
             panelAddProp.Controls.Add(label7);
             panelAddProp.Controls.Add(label1);
             panelAddProp.Controls.Add(description);
@@ -591,6 +577,57 @@
             panelAddProp.Name = "panelAddProp";
             panelAddProp.Size = new Size(310, 679);
             panelAddProp.TabIndex = 143;
+            // 
+            // groupBox8
+            // 
+            groupBox8.Controls.Add(label49);
+            groupBox8.Controls.Add(posLatEnd);
+            groupBox8.Controls.Add(label50);
+            groupBox8.Controls.Add(posLongEnd);
+            groupBox8.Location = new Point(161, 174);
+            groupBox8.Name = "groupBox8";
+            groupBox8.Size = new Size(141, 165);
+            groupBox8.TabIndex = 16;
+            groupBox8.TabStop = false;
+            groupBox8.Text = "Position End";
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Location = new Point(11, 96);
+            label49.Name = "label49";
+            label49.Size = new Size(60, 20);
+            label49.TabIndex = 10;
+            label49.Text = "latitude";
+            // 
+            // posLatEnd
+            // 
+            posLatEnd.DecimalPlaces = 5;
+            posLatEnd.Location = new Point(11, 121);
+            posLatEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLatEnd.Name = "posLatEnd";
+            posLatEnd.Size = new Size(123, 27);
+            posLatEnd.TabIndex = 9;
+            posLatEnd.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label50
+            // 
+            label50.AutoSize = true;
+            label50.Location = new Point(11, 31);
+            label50.Name = "label50";
+            label50.Size = new Size(73, 20);
+            label50.TabIndex = 8;
+            label50.Text = "longitude";
+            // 
+            // posLongEnd
+            // 
+            posLongEnd.DecimalPlaces = 5;
+            posLongEnd.Location = new Point(11, 53);
+            posLongEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLongEnd.Name = "posLongEnd";
+            posLongEnd.Size = new Size(123, 27);
+            posLongEnd.TabIndex = 7;
+            posLongEnd.TextAlign = HorizontalAlignment.Right;
             // 
             // label7
             // 
@@ -631,12 +668,12 @@
             groupBox4.Controls.Add(posLat);
             groupBox4.Controls.Add(label12);
             groupBox4.Controls.Add(posLong);
-            groupBox4.Location = new Point(85, 169);
+            groupBox4.Location = new Point(9, 170);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(141, 165);
             groupBox4.TabIndex = 11;
             groupBox4.TabStop = false;
-            groupBox4.Text = "Position";
+            groupBox4.Text = "Position Start";
             // 
             // label11
             // 
@@ -865,114 +902,123 @@
             label18.TabIndex = 0;
             label18.Text = "ADD PLOT";
             // 
-            // panelDelete
-            // 
-            panelDelete.BackColor = Color.DarkSalmon;
-            panelDelete.Controls.Add(dataGridObj);
-            panelDelete.Controls.Add(showBtn);
-            panelDelete.Controls.Add(deleteBtn);
-            panelDelete.Controls.Add(label27);
-            panelDelete.Location = new Point(191, 0);
-            panelDelete.Name = "panelDelete";
-            panelDelete.Size = new Size(310, 679);
-            panelDelete.TabIndex = 145;
-            // 
-            // dataGridObj
-            // 
-            dataGridObj.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridObj.Location = new Point(17, 81);
-            dataGridObj.Name = "dataGridObj";
-            dataGridObj.RowHeadersWidth = 51;
-            dataGridObj.RowTemplate.Height = 29;
-            dataGridObj.Size = new Size(274, 425);
-            dataGridObj.TabIndex = 8;
-            // 
-            // showBtn
-            // 
-            showBtn.Location = new Point(37, 537);
-            showBtn.Name = "showBtn";
-            showBtn.Size = new Size(222, 59);
-            showBtn.TabIndex = 7;
-            showBtn.Text = "SHOW";
-            showBtn.UseVisualStyleBackColor = true;
-            showBtn.Click += showBtn_Click;
-            // 
-            // deleteBtn
-            // 
-            deleteBtn.Location = new Point(37, 609);
-            deleteBtn.Name = "deleteBtn";
-            deleteBtn.Size = new Size(222, 59);
-            deleteBtn.TabIndex = 5;
-            deleteBtn.Text = "DELETE";
-            deleteBtn.UseVisualStyleBackColor = true;
-            deleteBtn.Click += deleteBtn_Click;
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Location = new Point(122, 37);
-            label27.Name = "label27";
-            label27.Size = new Size(59, 20);
-            label27.TabIndex = 0;
-            label27.Text = "DELETE";
-            // 
-            // panelEdit
-            // 
-            panelEdit.BackColor = Color.DarkSalmon;
-            panelEdit.Controls.Add(dataGridObj2);
-            panelEdit.Controls.Add(editBtn);
-            panelEdit.Controls.Add(label21);
-            panelEdit.Location = new Point(191, 0);
-            panelEdit.Name = "panelEdit";
-            panelEdit.Size = new Size(310, 679);
-            panelEdit.TabIndex = 155;
-            // 
-            // dataGridObj2
-            // 
-            dataGridObj2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridObj2.Location = new Point(17, 81);
-            dataGridObj2.Name = "dataGridObj2";
-            dataGridObj2.RowHeadersWidth = 51;
-            dataGridObj2.RowTemplate.Height = 29;
-            dataGridObj2.Size = new Size(274, 425);
-            dataGridObj2.TabIndex = 8;
-            // 
-            // editBtn
-            // 
-            editBtn.Location = new Point(43, 539);
-            editBtn.Name = "editBtn";
-            editBtn.Size = new Size(222, 59);
-            editBtn.TabIndex = 5;
-            editBtn.Text = "CHOOSE";
-            editBtn.UseVisualStyleBackColor = true;
-            editBtn.Click += editBtn_Click;
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Location = new Point(113, 37);
-            label21.Name = "label21";
-            label21.Size = new Size(83, 20);
-            label21.TabIndex = 0;
-            label21.Text = "Pick to Edit";
-            // 
             // panelProp
             // 
             panelProp.BackColor = Color.AntiqueWhite;
+            panelProp.Controls.Add(groupBox13);
+            panelProp.Controls.Add(groupBox14);
             panelProp.Controls.Add(editBTNProp);
             panelProp.Controls.Add(label36);
-            panelProp.Controls.Add(label35);
-            panelProp.Controls.Add(label34);
             panelProp.Controls.Add(descBoxEditProp);
-            panelProp.Controls.Add(YCoordProp);
-            panelProp.Controls.Add(XcoordProp);
             panelProp.Controls.Add(rnPropEdit);
             panelProp.Controls.Add(label33);
             panelProp.Controls.Add(label32);
-            panelProp.Location = new Point(507, 81);
+            panelProp.Location = new Point(970, 70);
             panelProp.Name = "panelProp";
             panelProp.Size = new Size(235, 421);
             panelProp.TabIndex = 156;
+            // 
+            // groupBox13
+            // 
+            groupBox13.Controls.Add(label34);
+            groupBox13.Controls.Add(label35);
+            groupBox13.Controls.Add(editPropEndY);
+            groupBox13.Controls.Add(editPropEndX);
+            groupBox13.Location = new Point(9, 178);
+            groupBox13.Name = "groupBox13";
+            groupBox13.Size = new Size(215, 104);
+            groupBox13.TabIndex = 17;
+            groupBox13.TabStop = false;
+            groupBox13.Text = "EndPosition";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(29, 71);
+            label34.Name = "label34";
+            label34.Size = new Size(17, 20);
+            label34.TabIndex = 7;
+            label34.Text = "Y";
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Location = new Point(27, 29);
+            label35.Name = "label35";
+            label35.Size = new Size(18, 20);
+            label35.TabIndex = 6;
+            label35.Text = "X";
+            // 
+            // editPropEndY
+            // 
+            editPropEndY.DecimalPlaces = 10;
+            editPropEndY.Location = new Point(81, 64);
+            editPropEndY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            editPropEndY.Name = "editPropEndY";
+            editPropEndY.Size = new Size(125, 27);
+            editPropEndY.TabIndex = 4;
+            editPropEndY.TextAlign = HorizontalAlignment.Right;
+            // 
+            // editPropEndX
+            // 
+            editPropEndX.DecimalPlaces = 10;
+            editPropEndX.Location = new Point(81, 27);
+            editPropEndX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            editPropEndX.Name = "editPropEndX";
+            editPropEndX.Size = new Size(125, 27);
+            editPropEndX.TabIndex = 3;
+            editPropEndX.TextAlign = HorizontalAlignment.Right;
+            // 
+            // groupBox14
+            // 
+            groupBox14.Controls.Add(label53);
+            groupBox14.Controls.Add(label54);
+            groupBox14.Controls.Add(editPropStartY);
+            groupBox14.Controls.Add(editPropStartX);
+            groupBox14.Location = new Point(9, 71);
+            groupBox14.Name = "groupBox14";
+            groupBox14.Size = new Size(215, 104);
+            groupBox14.TabIndex = 16;
+            groupBox14.TabStop = false;
+            groupBox14.Text = "StartPosition";
+            // 
+            // label53
+            // 
+            label53.AutoSize = true;
+            label53.Location = new Point(29, 71);
+            label53.Name = "label53";
+            label53.Size = new Size(17, 20);
+            label53.TabIndex = 7;
+            label53.Text = "Y";
+            // 
+            // label54
+            // 
+            label54.AutoSize = true;
+            label54.Location = new Point(27, 29);
+            label54.Name = "label54";
+            label54.Size = new Size(18, 20);
+            label54.TabIndex = 6;
+            label54.Text = "X";
+            // 
+            // editPropStartY
+            // 
+            editPropStartY.DecimalPlaces = 10;
+            editPropStartY.Location = new Point(81, 64);
+            editPropStartY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            editPropStartY.Name = "editPropStartY";
+            editPropStartY.Size = new Size(125, 27);
+            editPropStartY.TabIndex = 4;
+            editPropStartY.TextAlign = HorizontalAlignment.Right;
+            // 
+            // editPropStartX
+            // 
+            editPropStartX.DecimalPlaces = 10;
+            editPropStartX.Location = new Point(81, 27);
+            editPropStartX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            editPropStartX.Name = "editPropStartX";
+            editPropStartX.Size = new Size(125, 27);
+            editPropStartX.TabIndex = 3;
+            editPropStartX.TextAlign = HorizontalAlignment.Right;
             // 
             // editBTNProp
             // 
@@ -987,61 +1033,23 @@
             // label36
             // 
             label36.AutoSize = true;
-            label36.Location = new Point(14, 229);
+            label36.Location = new Point(15, 291);
             label36.Name = "label36";
             label36.Size = new Size(44, 20);
             label36.TabIndex = 8;
             label36.Text = "Desc.";
             // 
-            // label35
-            // 
-            label35.AutoSize = true;
-            label35.Location = new Point(14, 187);
-            label35.Name = "label35";
-            label35.Size = new Size(17, 20);
-            label35.TabIndex = 7;
-            label35.Text = "Y";
-            // 
-            // label34
-            // 
-            label34.AutoSize = true;
-            label34.Location = new Point(14, 137);
-            label34.Name = "label34";
-            label34.Size = new Size(18, 20);
-            label34.TabIndex = 6;
-            label34.Text = "X";
-            // 
             // descBoxEditProp
             // 
-            descBoxEditProp.Location = new Point(89, 229);
+            descBoxEditProp.Location = new Point(98, 288);
             descBoxEditProp.Name = "descBoxEditProp";
-            descBoxEditProp.Size = new Size(126, 115);
+            descBoxEditProp.Size = new Size(126, 60);
             descBoxEditProp.TabIndex = 5;
             descBoxEditProp.Text = "";
             // 
-            // YCoordProp
-            // 
-            YCoordProp.DecimalPlaces = 5;
-            YCoordProp.Location = new Point(90, 180);
-            YCoordProp.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            YCoordProp.Name = "YCoordProp";
-            YCoordProp.Size = new Size(125, 27);
-            YCoordProp.TabIndex = 4;
-            YCoordProp.TextAlign = HorizontalAlignment.Right;
-            // 
-            // XcoordProp
-            // 
-            XcoordProp.DecimalPlaces = 5;
-            XcoordProp.Location = new Point(90, 131);
-            XcoordProp.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            XcoordProp.Name = "XcoordProp";
-            XcoordProp.Size = new Size(125, 27);
-            XcoordProp.TabIndex = 3;
-            XcoordProp.TextAlign = HorizontalAlignment.Right;
-            // 
             // rnPropEdit
             // 
-            rnPropEdit.Location = new Point(90, 80);
+            rnPropEdit.Location = new Point(89, 38);
             rnPropEdit.Name = "rnPropEdit";
             rnPropEdit.Size = new Size(125, 27);
             rnPropEdit.TabIndex = 2;
@@ -1049,7 +1057,7 @@
             // label33
             // 
             label33.AutoSize = true;
-            label33.Location = new Point(14, 87);
+            label33.Location = new Point(14, 45);
             label33.Name = "label33";
             label33.Size = new Size(35, 20);
             label33.TabIndex = 1;
@@ -1058,7 +1066,7 @@
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new Point(75, 31);
+            label32.Location = new Point(89, 7);
             label32.Name = "label32";
             label32.Size = new Size(65, 20);
             label32.TabIndex = 0;
@@ -1076,7 +1084,7 @@
             panelPlot.Controls.Add(rnPlotEdit);
             panelPlot.Controls.Add(label40);
             panelPlot.Controls.Add(label41);
-            panelPlot.Location = new Point(510, 81);
+            panelPlot.Location = new Point(970, 70);
             panelPlot.Name = "panelPlot";
             panelPlot.Size = new Size(235, 421);
             panelPlot.TabIndex = 157;
@@ -1114,9 +1122,9 @@
             // 
             // endPosEditPlotY
             // 
-            endPosEditPlotY.DecimalPlaces = 5;
+            endPosEditPlotY.DecimalPlaces = 10;
             endPosEditPlotY.Location = new Point(81, 64);
-            endPosEditPlotY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosEditPlotY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosEditPlotY.Name = "endPosEditPlotY";
             endPosEditPlotY.Size = new Size(125, 27);
             endPosEditPlotY.TabIndex = 4;
@@ -1124,9 +1132,9 @@
             // 
             // endPosEditPlotX
             // 
-            endPosEditPlotX.DecimalPlaces = 5;
+            endPosEditPlotX.DecimalPlaces = 10;
             endPosEditPlotX.Location = new Point(81, 27);
-            endPosEditPlotX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosEditPlotX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosEditPlotX.Name = "endPosEditPlotX";
             endPosEditPlotX.Size = new Size(125, 27);
             endPosEditPlotX.TabIndex = 3;
@@ -1165,9 +1173,9 @@
             // 
             // startPosEditPlotY
             // 
-            startPosEditPlotY.DecimalPlaces = 5;
+            startPosEditPlotY.DecimalPlaces = 10;
             startPosEditPlotY.Location = new Point(81, 64);
-            startPosEditPlotY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosEditPlotY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             startPosEditPlotY.Name = "startPosEditPlotY";
             startPosEditPlotY.Size = new Size(125, 27);
             startPosEditPlotY.TabIndex = 4;
@@ -1175,9 +1183,9 @@
             // 
             // startPosEditPlotX
             // 
-            startPosEditPlotX.DecimalPlaces = 5;
+            startPosEditPlotX.DecimalPlaces = 10;
             startPosEditPlotX.Location = new Point(81, 27);
-            startPosEditPlotX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosEditPlotX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             startPosEditPlotX.Name = "startPosEditPlotX";
             startPosEditPlotX.Size = new Size(125, 27);
             startPosEditPlotX.TabIndex = 3;
@@ -1306,7 +1314,7 @@
             importBtn.TabIndex = 6;
             importBtn.Text = "Import data";
             importBtn.UseVisualStyleBackColor = true;
-            importBtn.Click += button1_Click;
+            importBtn.Click += importBtn_Click;
             // 
             // exportBtn
             // 
@@ -1330,15 +1338,121 @@
             // panelSeedApp
             // 
             panelSeedApp.BackColor = Color.AntiqueWhite;
+            panelSeedApp.Controls.Add(groupBox12);
+            panelSeedApp.Controls.Add(groupBox11);
             panelSeedApp.Controls.Add(groupBox6);
-            panelSeedApp.Controls.Add(groupBox7);
             panelSeedApp.Controls.Add(label26);
             panelSeedApp.Controls.Add(seedBtn2);
             panelSeedApp.Controls.Add(label48);
+            panelSeedApp.Controls.Add(groupBox7);
             panelSeedApp.Location = new Point(510, 81);
             panelSeedApp.Name = "panelSeedApp";
-            panelSeedApp.Size = new Size(235, 421);
+            panelSeedApp.Size = new Size(415, 421);
             panelSeedApp.TabIndex = 158;
+            // 
+            // groupBox12
+            // 
+            groupBox12.Controls.Add(label24);
+            groupBox12.Controls.Add(label25);
+            groupBox12.Controls.Add(endCoordY);
+            groupBox12.Controls.Add(endCoordX);
+            groupBox12.Location = new Point(218, 48);
+            groupBox12.Name = "groupBox12";
+            groupBox12.Size = new Size(185, 110);
+            groupBox12.TabIndex = 17;
+            groupBox12.TabStop = false;
+            groupBox12.Text = "EndCoord";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(18, 68);
+            label24.Name = "label24";
+            label24.Size = new Size(17, 20);
+            label24.TabIndex = 7;
+            label24.Text = "Y";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(19, 28);
+            label25.Name = "label25";
+            label25.Size = new Size(18, 20);
+            label25.TabIndex = 6;
+            label25.Text = "X";
+            // 
+            // endCoordY
+            // 
+            endCoordY.DecimalPlaces = 5;
+            endCoordY.Location = new Point(54, 64);
+            endCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endCoordY.Name = "endCoordY";
+            endCoordY.Size = new Size(125, 27);
+            endCoordY.TabIndex = 4;
+            endCoordY.TextAlign = HorizontalAlignment.Right;
+            endCoordY.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            // 
+            // endCoordX
+            // 
+            endCoordX.DecimalPlaces = 5;
+            endCoordX.Location = new Point(54, 25);
+            endCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endCoordX.Name = "endCoordX";
+            endCoordX.Size = new Size(125, 27);
+            endCoordX.TabIndex = 3;
+            endCoordX.TextAlign = HorizontalAlignment.Right;
+            endCoordX.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            // 
+            // groupBox11
+            // 
+            groupBox11.Controls.Add(label55);
+            groupBox11.Controls.Add(label56);
+            groupBox11.Controls.Add(startCoordY);
+            groupBox11.Controls.Add(startCoordX);
+            groupBox11.Location = new Point(11, 47);
+            groupBox11.Name = "groupBox11";
+            groupBox11.Size = new Size(185, 110);
+            groupBox11.TabIndex = 16;
+            groupBox11.TabStop = false;
+            groupBox11.Text = "StartCoord";
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.Location = new Point(18, 68);
+            label55.Name = "label55";
+            label55.Size = new Size(17, 20);
+            label55.TabIndex = 7;
+            label55.Text = "Y";
+            // 
+            // label56
+            // 
+            label56.AutoSize = true;
+            label56.Location = new Point(19, 28);
+            label56.Name = "label56";
+            label56.Size = new Size(18, 20);
+            label56.TabIndex = 6;
+            label56.Text = "X";
+            // 
+            // startCoordY
+            // 
+            startCoordY.DecimalPlaces = 5;
+            startCoordY.Location = new Point(54, 64);
+            startCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startCoordY.Name = "startCoordY";
+            startCoordY.Size = new Size(125, 27);
+            startCoordY.TabIndex = 4;
+            startCoordY.TextAlign = HorizontalAlignment.Right;
+            // 
+            // startCoordX
+            // 
+            startCoordX.DecimalPlaces = 5;
+            startCoordX.Location = new Point(54, 25);
+            startCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startCoordX.Name = "startCoordX";
+            startCoordX.Size = new Size(125, 27);
+            startCoordX.TabIndex = 3;
+            startCoordX.TextAlign = HorizontalAlignment.Right;
             // 
             // groupBox6
             // 
@@ -1346,9 +1460,9 @@
             groupBox6.Controls.Add(label23);
             groupBox6.Controls.Add(plotNo);
             groupBox6.Controls.Add(PropNo);
-            groupBox6.Location = new Point(11, 251);
+            groupBox6.Location = new Point(9, 192);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(215, 104);
+            groupBox6.Size = new Size(185, 104);
             groupBox6.TabIndex = 15;
             groupBox6.TabStop = false;
             groupBox6.Text = "Objects generation";
@@ -1356,7 +1470,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(27, 71);
+            label22.Location = new Point(3, 71);
             label22.Name = "label22";
             label22.Size = new Size(41, 20);
             label22.TabIndex = 7;
@@ -1365,127 +1479,31 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new Point(2, 29);
+            label23.Location = new Point(4, 29);
             label23.Name = "label23";
-            label23.Size = new Size(76, 20);
+            label23.Size = new Size(40, 20);
             label23.TabIndex = 6;
-            label23.Text = "Properties";
-            label23.Click += label23_Click;
+            label23.Text = "Prop";
             // 
             // plotNo
             // 
-            plotNo.Location = new Point(81, 64);
+            plotNo.Location = new Point(54, 64);
             plotNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             plotNo.Name = "plotNo";
             plotNo.Size = new Size(125, 27);
             plotNo.TabIndex = 4;
             plotNo.TextAlign = HorizontalAlignment.Right;
-            plotNo.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            plotNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // PropNo
             // 
-            PropNo.Location = new Point(81, 27);
+            PropNo.Location = new Point(55, 27);
             PropNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             PropNo.Name = "PropNo";
             PropNo.Size = new Size(125, 27);
             PropNo.TabIndex = 3;
             PropNo.TextAlign = HorizontalAlignment.Right;
-            PropNo.Value = new decimal(new int[] { 70, 0, 0, 0 });
-            // 
-            // groupBox7
-            // 
-            groupBox7.Controls.Add(label46);
-            groupBox7.Controls.Add(label47);
-            groupBox7.Controls.Add(CountNo);
-            groupBox7.Controls.Add(DepthNo);
-            groupBox7.Controls.Add(label24);
-            groupBox7.Controls.Add(label25);
-            groupBox7.Controls.Add(LengthOfTree);
-            groupBox7.Controls.Add(widthOfTree);
-            groupBox7.Location = new Point(9, 44);
-            groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(215, 195);
-            groupBox7.TabIndex = 14;
-            groupBox7.TabStop = false;
-            groupBox7.Text = "Tree settings";
-            // 
-            // label46
-            // 
-            label46.AutoSize = true;
-            label46.Location = new Point(14, 155);
-            label46.Name = "label46";
-            label46.Size = new Size(48, 20);
-            label46.TabIndex = 11;
-            label46.Text = "Count";
-            // 
-            // label47
-            // 
-            label47.AutoSize = true;
-            label47.Location = new Point(14, 119);
-            label47.Name = "label47";
-            label47.Size = new Size(50, 20);
-            label47.TabIndex = 10;
-            label47.Text = "Depth";
-            // 
-            // CountNo
-            // 
-            CountNo.Location = new Point(77, 151);
-            CountNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            CountNo.Name = "CountNo";
-            CountNo.Size = new Size(125, 27);
-            CountNo.TabIndex = 9;
-            CountNo.TextAlign = HorizontalAlignment.Right;
-            CountNo.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            // 
-            // DepthNo
-            // 
-            DepthNo.Location = new Point(77, 113);
-            DepthNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            DepthNo.Name = "DepthNo";
-            DepthNo.Size = new Size(125, 27);
-            DepthNo.TabIndex = 8;
-            DepthNo.TextAlign = HorizontalAlignment.Right;
-            DepthNo.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Location = new Point(18, 68);
-            label24.Name = "label24";
-            label24.Size = new Size(54, 20);
-            label24.TabIndex = 7;
-            label24.Text = "Length";
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Location = new Point(19, 28);
-            label25.Name = "label25";
-            label25.Size = new Size(49, 20);
-            label25.TabIndex = 6;
-            label25.Text = "Width";
-            // 
-            // LengthOfTree
-            // 
-            LengthOfTree.DecimalPlaces = 5;
-            LengthOfTree.Location = new Point(81, 64);
-            LengthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            LengthOfTree.Name = "LengthOfTree";
-            LengthOfTree.Size = new Size(125, 27);
-            LengthOfTree.TabIndex = 4;
-            LengthOfTree.TextAlign = HorizontalAlignment.Right;
-            LengthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
-            // 
-            // widthOfTree
-            // 
-            widthOfTree.DecimalPlaces = 5;
-            widthOfTree.Location = new Point(81, 27);
-            widthOfTree.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            widthOfTree.Name = "widthOfTree";
-            widthOfTree.Size = new Size(125, 27);
-            widthOfTree.TabIndex = 3;
-            widthOfTree.TextAlign = HorizontalAlignment.Right;
-            widthOfTree.Value = new decimal(new int[] { 500, 0, 0, 0 });
+            PropNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // label26
             // 
@@ -1497,7 +1515,7 @@
             // 
             // seedBtn2
             // 
-            seedBtn2.Location = new Point(17, 364);
+            seedBtn2.Location = new Point(107, 347);
             seedBtn2.Name = "seedBtn2";
             seedBtn2.Size = new Size(198, 27);
             seedBtn2.TabIndex = 9;
@@ -1508,11 +1526,62 @@
             // label48
             // 
             label48.AutoSize = true;
-            label48.Location = new Point(57, 11);
+            label48.Location = new Point(144, 11);
             label48.Name = "label48";
             label48.Size = new Size(111, 20);
             label48.TabIndex = 0;
             label48.Text = "Reset and Seed";
+            // 
+            // groupBox7
+            // 
+            groupBox7.Controls.Add(label46);
+            groupBox7.Controls.Add(label47);
+            groupBox7.Controls.Add(CountNo);
+            groupBox7.Controls.Add(DepthNo);
+            groupBox7.Location = new Point(216, 192);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(185, 100);
+            groupBox7.TabIndex = 14;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "Tree settings";
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(6, 71);
+            label46.Name = "label46";
+            label46.Size = new Size(48, 20);
+            label46.TabIndex = 11;
+            label46.Text = "Count";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(6, 36);
+            label47.Name = "label47";
+            label47.Size = new Size(50, 20);
+            label47.TabIndex = 10;
+            label47.Text = "Depth";
+            // 
+            // CountNo
+            // 
+            CountNo.Location = new Point(60, 69);
+            CountNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            CountNo.Name = "CountNo";
+            CountNo.Size = new Size(119, 27);
+            CountNo.TabIndex = 9;
+            CountNo.TextAlign = HorizontalAlignment.Right;
+            CountNo.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // DepthNo
+            // 
+            DepthNo.Location = new Point(62, 31);
+            DepthNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            DepthNo.Name = "DepthNo";
+            DepthNo.Size = new Size(117, 27);
+            DepthNo.TabIndex = 8;
+            DepthNo.TextAlign = HorizontalAlignment.Right;
+            DepthNo.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // panelDepth
             // 
@@ -1641,26 +1710,66 @@
             panel1.Size = new Size(95, 215);
             panel1.TabIndex = 163;
             // 
-            // resetBtn
+            // panelDataEditDel
+            // 
+            panelDataEditDel.BackColor = Color.DarkSalmon;
+            panelDataEditDel.Controls.Add(DeleteBtnRangeSearch);
+            panelDataEditDel.Controls.Add(EditBtnRangeSearch);
+            panelDataEditDel.Controls.Add(dataGridEditDelete);
+            panelDataEditDel.Location = new Point(502, 0);
+            panelDataEditDel.Name = "panelDataEditDel";
+            panelDataEditDel.Size = new Size(471, 679);
+            panelDataEditDel.TabIndex = 164;
+            // 
+            // DeleteBtnRangeSearch
+            // 
+            DeleteBtnRangeSearch.Location = new Point(292, 592);
+            DeleteBtnRangeSearch.Name = "DeleteBtnRangeSearch";
+            DeleteBtnRangeSearch.Size = new Size(161, 59);
+            DeleteBtnRangeSearch.TabIndex = 15;
+            DeleteBtnRangeSearch.Text = "DELETE";
+            DeleteBtnRangeSearch.UseVisualStyleBackColor = true;
+            DeleteBtnRangeSearch.Click += DeleteBtnRangeSearch_Click;
+            // 
+            // EditBtnRangeSearch
+            // 
+            EditBtnRangeSearch.Location = new Point(17, 592);
+            EditBtnRangeSearch.Name = "EditBtnRangeSearch";
+            EditBtnRangeSearch.Size = new Size(168, 59);
+            EditBtnRangeSearch.TabIndex = 14;
+            EditBtnRangeSearch.Text = "EDIT";
+            EditBtnRangeSearch.UseVisualStyleBackColor = true;
+            EditBtnRangeSearch.Click += EditBtnRangeSearch_Click;
+            // 
+            // dataGridEditDelete
+            // 
+            dataGridEditDelete.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridEditDelete.Location = new Point(11, 19);
+            dataGridEditDelete.Name = "dataGridEditDelete";
+            dataGridEditDelete.RowHeadersWidth = 51;
+            dataGridEditDelete.RowTemplate.Height = 29;
+            dataGridEditDelete.Size = new Size(442, 523);
+            dataGridEditDelete.TabIndex = 13;
+            // 
+            // App
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
-            Controls.Add(panel1);
+            Controls.Add(menupanel);
+            Controls.Add(panelDataEditDel);
             Controls.Add(panelDepth);
             Controls.Add(panelSeedApp);
-            Controls.Add(panelSettings);
             Controls.Add(panelPlot);
+            Controls.Add(panelSettings);
             Controls.Add(panelProp);
-            Controls.Add(panelEdit);
-            Controls.Add(panelDelete);
+            Controls.Add(panel1);
+            Controls.Add(QuadPanel);
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
             Controls.Add(panelSearchForProp);
-            Controls.Add(menupanel);
-            Controls.Add(QuadPanel);
-            Name = "resetBtn";
+            Name = "App";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Reset Tree";
             Load += App_Load;
@@ -1681,6 +1790,10 @@
             ((System.ComponentModel.ISupportInitialize)startPosLong).EndInit();
             panelAddProp.ResumeLayout(false);
             panelAddProp.PerformLayout();
+            groupBox8.ResumeLayout(false);
+            groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)posLatEnd).EndInit();
+            ((System.ComponentModel.ISupportInitialize)posLongEnd).EndInit();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)posLat).EndInit();
@@ -1695,16 +1808,16 @@
             groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)startPosPlotLat).EndInit();
             ((System.ComponentModel.ISupportInitialize)startPosPlotLong).EndInit();
-            panelDelete.ResumeLayout(false);
-            panelDelete.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridObj).EndInit();
-            panelEdit.ResumeLayout(false);
-            panelEdit.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridObj2).EndInit();
             panelProp.ResumeLayout(false);
             panelProp.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)YCoordProp).EndInit();
-            ((System.ComponentModel.ISupportInitialize)XcoordProp).EndInit();
+            groupBox13.ResumeLayout(false);
+            groupBox13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)editPropEndY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)editPropEndX).EndInit();
+            groupBox14.ResumeLayout(false);
+            groupBox14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)editPropStartY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)editPropStartX).EndInit();
             panelPlot.ResumeLayout(false);
             panelPlot.PerformLayout();
             groupBox10.ResumeLayout(false);
@@ -1719,6 +1832,14 @@
             panelSettings.PerformLayout();
             panelSeedApp.ResumeLayout(false);
             panelSeedApp.PerformLayout();
+            groupBox12.ResumeLayout(false);
+            groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)endCoordY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)endCoordX).EndInit();
+            groupBox11.ResumeLayout(false);
+            groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)startCoordY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)startCoordX).EndInit();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)plotNo).EndInit();
@@ -1727,13 +1848,13 @@
             groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CountNo).EndInit();
             ((System.ComponentModel.ISupportInitialize)DepthNo).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LengthOfTree).EndInit();
-            ((System.ComponentModel.ISupportInitialize)widthOfTree).EndInit();
             panelDepth.ResumeLayout(false);
             panelDepth.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)newDepthNum).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panelDataEditDel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridEditDelete).EndInit();
             ResumeLayout(false);
         }
 
@@ -1741,10 +1862,8 @@
         private Panel QuadPanel;
         private Button testbutton;
         private Panel menupanel;
-        private Button editButton;
         private Button addPlotButton;
         private Button addPropButton;
-        private Button deletePropButton;
         private Button giveRangeButton;
         private Button searchPropButton;
         private Panel panelSearchForProp;
@@ -1758,7 +1877,6 @@
         private RadioButton rbPlot;
         private RadioButton rbProp;
         private Panel panelGiveRange;
-        private RichTextBox objInfo;
         private Button searchRangeButton;
         private Label label8;
         private GroupBox groupBox2;
@@ -1800,39 +1918,18 @@
         private NumericUpDown startPosPlotLong;
         private Button PlotAddBtn;
         private Label label18;
-        private Panel panelDelete;
         private GroupBox groupBox6;
-        private Label label21;
-        private NumericUpDown numericUpDown1;
         private Label label22;
-        private NumericUpDown numericUpDown2;
         private Label label23;
-        private Label label24;
         private RichTextBox richTextBox1;
         private GroupBox groupBox7;
-        private Label label25;
-        private NumericUpDown numericUpDown3;
         private Label label26;
-        private NumericUpDown numericUpDown4;
-        private Button deleteBtn;
-        private Label label27;
-        private Button showBtn;
-        private DataGridView dataGridObj;
-        private NumericUpDown widthOfTree;
-        private NumericUpDown LengthOfTree;
         private NumericUpDown plotNo;
         private NumericUpDown PropNo;
-        private Panel panelEdit;
-        private DataGridView dataGridObj2;
-        private Button editBtn;
         private Panel panelProp;
         private Button editBTNProp;
         private Label label36;
-        private Label label35;
-        private Label label34;
         private RichTextBox descBoxEditProp;
-        private NumericUpDown YCoordProp;
-        private NumericUpDown XcoordProp;
         private TextBox rnPropEdit;
         private Label label33;
         private Label label32;
@@ -1883,5 +1980,34 @@
         private Label improveLBL;
         private Panel panel1;
         private CheckBox checkBoxWantOpt;
+        private GroupBox groupBox8;
+        private Label label49;
+        private NumericUpDown posLatEnd;
+        private Label label50;
+        private NumericUpDown posLongEnd;
+        private Panel panelDataEditDel;
+        private Button DeleteBtnRangeSearch;
+        private Button EditBtnRangeSearch;
+        private DataGridView dataGridEditDelete;
+        private GroupBox groupBox12;
+        private Label label24;
+        private Label label25;
+        private NumericUpDown endCoordY;
+        private NumericUpDown endCoordX;
+        private GroupBox groupBox11;
+        private Label label55;
+        private Label label56;
+        private NumericUpDown startCoordY;
+        private NumericUpDown startCoordX;
+        private GroupBox groupBox13;
+        private Label label34;
+        private Label label35;
+        private NumericUpDown editPropEndY;
+        private NumericUpDown editPropEndX;
+        private GroupBox groupBox14;
+        private Label label53;
+        private Label label54;
+        private NumericUpDown editPropStartY;
+        private NumericUpDown editPropStartX;
     }
 }
