@@ -285,14 +285,86 @@ namespace QuadTree.GeoSystem
                 ((PlotOfLand)refObj).RegisterNumber = regNumber;
                 ((PlotOfLand)refObj).Description = description;
             }
-        } 
+        }
 
-        public Polygon PickToEdit(Polygon obj) 
+        public bool EditObject(Polygon oldObj, Polygon newObj, bool keyAttr) 
         {
+            //returns the reference to a object in structure
+            var _refObj = this._area.ShowObject(oldObj);
 
+            if (_refObj != null)
+            {
+                //nasiel sa
+                if (keyAttr)
+                {
+                    if (newObj is PlotOfLand)
+                    {
+                        this.ChangeKeyAttr(((PlotOfLand)_refObj), 
+                            ((PlotOfLand)newObj).Coordinates.startPos.Longitude, 
+                            ((PlotOfLand)newObj).Coordinates.startPos.Latitude, 
+                            ((PlotOfLand)newObj).Coordinates.endPos.Longitude, 
+                            ((PlotOfLand)newObj).Coordinates.endPos.Latitude);
+                    }
+                    else
+                    {
+                        this.ChangeKeyAttr(((Property)_refObj),
+                            ((Property)newObj).Coordinates.x.Longitude,
+                            ((Property)newObj).Coordinates.x.Latitude,
+                            ((Property)newObj).Coordinates.y.Longitude,
+                            ((Property)newObj).Coordinates.y.Latitude);
+                    }
+                    
+                    return true;
+                }
+                else
+                {
+                    if (newObj is PlotOfLand)
+                    {
+                        this.ChangeNonKeyAttr(((PlotOfLand)_refObj),
+                            ((PlotOfLand)newObj).RegisterNumber, ((PlotOfLand)newObj).Description);
+                    }
+                    else
+                    {
+                        this.ChangeNonKeyAttr(((Property)_refObj),
+                            ((Property)newObj).RegisterNumber, ((Property)newObj).Description);
+                    }
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+        }
+
+        public Polygon PickToEdit(Polygon obj)
+        {
             return (Polygon)this._area.ShowObject(obj);
         }
 
+        public Property PickAttrProp(Property obj)
+        {
+            Property _refProp = (Property)this._area.ShowObject(obj);
+
+            //just attributes for form
+            Property pomProp = new Property(_refProp.RegisterNumber, _refProp.Description, _refProp.Coordinates, null);
+
+            return pomProp;
+        }
+
+        public PlotOfLand PickAttrPlot(PlotOfLand obj)
+        {
+            PlotOfLand _refPlot = (PlotOfLand)this._area.ShowObject(obj);
+
+            //just attributes for form
+            PlotOfLand pomPlot = new PlotOfLand(_refPlot.RegisterNumber, _refPlot.Description, _refPlot.Coordinates, null);
+
+            return pomPlot;
+        }
 
         public void WriteToFiles()
         {

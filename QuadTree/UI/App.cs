@@ -214,7 +214,7 @@ namespace QuadTree.UI
                                           $"Description: {((Property)property).Description}\n";
                     objectDetails += "Plots:\n";
 
-                    foreach (var plot in ((Property)property)._lands) 
+                    foreach (var plot in ((Property)property)._lands)
                     {
                         objectDetails += $"{plot.RegisterNumber} : {plot.Description}\n";
                     }
@@ -385,6 +385,8 @@ namespace QuadTree.UI
             }
         }
 
+
+        /*//old EDIT does not go here
         private void editBtn_Click(object sender, EventArgs e)
         {
             //this.redoGrids();
@@ -411,6 +413,8 @@ namespace QuadTree.UI
                     panelProp.Show();
 
                     originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
+                    //originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
+
 
                     if (originalProp != null)
                     {
@@ -437,6 +441,7 @@ namespace QuadTree.UI
                     panelPlot.Show();
 
                     originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
+                    //originalPlot = this._app.PickAttrPlot(new PlotOfLand((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null));
 
                     if (originalPlot != null)
                     {
@@ -458,7 +463,7 @@ namespace QuadTree.UI
                     }
                 }
             }
-        }
+        }*/
 
         private void editbtnPlot_Click(object sender, EventArgs e)
         {
@@ -472,6 +477,24 @@ namespace QuadTree.UI
 
             bool attrChanged = originalPLOTRegisterNumber != rn ||
                 originalPLOTDescription != descEditPlot.Text;
+
+
+           /* var changed = this._app.EditObject(originalPlot,
+               new PlotOfLand(rn, descEditPlot.Text,
+               (new Coordinates((double)startPosEditPlotX.Value, (double)startPosEditPlotY.Value, 0),
+               new Coordinates((double)endPosEditPlotX.Value, (double)endPosEditPlotY.Value, 0)), null),
+               keyAttrChanged);
+
+            if (changed)
+            {
+                MessageBox.Show("Attributes changed.");
+            }
+            else
+            {
+                MessageBox.Show("Failed changing attributes.");
+            }*/
+
+
 
             if (!keyAttrChanged && attrChanged)
             {
@@ -518,11 +541,27 @@ namespace QuadTree.UI
             bool attrChanged = originalPROPRegisterNumber != rn ||
                 originalPROPDescription != descBoxEditProp.Text;
 
+            /*var changed = this._app.EditObject(originalProp,
+               new Property(rn, descBoxEditProp.Text,
+               (new Coordinates((double)editPropStartX.Value, (double)editPropStartY.Value, 0),
+               new Coordinates((double)editPropEndX.Value, (double)editPropEndY.Value, 0)), null),
+               keyAttrChanged);
+
+            if (changed)
+            {
+                MessageBox.Show("Attributes changed.");
+            }
+            else
+            {
+                MessageBox.Show("Failed changing attributes.");
+            }*/
+
             if (!keyAttrChanged && attrChanged)
             {
                 originalProp._description = descBoxEditProp.Text;
                 originalProp._registerNumber = rn;
                 selectedRowProp.Cells[0].Value = rn;
+                selectedRowProp.Cells[1].Value = descBoxEditProp.Text;
                 dataGridEditDelete.Refresh();
             }
             else if (keyAttrChanged)
@@ -699,7 +738,8 @@ namespace QuadTree.UI
 
                     //TODO: nepristupovat priamo na GUI k objektu
 
-                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, (string)desc, (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    //originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
 
                     if (originalProp != null)
                     {
@@ -714,8 +754,8 @@ namespace QuadTree.UI
                         originalPROPRegisterNumber = originalProp._registerNumber;
                         originalPROPXCoordinateStart = originalProp.suradnice.x.Longitude;
                         originalPROPYCoordinateStart = originalProp.suradnice.x.Latitude;
-                        originalPROPXCoordinateStart = originalProp.suradnice.y.Longitude;
-                        originalPROPXCoordinateEnd = originalProp.suradnice.y.Latitude;
+                        originalPROPXCoordinateEnd = originalProp.suradnice.y.Longitude;
+                        originalPROPYCoordinateEnd = originalProp.suradnice.y.Latitude;
 
                     }
 
@@ -727,6 +767,8 @@ namespace QuadTree.UI
                     panelPlot.Show();
 
                     originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    //originalPlot = this._app.PickAttrPlot(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+
 
                     if (originalPlot != null)
                     {

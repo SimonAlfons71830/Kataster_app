@@ -1935,7 +1935,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
             Controls.Add(menupanel);
-            Controls.Add(panelPlot);
             Controls.Add(panelProp);
             Controls.Add(panelDepth);
             Controls.Add(panelSeedApp);
@@ -1947,6 +1946,7 @@
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
+            Controls.Add(panelPlot);
             Name = "App";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Reset Tree";
