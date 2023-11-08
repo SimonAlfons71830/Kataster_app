@@ -37,6 +37,8 @@
             giveRangeButton = new Button();
             searchPropButton = new Button();
             panelSearchForProp = new Panel();
+            panel6 = new Panel();
+            label3 = new Label();
             rbPlot = new RadioButton();
             rbProp = new RadioButton();
             propInfo = new RichTextBox();
@@ -45,8 +47,9 @@
             latitudeNum = new NumericUpDown();
             label4 = new Label();
             longitudeNum = new NumericUpDown();
-            label3 = new Label();
             panelGiveRange = new Panel();
+            panel5 = new Panel();
+            label13 = new Label();
             groupBox2 = new GroupBox();
             label2 = new Label();
             endPosLat = new NumericUpDown();
@@ -58,8 +61,9 @@
             label10 = new Label();
             startPosLong = new NumericUpDown();
             searchRangeButton = new Button();
-            label8 = new Label();
             panelAddProp = new Panel();
+            panel4 = new Panel();
+            label18 = new Label();
             groupBox8 = new GroupBox();
             label49 = new Label();
             posLatEnd = new NumericUpDown();
@@ -75,8 +79,9 @@
             label12 = new Label();
             posLong = new NumericUpDown();
             addBTN = new Button();
-            label13 = new Label();
             panelAddPlot = new Panel();
+            panel3 = new Panel();
+            label21 = new Label();
             groupBox5 = new GroupBox();
             label19 = new Label();
             endPosPlotLat = new NumericUpDown();
@@ -92,7 +97,6 @@
             label17 = new Label();
             startPosPlotLong = new NumericUpDown();
             PlotAddBtn = new Button();
-            label18 = new Label();
             panelProp = new Panel();
             groupBox13 = new GroupBox();
             label34 = new Label();
@@ -135,6 +139,7 @@
             resetAppBtn = new Button();
             importBtn = new Button();
             exportBtn = new Button();
+            panel2 = new Panel();
             label45 = new Label();
             panelSeedApp = new Panel();
             groupBox12 = new GroupBox();
@@ -179,9 +184,11 @@
             dataGridEditDelete = new DataGridView();
             menupanel.SuspendLayout();
             panelSearchForProp.SuspendLayout();
+            panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)latitudeNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)longitudeNum).BeginInit();
             panelGiveRange.SuspendLayout();
+            panel5.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)endPosLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)endPosLong).BeginInit();
@@ -189,6 +196,7 @@
             ((System.ComponentModel.ISupportInitialize)startPosLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosLong).BeginInit();
             panelAddProp.SuspendLayout();
+            panel4.SuspendLayout();
             groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)posLatEnd).BeginInit();
             ((System.ComponentModel.ISupportInitialize)posLongEnd).BeginInit();
@@ -196,6 +204,7 @@
             ((System.ComponentModel.ISupportInitialize)posLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)posLong).BeginInit();
             panelAddPlot.SuspendLayout();
+            panel3.SuspendLayout();
             groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)endPosPlotLat).BeginInit();
             ((System.ComponentModel.ISupportInitialize)endPosPlotLong).BeginInit();
@@ -217,6 +226,7 @@
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).BeginInit();
             panelSettings.SuspendLayout();
+            panel2.SuspendLayout();
             panelSeedApp.SuspendLayout();
             groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)endCoordY).BeginInit();
@@ -247,11 +257,12 @@
             // 
             // testbutton
             // 
+            testbutton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             testbutton.Location = new Point(0, 12);
             testbutton.Name = "testbutton";
             testbutton.Size = new Size(191, 27);
             testbutton.TabIndex = 139;
-            testbutton.Text = "test";
+            testbutton.Text = "t e s t";
             testbutton.UseVisualStyleBackColor = true;
             testbutton.Click += appbutton_Click;
             // 
@@ -273,61 +284,67 @@
             // settingsButton
             // 
             settingsButton.FlatStyle = FlatStyle.Flat;
+            settingsButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             settingsButton.Location = new Point(0, 573);
             settingsButton.Name = "settingsButton";
             settingsButton.Size = new Size(191, 59);
             settingsButton.TabIndex = 149;
-            settingsButton.Text = "SETTINGS";
+            settingsButton.Text = "S E T T I N G S";
             settingsButton.UseVisualStyleBackColor = true;
             settingsButton.Click += settingsButton_Click;
             // 
             // addPlotButton
             // 
             addPlotButton.FlatStyle = FlatStyle.Flat;
+            addPlotButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             addPlotButton.Location = new Point(0, 280);
             addPlotButton.Name = "addPlotButton";
             addPlotButton.Size = new Size(191, 59);
             addPlotButton.TabIndex = 143;
-            addPlotButton.Text = "ADD PLOT";
+            addPlotButton.Text = "A D D   P L O T";
             addPlotButton.UseVisualStyleBackColor = true;
             addPlotButton.Click += addPlotButton_Click;
             // 
             // addPropButton
             // 
             addPropButton.FlatStyle = FlatStyle.Flat;
+            addPropButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             addPropButton.Location = new Point(0, 211);
             addPropButton.Name = "addPropButton";
             addPropButton.Size = new Size(191, 59);
             addPropButton.TabIndex = 142;
-            addPropButton.Text = "ADD PROP";
+            addPropButton.Text = "A D D   P R O P";
             addPropButton.UseVisualStyleBackColor = true;
             addPropButton.Click += addPropButton_Click;
             // 
             // giveRangeButton
             // 
             giveRangeButton.FlatStyle = FlatStyle.Flat;
+            giveRangeButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             giveRangeButton.Location = new Point(0, 140);
             giveRangeButton.Name = "giveRangeButton";
             giveRangeButton.Size = new Size(191, 59);
             giveRangeButton.TabIndex = 141;
-            giveRangeButton.Text = "GIVE RANGE";
+            giveRangeButton.Text = "G I V E   R A N G E";
             giveRangeButton.UseVisualStyleBackColor = true;
             giveRangeButton.Click += giveRangeButton_Click;
             // 
             // searchPropButton
             // 
             searchPropButton.FlatStyle = FlatStyle.Flat;
+            searchPropButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             searchPropButton.Location = new Point(0, 69);
             searchPropButton.Name = "searchPropButton";
             searchPropButton.Size = new Size(191, 59);
             searchPropButton.TabIndex = 140;
-            searchPropButton.Text = "SEARCH";
+            searchPropButton.Text = "S E A R C H";
             searchPropButton.UseVisualStyleBackColor = true;
             searchPropButton.Click += searchPropButton_Click;
             // 
             // panelSearchForProp
             // 
             panelSearchForProp.BackColor = Color.DarkSalmon;
+            panelSearchForProp.Controls.Add(panel6);
             panelSearchForProp.Controls.Add(rbPlot);
             panelSearchForProp.Controls.Add(rbProp);
             panelSearchForProp.Controls.Add(propInfo);
@@ -336,110 +353,148 @@
             panelSearchForProp.Controls.Add(latitudeNum);
             panelSearchForProp.Controls.Add(label4);
             panelSearchForProp.Controls.Add(longitudeNum);
-            panelSearchForProp.Controls.Add(label3);
             panelSearchForProp.Location = new Point(191, 0);
             panelSearchForProp.Name = "panelSearchForProp";
             panelSearchForProp.Size = new Size(310, 679);
             panelSearchForProp.TabIndex = 141;
             // 
+            // panel6
+            // 
+            panel6.BackColor = Color.PeachPuff;
+            panel6.Controls.Add(label3);
+            panel6.Location = new Point(0, 0);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(313, 82);
+            panel6.TabIndex = 166;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(64, 31);
+            label3.Name = "label3";
+            label3.Size = new Size(192, 18);
+            label3.TabIndex = 0;
+            label3.Text = "P O I N T   S E A R C H";
+            label3.TextAlign = ContentAlignment.TopCenter;
+            // 
             // rbPlot
             // 
             rbPlot.AutoSize = true;
-            rbPlot.Location = new Point(95, 108);
+            rbPlot.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            rbPlot.Location = new Point(183, 98);
             rbPlot.Name = "rbPlot";
-            rbPlot.Size = new Size(62, 24);
+            rbPlot.Size = new Size(85, 22);
             rbPlot.TabIndex = 8;
-            rbPlot.Text = "PLOT";
+            rbPlot.Text = "P L O T";
             rbPlot.UseVisualStyleBackColor = true;
             // 
             // rbProp
             // 
             rbProp.AutoSize = true;
             rbProp.Checked = true;
-            rbProp.Location = new Point(95, 73);
+            rbProp.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            rbProp.Location = new Point(11, 100);
             rbProp.Name = "rbProp";
-            rbProp.Size = new Size(98, 24);
+            rbProp.Size = new Size(149, 22);
             rbProp.TabIndex = 7;
             rbProp.TabStop = true;
-            rbProp.Text = "PROPERTY";
+            rbProp.Text = "P R O P E R T Y";
             rbProp.UseVisualStyleBackColor = true;
             // 
             // propInfo
             // 
-            propInfo.Location = new Point(37, 436);
+            propInfo.Location = new Point(37, 413);
             propInfo.Name = "propInfo";
-            propInfo.Size = new Size(222, 197);
+            propInfo.Size = new Size(222, 219);
             propInfo.TabIndex = 6;
             propInfo.Text = "";
             // 
             // button2
             // 
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             button2.Location = new Point(37, 331);
             button2.Name = "button2";
-            button2.Size = new Size(222, 59);
+            button2.Size = new Size(222, 48);
             button2.TabIndex = 5;
-            button2.Text = "SEARCH";
+            button2.Text = "S E A R C H";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click_1;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(77, 237);
+            label5.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(79, 248);
             label5.Name = "label5";
-            label5.Size = new Size(60, 20);
+            label5.Size = new Size(128, 18);
             label5.TabIndex = 4;
-            label5.Text = "latitude";
+            label5.Text = "L A T I T U D E";
             // 
             // latitudeNum
             // 
             latitudeNum.DecimalPlaces = 5;
-            latitudeNum.Location = new Point(77, 261);
+            latitudeNum.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            latitudeNum.Location = new Point(78, 272);
             latitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             latitudeNum.Name = "latitudeNum";
-            latitudeNum.Size = new Size(135, 27);
+            latitudeNum.Size = new Size(135, 25);
             latitudeNum.TabIndex = 3;
             latitudeNum.TextAlign = HorizontalAlignment.Right;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(77, 171);
+            label4.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(77, 165);
             label4.Name = "label4";
-            label4.Size = new Size(73, 20);
+            label4.Size = new Size(152, 18);
             label4.TabIndex = 2;
-            label4.Text = "longitude";
+            label4.Text = "L O N G I T U D E ";
             // 
             // longitudeNum
             // 
             longitudeNum.DecimalPlaces = 5;
-            longitudeNum.Location = new Point(77, 193);
+            longitudeNum.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            longitudeNum.Location = new Point(79, 191);
             longitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             longitudeNum.Name = "longitudeNum";
-            longitudeNum.Size = new Size(135, 27);
+            longitudeNum.Size = new Size(134, 25);
             longitudeNum.TabIndex = 1;
             longitudeNum.TextAlign = HorizontalAlignment.Right;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(53, 19);
-            label3.Name = "label3";
-            label3.Size = new Size(205, 20);
-            label3.TabIndex = 0;
-            label3.Text = "SEARCH FOR PROPERTY/PLOT";
             // 
             // panelGiveRange
             // 
             panelGiveRange.BackColor = Color.DarkSalmon;
+            panelGiveRange.Controls.Add(panel5);
             panelGiveRange.Controls.Add(groupBox2);
             panelGiveRange.Controls.Add(groupBox1);
             panelGiveRange.Controls.Add(searchRangeButton);
-            panelGiveRange.Controls.Add(label8);
             panelGiveRange.Location = new Point(191, 0);
             panelGiveRange.Name = "panelGiveRange";
             panelGiveRange.Size = new Size(313, 679);
             panelGiveRange.TabIndex = 142;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.PeachPuff;
+            panel5.Controls.Add(label13);
+            panel5.Location = new Point(0, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(313, 82);
+            panel5.TabIndex = 166;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label13.Location = new Point(58, 31);
+            label13.Name = "label13";
+            label13.Size = new Size(200, 18);
+            label13.TabIndex = 0;
+            label13.Text = "R A N G E    S E A R C H";
+            label13.TextAlign = ContentAlignment.TopCenter;
             // 
             // groupBox2
             // 
@@ -447,9 +502,10 @@
             groupBox2.Controls.Add(endPosLat);
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(endPosLong);
-            groupBox2.Location = new Point(155, 143);
+            groupBox2.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox2.Location = new Point(155, 115);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(141, 165);
+            groupBox2.Size = new Size(141, 193);
             groupBox2.TabIndex = 12;
             groupBox2.TabStop = false;
             groupBox2.Text = "Ending position";
@@ -457,38 +513,42 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(11, 96);
+            label2.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(12, 121);
             label2.Name = "label2";
-            label2.Size = new Size(60, 20);
+            label2.Size = new Size(72, 18);
             label2.TabIndex = 10;
-            label2.Text = "latitude";
+            label2.Text = "LATITUDE";
             // 
             // endPosLat
             // 
             endPosLat.DecimalPlaces = 5;
-            endPosLat.Location = new Point(11, 121);
+            endPosLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            endPosLat.Location = new Point(12, 146);
             endPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosLat.Name = "endPosLat";
-            endPosLat.Size = new Size(123, 27);
+            endPosLat.Size = new Size(123, 25);
             endPosLat.TabIndex = 9;
             endPosLat.TextAlign = HorizontalAlignment.Right;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(11, 31);
+            label6.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Location = new Point(12, 56);
             label6.Name = "label6";
-            label6.Size = new Size(73, 20);
+            label6.Size = new Size(80, 18);
             label6.TabIndex = 8;
-            label6.Text = "longitude";
+            label6.Text = "LONGITUDE";
             // 
             // endPosLong
             // 
             endPosLong.DecimalPlaces = 5;
-            endPosLong.Location = new Point(11, 53);
+            endPosLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            endPosLong.Location = new Point(12, 78);
             endPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosLong.Name = "endPosLong";
-            endPosLong.Size = new Size(123, 27);
+            endPosLong.Size = new Size(123, 25);
             endPosLong.TabIndex = 7;
             endPosLong.TextAlign = HorizontalAlignment.Right;
             // 
@@ -498,9 +558,10 @@
             groupBox1.Controls.Add(startPosLat);
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(startPosLong);
-            groupBox1.Location = new Point(9, 143);
+            groupBox1.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox1.Location = new Point(9, 115);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(141, 165);
+            groupBox1.Size = new Size(141, 193);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
             groupBox1.Text = "Starting position";
@@ -508,63 +569,61 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(11, 96);
+            label9.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label9.Location = new Point(11, 121);
             label9.Name = "label9";
-            label9.Size = new Size(60, 20);
+            label9.Size = new Size(72, 18);
             label9.TabIndex = 10;
-            label9.Text = "latitude";
+            label9.Text = "LATITUDE";
             // 
             // startPosLat
             // 
             startPosLat.DecimalPlaces = 5;
-            startPosLat.Location = new Point(11, 121);
+            startPosLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            startPosLat.Location = new Point(11, 146);
             startPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             startPosLat.Name = "startPosLat";
-            startPosLat.Size = new Size(123, 27);
+            startPosLat.Size = new Size(123, 25);
             startPosLat.TabIndex = 9;
             startPosLat.TextAlign = HorizontalAlignment.Right;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(11, 31);
+            label10.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Location = new Point(11, 56);
             label10.Name = "label10";
-            label10.Size = new Size(73, 20);
+            label10.Size = new Size(80, 18);
             label10.TabIndex = 8;
-            label10.Text = "longitude";
+            label10.Text = "LONGITUDE";
             // 
             // startPosLong
             // 
             startPosLong.DecimalPlaces = 5;
-            startPosLong.Location = new Point(11, 53);
+            startPosLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            startPosLong.Location = new Point(11, 78);
             startPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             startPosLong.Name = "startPosLong";
-            startPosLong.Size = new Size(123, 27);
+            startPosLong.Size = new Size(123, 25);
             startPosLong.TabIndex = 7;
             startPosLong.TextAlign = HorizontalAlignment.Right;
             // 
             // searchRangeButton
             // 
-            searchRangeButton.Location = new Point(43, 396);
+            searchRangeButton.FlatStyle = FlatStyle.Flat;
+            searchRangeButton.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            searchRangeButton.Location = new Point(43, 413);
             searchRangeButton.Name = "searchRangeButton";
             searchRangeButton.Size = new Size(222, 59);
             searchRangeButton.TabIndex = 5;
-            searchRangeButton.Text = "SEARCH";
+            searchRangeButton.Text = "S E A R C H";
             searchRangeButton.UseVisualStyleBackColor = true;
             searchRangeButton.Click += searchRangeButton_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(69, 37);
-            label8.Name = "label8";
-            label8.Size = new Size(173, 20);
-            label8.TabIndex = 0;
-            label8.Text = "GIVE RANGE TO SEARCH";
             // 
             // panelAddProp
             // 
             panelAddProp.BackColor = Color.DarkSalmon;
+            panelAddProp.Controls.Add(panel4);
             panelAddProp.Controls.Add(groupBox8);
             panelAddProp.Controls.Add(label7);
             panelAddProp.Controls.Add(label1);
@@ -572,11 +631,30 @@
             panelAddProp.Controls.Add(registrationNumber);
             panelAddProp.Controls.Add(groupBox4);
             panelAddProp.Controls.Add(addBTN);
-            panelAddProp.Controls.Add(label13);
             panelAddProp.Location = new Point(191, 0);
             panelAddProp.Name = "panelAddProp";
             panelAddProp.Size = new Size(310, 679);
             panelAddProp.TabIndex = 143;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.PeachPuff;
+            panel4.Controls.Add(label18);
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(313, 82);
+            panel4.TabIndex = 166;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label18.Location = new Point(64, 31);
+            label18.Name = "label18";
+            label18.Size = new Size(192, 18);
+            label18.TabIndex = 0;
+            label18.Text = "A D D   P R O P E R T Y";
+            label18.TextAlign = ContentAlignment.TopCenter;
             // 
             // groupBox8
             // 
@@ -584,6 +662,7 @@
             groupBox8.Controls.Add(posLatEnd);
             groupBox8.Controls.Add(label50);
             groupBox8.Controls.Add(posLongEnd);
+            groupBox8.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox8.Location = new Point(161, 174);
             groupBox8.Name = "groupBox8";
             groupBox8.Size = new Size(141, 165);
@@ -594,58 +673,64 @@
             // label49
             // 
             label49.AutoSize = true;
+            label49.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label49.Location = new Point(11, 96);
             label49.Name = "label49";
-            label49.Size = new Size(60, 20);
+            label49.Size = new Size(72, 18);
             label49.TabIndex = 10;
-            label49.Text = "latitude";
+            label49.Text = "LATITUDE";
             // 
             // posLatEnd
             // 
             posLatEnd.DecimalPlaces = 5;
+            posLatEnd.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLatEnd.Location = new Point(11, 121);
             posLatEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             posLatEnd.Name = "posLatEnd";
-            posLatEnd.Size = new Size(123, 27);
+            posLatEnd.Size = new Size(123, 25);
             posLatEnd.TabIndex = 9;
             posLatEnd.TextAlign = HorizontalAlignment.Right;
             // 
             // label50
             // 
             label50.AutoSize = true;
+            label50.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label50.Location = new Point(11, 31);
             label50.Name = "label50";
-            label50.Size = new Size(73, 20);
+            label50.Size = new Size(80, 18);
             label50.TabIndex = 8;
-            label50.Text = "longitude";
+            label50.Text = "LONGITUDE";
             // 
             // posLongEnd
             // 
             posLongEnd.DecimalPlaces = 5;
+            posLongEnd.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLongEnd.Location = new Point(11, 53);
             posLongEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             posLongEnd.Name = "posLongEnd";
-            posLongEnd.Size = new Size(123, 27);
+            posLongEnd.Size = new Size(123, 25);
             posLongEnd.TabIndex = 7;
             posLongEnd.TextAlign = HorizontalAlignment.Right;
             // 
             // label7
             // 
             label7.AutoSize = true;
+            label7.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label7.Location = new Point(113, 373);
             label7.Name = "label7";
-            label7.Size = new Size(85, 20);
+            label7.Size = new Size(96, 18);
             label7.TabIndex = 15;
-            label7.Text = "Description";
+            label7.Text = "DESCRIPTION";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(82, 100);
+            label1.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(75, 100);
             label1.Name = "label1";
-            label1.Size = new Size(147, 20);
+            label1.Size = new Size(160, 18);
             label1.TabIndex = 14;
-            label1.Text = "Registration Number";
+            label1.Text = "REGISTRATION NUMBER";
             // 
             // description
             // 
@@ -668,6 +753,7 @@
             groupBox4.Controls.Add(posLat);
             groupBox4.Controls.Add(label12);
             groupBox4.Controls.Add(posLong);
+            groupBox4.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox4.Location = new Point(9, 170);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(141, 165);
@@ -678,63 +764,61 @@
             // label11
             // 
             label11.AutoSize = true;
+            label11.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label11.Location = new Point(11, 96);
             label11.Name = "label11";
-            label11.Size = new Size(60, 20);
+            label11.Size = new Size(72, 18);
             label11.TabIndex = 10;
-            label11.Text = "latitude";
+            label11.Text = "LATITUDE";
             // 
             // posLat
             // 
             posLat.DecimalPlaces = 5;
+            posLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLat.Location = new Point(11, 121);
             posLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             posLat.Name = "posLat";
-            posLat.Size = new Size(123, 27);
+            posLat.Size = new Size(123, 25);
             posLat.TabIndex = 9;
             posLat.TextAlign = HorizontalAlignment.Right;
             // 
             // label12
             // 
             label12.AutoSize = true;
+            label12.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label12.Location = new Point(11, 31);
             label12.Name = "label12";
-            label12.Size = new Size(73, 20);
+            label12.Size = new Size(80, 18);
             label12.TabIndex = 8;
-            label12.Text = "longitude";
+            label12.Text = "LONGITUDE";
             // 
             // posLong
             // 
             posLong.DecimalPlaces = 5;
+            posLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLong.Location = new Point(11, 53);
             posLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             posLong.Name = "posLong";
-            posLong.Size = new Size(123, 27);
+            posLong.Size = new Size(123, 25);
             posLong.TabIndex = 7;
             posLong.TextAlign = HorizontalAlignment.Right;
             // 
             // addBTN
             // 
+            addBTN.FlatStyle = FlatStyle.Flat;
+            addBTN.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             addBTN.Location = new Point(43, 575);
             addBTN.Name = "addBTN";
             addBTN.Size = new Size(222, 59);
             addBTN.TabIndex = 5;
-            addBTN.Text = "ADD";
+            addBTN.Text = "A D D";
             addBTN.UseVisualStyleBackColor = true;
             addBTN.Click += addBTN_Click;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(99, 37);
-            label13.Name = "label13";
-            label13.Size = new Size(113, 20);
-            label13.TabIndex = 0;
-            label13.Text = "ADD PROPERTY";
             // 
             // panelAddPlot
             // 
             panelAddPlot.BackColor = Color.DarkSalmon;
+            panelAddPlot.Controls.Add(panel3);
             panelAddPlot.Controls.Add(groupBox5);
             panelAddPlot.Controls.Add(label14);
             panelAddPlot.Controls.Add(label15);
@@ -742,11 +826,30 @@
             panelAddPlot.Controls.Add(regPlotNumber);
             panelAddPlot.Controls.Add(groupBox3);
             panelAddPlot.Controls.Add(PlotAddBtn);
-            panelAddPlot.Controls.Add(label18);
             panelAddPlot.Location = new Point(191, 0);
             panelAddPlot.Name = "panelAddPlot";
             panelAddPlot.Size = new Size(310, 679);
             panelAddPlot.TabIndex = 144;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.PeachPuff;
+            panel3.Controls.Add(label21);
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(313, 82);
+            panel3.TabIndex = 166;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label21.Location = new Point(85, 31);
+            label21.Name = "label21";
+            label21.Size = new Size(128, 18);
+            label21.TabIndex = 0;
+            label21.Text = "A D D   P L O T";
+            label21.TextAlign = ContentAlignment.TopCenter;
             // 
             // groupBox5
             // 
@@ -754,6 +857,7 @@
             groupBox5.Controls.Add(endPosPlotLat);
             groupBox5.Controls.Add(label20);
             groupBox5.Controls.Add(endPosPlotLong);
+            groupBox5.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox5.Location = new Point(158, 173);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(141, 165);
@@ -764,58 +868,64 @@
             // label19
             // 
             label19.AutoSize = true;
+            label19.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label19.Location = new Point(11, 96);
             label19.Name = "label19";
-            label19.Size = new Size(60, 20);
+            label19.Size = new Size(72, 18);
             label19.TabIndex = 10;
-            label19.Text = "latitude";
+            label19.Text = "LATITUDE";
             // 
             // endPosPlotLat
             // 
             endPosPlotLat.DecimalPlaces = 5;
+            endPosPlotLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosPlotLat.Location = new Point(11, 121);
             endPosPlotLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             endPosPlotLat.Name = "endPosPlotLat";
-            endPosPlotLat.Size = new Size(123, 27);
+            endPosPlotLat.Size = new Size(123, 25);
             endPosPlotLat.TabIndex = 9;
             endPosPlotLat.TextAlign = HorizontalAlignment.Right;
             // 
             // label20
             // 
             label20.AutoSize = true;
+            label20.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label20.Location = new Point(11, 31);
             label20.Name = "label20";
-            label20.Size = new Size(73, 20);
+            label20.Size = new Size(80, 18);
             label20.TabIndex = 8;
-            label20.Text = "longitude";
+            label20.Text = "LONGITUDE";
             // 
             // endPosPlotLong
             // 
             endPosPlotLong.DecimalPlaces = 5;
+            endPosPlotLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosPlotLong.Location = new Point(11, 53);
             endPosPlotLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             endPosPlotLong.Name = "endPosPlotLong";
-            endPosPlotLong.Size = new Size(123, 27);
+            endPosPlotLong.Size = new Size(123, 25);
             endPosPlotLong.TabIndex = 7;
             endPosPlotLong.TextAlign = HorizontalAlignment.Right;
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(115, 377);
+            label14.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label14.Location = new Point(113, 379);
             label14.Name = "label14";
-            label14.Size = new Size(85, 20);
+            label14.Size = new Size(96, 18);
             label14.TabIndex = 15;
-            label14.Text = "Description";
+            label14.Text = "DESCRIPTION";
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(85, 104);
+            label15.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label15.Location = new Point(77, 102);
             label15.Name = "label15";
-            label15.Size = new Size(147, 20);
+            label15.Size = new Size(160, 18);
             label15.TabIndex = 14;
-            label15.Text = "Registration Number";
+            label15.Text = "REGISTRATION NUMBER";
             // 
             // PlotDesc
             // 
@@ -838,6 +948,7 @@
             groupBox3.Controls.Add(startPosPlotLat);
             groupBox3.Controls.Add(label17);
             groupBox3.Controls.Add(startPosPlotLong);
+            groupBox3.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox3.Location = new Point(11, 173);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(141, 165);
@@ -848,59 +959,56 @@
             // label16
             // 
             label16.AutoSize = true;
+            label16.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label16.Location = new Point(11, 96);
             label16.Name = "label16";
-            label16.Size = new Size(60, 20);
+            label16.Size = new Size(72, 18);
             label16.TabIndex = 10;
-            label16.Text = "latitude";
+            label16.Text = "LATITUDE";
             // 
             // startPosPlotLat
             // 
             startPosPlotLat.DecimalPlaces = 5;
+            startPosPlotLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosPlotLat.Location = new Point(11, 121);
             startPosPlotLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             startPosPlotLat.Name = "startPosPlotLat";
-            startPosPlotLat.Size = new Size(123, 27);
+            startPosPlotLat.Size = new Size(123, 25);
             startPosPlotLat.TabIndex = 9;
             startPosPlotLat.TextAlign = HorizontalAlignment.Right;
             // 
             // label17
             // 
             label17.AutoSize = true;
+            label17.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label17.Location = new Point(11, 31);
             label17.Name = "label17";
-            label17.Size = new Size(73, 20);
+            label17.Size = new Size(80, 18);
             label17.TabIndex = 8;
-            label17.Text = "longitude";
+            label17.Text = "LONGITUDE";
             // 
             // startPosPlotLong
             // 
             startPosPlotLong.DecimalPlaces = 5;
+            startPosPlotLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosPlotLong.Location = new Point(11, 53);
             startPosPlotLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             startPosPlotLong.Name = "startPosPlotLong";
-            startPosPlotLong.Size = new Size(123, 27);
+            startPosPlotLong.Size = new Size(123, 25);
             startPosPlotLong.TabIndex = 7;
             startPosPlotLong.TextAlign = HorizontalAlignment.Right;
             // 
             // PlotAddBtn
             // 
+            PlotAddBtn.FlatStyle = FlatStyle.Flat;
+            PlotAddBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             PlotAddBtn.Location = new Point(46, 579);
             PlotAddBtn.Name = "PlotAddBtn";
             PlotAddBtn.Size = new Size(222, 59);
             PlotAddBtn.TabIndex = 5;
-            PlotAddBtn.Text = "ADD";
+            PlotAddBtn.Text = "A D D";
             PlotAddBtn.UseVisualStyleBackColor = true;
             PlotAddBtn.Click += PlotAddBtn_Click;
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(113, 37);
-            label18.Name = "label18";
-            label18.Size = new Size(77, 20);
-            label18.TabIndex = 0;
-            label18.Text = "ADD PLOT";
             // 
             // panelProp
             // 
@@ -924,6 +1032,7 @@
             groupBox13.Controls.Add(label35);
             groupBox13.Controls.Add(editPropEndY);
             groupBox13.Controls.Add(editPropEndX);
+            groupBox13.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox13.Location = new Point(9, 178);
             groupBox13.Name = "groupBox13";
             groupBox13.Size = new Size(215, 104);
@@ -936,7 +1045,7 @@
             label34.AutoSize = true;
             label34.Location = new Point(29, 71);
             label34.Name = "label34";
-            label34.Size = new Size(17, 20);
+            label34.Size = new Size(16, 18);
             label34.TabIndex = 7;
             label34.Text = "Y";
             // 
@@ -945,27 +1054,29 @@
             label35.AutoSize = true;
             label35.Location = new Point(27, 29);
             label35.Name = "label35";
-            label35.Size = new Size(18, 20);
+            label35.Size = new Size(16, 18);
             label35.TabIndex = 6;
             label35.Text = "X";
             // 
             // editPropEndY
             // 
             editPropEndY.DecimalPlaces = 10;
+            editPropEndY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropEndY.Location = new Point(81, 64);
             editPropEndY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             editPropEndY.Name = "editPropEndY";
-            editPropEndY.Size = new Size(125, 27);
+            editPropEndY.Size = new Size(125, 25);
             editPropEndY.TabIndex = 4;
             editPropEndY.TextAlign = HorizontalAlignment.Right;
             // 
             // editPropEndX
             // 
             editPropEndX.DecimalPlaces = 10;
+            editPropEndX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropEndX.Location = new Point(81, 27);
             editPropEndX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             editPropEndX.Name = "editPropEndX";
-            editPropEndX.Size = new Size(125, 27);
+            editPropEndX.Size = new Size(125, 25);
             editPropEndX.TabIndex = 3;
             editPropEndX.TextAlign = HorizontalAlignment.Right;
             // 
@@ -975,6 +1086,7 @@
             groupBox14.Controls.Add(label54);
             groupBox14.Controls.Add(editPropStartY);
             groupBox14.Controls.Add(editPropStartX);
+            groupBox14.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox14.Location = new Point(9, 71);
             groupBox14.Name = "groupBox14";
             groupBox14.Size = new Size(215, 104);
@@ -987,7 +1099,7 @@
             label53.AutoSize = true;
             label53.Location = new Point(29, 71);
             label53.Name = "label53";
-            label53.Size = new Size(17, 20);
+            label53.Size = new Size(16, 18);
             label53.TabIndex = 7;
             label53.Text = "Y";
             // 
@@ -996,46 +1108,51 @@
             label54.AutoSize = true;
             label54.Location = new Point(27, 29);
             label54.Name = "label54";
-            label54.Size = new Size(18, 20);
+            label54.Size = new Size(16, 18);
             label54.TabIndex = 6;
             label54.Text = "X";
             // 
             // editPropStartY
             // 
             editPropStartY.DecimalPlaces = 10;
+            editPropStartY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropStartY.Location = new Point(81, 64);
             editPropStartY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             editPropStartY.Name = "editPropStartY";
-            editPropStartY.Size = new Size(125, 27);
+            editPropStartY.Size = new Size(125, 25);
             editPropStartY.TabIndex = 4;
             editPropStartY.TextAlign = HorizontalAlignment.Right;
             // 
             // editPropStartX
             // 
             editPropStartX.DecimalPlaces = 10;
+            editPropStartX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropStartX.Location = new Point(81, 27);
             editPropStartX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             editPropStartX.Name = "editPropStartX";
-            editPropStartX.Size = new Size(125, 27);
+            editPropStartX.Size = new Size(125, 25);
             editPropStartX.TabIndex = 3;
             editPropStartX.TextAlign = HorizontalAlignment.Right;
             // 
             // editBTNProp
             // 
+            editBTNProp.FlatStyle = FlatStyle.Flat;
+            editBTNProp.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             editBTNProp.Location = new Point(17, 364);
             editBTNProp.Name = "editBTNProp";
             editBTNProp.Size = new Size(198, 27);
             editBTNProp.TabIndex = 9;
-            editBTNProp.Text = "EDIT";
+            editBTNProp.Text = "E D I T";
             editBTNProp.UseVisualStyleBackColor = true;
             editBTNProp.Click += editBTNProp_Click;
             // 
             // label36
             // 
             label36.AutoSize = true;
+            label36.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label36.Location = new Point(15, 291);
             label36.Name = "label36";
-            label36.Size = new Size(44, 20);
+            label36.Size = new Size(48, 18);
             label36.TabIndex = 8;
             label36.Text = "Desc.";
             // 
@@ -1057,20 +1174,22 @@
             // label33
             // 
             label33.AutoSize = true;
+            label33.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label33.Location = new Point(14, 45);
             label33.Name = "label33";
-            label33.Size = new Size(35, 20);
+            label33.Size = new Size(40, 18);
             label33.TabIndex = 1;
             label33.Text = "R.N.";
             // 
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new Point(89, 7);
+            label32.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label32.Location = new Point(46, 11);
             label32.Name = "label32";
-            label32.Size = new Size(65, 20);
+            label32.Size = new Size(128, 18);
             label32.TabIndex = 0;
-            label32.Text = "Property";
+            label32.Text = "P R O P E R T Y";
             // 
             // panelPlot
             // 
@@ -1095,6 +1214,7 @@
             groupBox10.Controls.Add(label44);
             groupBox10.Controls.Add(endPosEditPlotY);
             groupBox10.Controls.Add(endPosEditPlotX);
+            groupBox10.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox10.Location = new Point(9, 187);
             groupBox10.Name = "groupBox10";
             groupBox10.Size = new Size(215, 104);
@@ -1107,7 +1227,7 @@
             label42.AutoSize = true;
             label42.Location = new Point(29, 71);
             label42.Name = "label42";
-            label42.Size = new Size(17, 20);
+            label42.Size = new Size(16, 18);
             label42.TabIndex = 7;
             label42.Text = "Y";
             // 
@@ -1116,27 +1236,29 @@
             label44.AutoSize = true;
             label44.Location = new Point(27, 29);
             label44.Name = "label44";
-            label44.Size = new Size(18, 20);
+            label44.Size = new Size(16, 18);
             label44.TabIndex = 6;
             label44.Text = "X";
             // 
             // endPosEditPlotY
             // 
             endPosEditPlotY.DecimalPlaces = 10;
+            endPosEditPlotY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosEditPlotY.Location = new Point(81, 64);
             endPosEditPlotY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosEditPlotY.Name = "endPosEditPlotY";
-            endPosEditPlotY.Size = new Size(125, 27);
+            endPosEditPlotY.Size = new Size(125, 25);
             endPosEditPlotY.TabIndex = 4;
             endPosEditPlotY.TextAlign = HorizontalAlignment.Right;
             // 
             // endPosEditPlotX
             // 
             endPosEditPlotX.DecimalPlaces = 10;
+            endPosEditPlotX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosEditPlotX.Location = new Point(81, 27);
             endPosEditPlotX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             endPosEditPlotX.Name = "endPosEditPlotX";
-            endPosEditPlotX.Size = new Size(125, 27);
+            endPosEditPlotX.Size = new Size(125, 25);
             endPosEditPlotX.TabIndex = 3;
             endPosEditPlotX.TextAlign = HorizontalAlignment.Right;
             // 
@@ -1146,6 +1268,7 @@
             groupBox9.Controls.Add(label39);
             groupBox9.Controls.Add(startPosEditPlotY);
             groupBox9.Controls.Add(startPosEditPlotX);
+            groupBox9.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox9.Location = new Point(9, 80);
             groupBox9.Name = "groupBox9";
             groupBox9.Size = new Size(215, 104);
@@ -1158,7 +1281,7 @@
             label38.AutoSize = true;
             label38.Location = new Point(29, 71);
             label38.Name = "label38";
-            label38.Size = new Size(17, 20);
+            label38.Size = new Size(16, 18);
             label38.TabIndex = 7;
             label38.Text = "Y";
             // 
@@ -1167,27 +1290,29 @@
             label39.AutoSize = true;
             label39.Location = new Point(27, 29);
             label39.Name = "label39";
-            label39.Size = new Size(18, 20);
+            label39.Size = new Size(16, 18);
             label39.TabIndex = 6;
             label39.Text = "X";
             // 
             // startPosEditPlotY
             // 
             startPosEditPlotY.DecimalPlaces = 10;
+            startPosEditPlotY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosEditPlotY.Location = new Point(81, 64);
             startPosEditPlotY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             startPosEditPlotY.Name = "startPosEditPlotY";
-            startPosEditPlotY.Size = new Size(125, 27);
+            startPosEditPlotY.Size = new Size(125, 25);
             startPosEditPlotY.TabIndex = 4;
             startPosEditPlotY.TextAlign = HorizontalAlignment.Right;
             // 
             // startPosEditPlotX
             // 
             startPosEditPlotX.DecimalPlaces = 10;
+            startPosEditPlotX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosEditPlotX.Location = new Point(81, 27);
             startPosEditPlotX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             startPosEditPlotX.Name = "startPosEditPlotX";
-            startPosEditPlotX.Size = new Size(125, 27);
+            startPosEditPlotX.Size = new Size(125, 25);
             startPosEditPlotX.TabIndex = 3;
             startPosEditPlotX.TextAlign = HorizontalAlignment.Right;
             // 
@@ -1201,20 +1326,23 @@
             // 
             // editbtnPlot
             // 
-            editbtnPlot.Location = new Point(17, 364);
+            editbtnPlot.FlatStyle = FlatStyle.Flat;
+            editbtnPlot.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            editbtnPlot.Location = new Point(17, 376);
             editbtnPlot.Name = "editbtnPlot";
             editbtnPlot.Size = new Size(198, 27);
             editbtnPlot.TabIndex = 9;
-            editbtnPlot.Text = "EDIT";
+            editbtnPlot.Text = "E D I T";
             editbtnPlot.UseVisualStyleBackColor = true;
             editbtnPlot.Click += editbtnPlot_Click;
             // 
             // label37
             // 
             label37.AutoSize = true;
+            label37.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label37.Location = new Point(14, 299);
             label37.Name = "label37";
-            label37.Size = new Size(44, 20);
+            label37.Size = new Size(48, 18);
             label37.TabIndex = 8;
             label37.Text = "Desc.";
             // 
@@ -1236,20 +1364,22 @@
             // label40
             // 
             label40.AutoSize = true;
+            label40.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label40.Location = new Point(14, 53);
             label40.Name = "label40";
-            label40.Size = new Size(35, 20);
+            label40.Size = new Size(40, 18);
             label40.TabIndex = 1;
             label40.Text = "R.N.";
             // 
             // label41
             // 
             label41.AutoSize = true;
-            label41.Location = new Point(72, 11);
+            label41.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label41.Location = new Point(89, 11);
             label41.Name = "label41";
-            label41.Size = new Size(35, 20);
+            label41.Size = new Size(64, 18);
             label41.TabIndex = 0;
-            label41.Text = "Plot";
+            label41.Text = "P L O T";
             // 
             // panelSettings
             // 
@@ -1260,7 +1390,7 @@
             panelSettings.Controls.Add(resetAppBtn);
             panelSettings.Controls.Add(importBtn);
             panelSettings.Controls.Add(exportBtn);
-            panelSettings.Controls.Add(label45);
+            panelSettings.Controls.Add(panel2);
             panelSettings.Location = new Point(191, 0);
             panelSettings.Name = "panelSettings";
             panelSettings.Size = new Size(310, 679);
@@ -1269,71 +1399,93 @@
             // checkBoxWantOpt
             // 
             checkBoxWantOpt.AutoSize = true;
-            checkBoxWantOpt.Location = new Point(106, 123);
+            checkBoxWantOpt.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            checkBoxWantOpt.Location = new Point(79, 123);
             checkBoxWantOpt.Name = "checkBoxWantOpt";
-            checkBoxWantOpt.Size = new Size(90, 24);
+            checkBoxWantOpt.Size = new Size(150, 22);
             checkBoxWantOpt.TabIndex = 164;
-            checkBoxWantOpt.Text = "optimize";
+            checkBoxWantOpt.Text = "O P T I M I Z E";
             checkBoxWantOpt.UseVisualStyleBackColor = true;
             // 
             // changeDepthBtn
             // 
+            changeDepthBtn.FlatStyle = FlatStyle.Flat;
+            changeDepthBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             changeDepthBtn.Location = new Point(37, 221);
             changeDepthBtn.Name = "changeDepthBtn";
             changeDepthBtn.Size = new Size(222, 59);
             changeDepthBtn.TabIndex = 9;
-            changeDepthBtn.Text = "Change depth";
+            changeDepthBtn.Text = "C H A N G E   D E P T H ";
             changeDepthBtn.UseVisualStyleBackColor = true;
             changeDepthBtn.Click += changeDepthBtn_Click;
             // 
             // seedAppBtn
             // 
+            seedAppBtn.FlatStyle = FlatStyle.Flat;
+            seedAppBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             seedAppBtn.Location = new Point(37, 309);
             seedAppBtn.Name = "seedAppBtn";
             seedAppBtn.Size = new Size(222, 59);
             seedAppBtn.TabIndex = 8;
-            seedAppBtn.Text = "Seed app";
+            seedAppBtn.Text = "S E E D   A P P";
             seedAppBtn.UseVisualStyleBackColor = true;
             seedAppBtn.Click += button1_Click_1;
             // 
             // resetAppBtn
             // 
+            resetAppBtn.FlatStyle = FlatStyle.Flat;
+            resetAppBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             resetAppBtn.Location = new Point(37, 400);
             resetAppBtn.Name = "resetAppBtn";
             resetAppBtn.Size = new Size(222, 59);
             resetAppBtn.TabIndex = 7;
-            resetAppBtn.Text = "Reset app";
+            resetAppBtn.Text = "R E S E T   A P P";
             resetAppBtn.UseVisualStyleBackColor = true;
             resetAppBtn.Click += resetAppBtn_Click;
             // 
             // importBtn
             // 
+            importBtn.FlatStyle = FlatStyle.Flat;
+            importBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             importBtn.Location = new Point(37, 492);
             importBtn.Name = "importBtn";
             importBtn.Size = new Size(222, 59);
             importBtn.TabIndex = 6;
-            importBtn.Text = "Import data";
+            importBtn.Text = "I M P O R T   D A T A";
             importBtn.UseVisualStyleBackColor = true;
             importBtn.Click += importBtn_Click;
             // 
             // exportBtn
             // 
+            exportBtn.FlatStyle = FlatStyle.Flat;
+            exportBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             exportBtn.Location = new Point(37, 573);
             exportBtn.Name = "exportBtn";
             exportBtn.Size = new Size(222, 59);
             exportBtn.TabIndex = 5;
-            exportBtn.Text = "Export data";
+            exportBtn.Text = "E X P O R T   D A T A";
             exportBtn.UseVisualStyleBackColor = true;
             exportBtn.Click += exportBtn_Click;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.PeachPuff;
+            panel2.Controls.Add(label45);
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(313, 82);
+            panel2.TabIndex = 165;
             // 
             // label45
             // 
             label45.AutoSize = true;
-            label45.Location = new Point(113, 37);
+            label45.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label45.Location = new Point(85, 31);
             label45.Name = "label45";
-            label45.Size = new Size(62, 20);
+            label45.Size = new Size(128, 18);
             label45.TabIndex = 0;
-            label45.Text = "Settings";
+            label45.Text = "S E T T I N G S";
+            label45.TextAlign = ContentAlignment.TopCenter;
             // 
             // panelSeedApp
             // 
@@ -1356,6 +1508,7 @@
             groupBox12.Controls.Add(label25);
             groupBox12.Controls.Add(endCoordY);
             groupBox12.Controls.Add(endCoordX);
+            groupBox12.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox12.Location = new Point(218, 48);
             groupBox12.Name = "groupBox12";
             groupBox12.Size = new Size(185, 110);
@@ -1368,7 +1521,7 @@
             label24.AutoSize = true;
             label24.Location = new Point(18, 68);
             label24.Name = "label24";
-            label24.Size = new Size(17, 20);
+            label24.Size = new Size(16, 18);
             label24.TabIndex = 7;
             label24.Text = "Y";
             // 
@@ -1377,17 +1530,18 @@
             label25.AutoSize = true;
             label25.Location = new Point(19, 28);
             label25.Name = "label25";
-            label25.Size = new Size(18, 20);
+            label25.Size = new Size(16, 18);
             label25.TabIndex = 6;
             label25.Text = "X";
             // 
             // endCoordY
             // 
             endCoordY.DecimalPlaces = 5;
+            endCoordY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endCoordY.Location = new Point(54, 64);
             endCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             endCoordY.Name = "endCoordY";
-            endCoordY.Size = new Size(125, 27);
+            endCoordY.Size = new Size(125, 25);
             endCoordY.TabIndex = 4;
             endCoordY.TextAlign = HorizontalAlignment.Right;
             endCoordY.Value = new decimal(new int[] { 500, 0, 0, 0 });
@@ -1395,10 +1549,11 @@
             // endCoordX
             // 
             endCoordX.DecimalPlaces = 5;
+            endCoordX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endCoordX.Location = new Point(54, 25);
             endCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             endCoordX.Name = "endCoordX";
-            endCoordX.Size = new Size(125, 27);
+            endCoordX.Size = new Size(125, 25);
             endCoordX.TabIndex = 3;
             endCoordX.TextAlign = HorizontalAlignment.Right;
             endCoordX.Value = new decimal(new int[] { 500, 0, 0, 0 });
@@ -1409,6 +1564,7 @@
             groupBox11.Controls.Add(label56);
             groupBox11.Controls.Add(startCoordY);
             groupBox11.Controls.Add(startCoordX);
+            groupBox11.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox11.Location = new Point(11, 47);
             groupBox11.Name = "groupBox11";
             groupBox11.Size = new Size(185, 110);
@@ -1421,7 +1577,7 @@
             label55.AutoSize = true;
             label55.Location = new Point(18, 68);
             label55.Name = "label55";
-            label55.Size = new Size(17, 20);
+            label55.Size = new Size(16, 18);
             label55.TabIndex = 7;
             label55.Text = "Y";
             // 
@@ -1430,27 +1586,29 @@
             label56.AutoSize = true;
             label56.Location = new Point(19, 28);
             label56.Name = "label56";
-            label56.Size = new Size(18, 20);
+            label56.Size = new Size(16, 18);
             label56.TabIndex = 6;
             label56.Text = "X";
             // 
             // startCoordY
             // 
             startCoordY.DecimalPlaces = 5;
+            startCoordY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startCoordY.Location = new Point(54, 64);
             startCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             startCoordY.Name = "startCoordY";
-            startCoordY.Size = new Size(125, 27);
+            startCoordY.Size = new Size(125, 25);
             startCoordY.TabIndex = 4;
             startCoordY.TextAlign = HorizontalAlignment.Right;
             // 
             // startCoordX
             // 
             startCoordX.DecimalPlaces = 5;
+            startCoordX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startCoordX.Location = new Point(54, 25);
             startCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             startCoordX.Name = "startCoordX";
-            startCoordX.Size = new Size(125, 27);
+            startCoordX.Size = new Size(125, 25);
             startCoordX.TabIndex = 3;
             startCoordX.TextAlign = HorizontalAlignment.Right;
             // 
@@ -1460,6 +1618,7 @@
             groupBox6.Controls.Add(label23);
             groupBox6.Controls.Add(plotNo);
             groupBox6.Controls.Add(PropNo);
+            groupBox6.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox6.Location = new Point(9, 192);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(185, 104);
@@ -1470,37 +1629,39 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(3, 71);
+            label22.Location = new Point(6, 66);
             label22.Name = "label22";
-            label22.Size = new Size(41, 20);
+            label22.Size = new Size(48, 18);
             label22.TabIndex = 7;
-            label22.Text = "Plots";
+            label22.Text = "PLOTS";
             // 
             // label23
             // 
             label23.AutoSize = true;
             label23.Location = new Point(4, 29);
             label23.Name = "label23";
-            label23.Size = new Size(40, 20);
+            label23.Size = new Size(40, 18);
             label23.TabIndex = 6;
-            label23.Text = "Prop";
+            label23.Text = "PROP";
             // 
             // plotNo
             // 
+            plotNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             plotNo.Location = new Point(54, 64);
             plotNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             plotNo.Name = "plotNo";
-            plotNo.Size = new Size(125, 27);
+            plotNo.Size = new Size(125, 25);
             plotNo.TabIndex = 4;
             plotNo.TextAlign = HorizontalAlignment.Right;
             plotNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // PropNo
             // 
+            PropNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PropNo.Location = new Point(55, 27);
             PropNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             PropNo.Name = "PropNo";
-            PropNo.Size = new Size(125, 27);
+            PropNo.Size = new Size(125, 25);
             PropNo.TabIndex = 3;
             PropNo.TextAlign = HorizontalAlignment.Right;
             PropNo.Value = new decimal(new int[] { 100, 0, 0, 0 });
@@ -1515,22 +1676,25 @@
             // 
             // seedBtn2
             // 
+            seedBtn2.FlatStyle = FlatStyle.Flat;
+            seedBtn2.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             seedBtn2.Location = new Point(107, 347);
             seedBtn2.Name = "seedBtn2";
             seedBtn2.Size = new Size(198, 27);
             seedBtn2.TabIndex = 9;
-            seedBtn2.Text = "SEED";
+            seedBtn2.Text = "S E E D";
             seedBtn2.UseVisualStyleBackColor = true;
             seedBtn2.Click += seedBtn2_Click;
             // 
             // label48
             // 
             label48.AutoSize = true;
-            label48.Location = new Point(144, 11);
+            label48.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label48.Location = new Point(95, 11);
             label48.Name = "label48";
-            label48.Size = new Size(111, 20);
+            label48.Size = new Size(224, 18);
             label48.TabIndex = 0;
-            label48.Text = "Reset and Seed";
+            label48.Text = "R E S E T   A N D   S E E D";
             // 
             // groupBox7
             // 
@@ -1538,6 +1702,7 @@
             groupBox7.Controls.Add(label47);
             groupBox7.Controls.Add(CountNo);
             groupBox7.Controls.Add(DepthNo);
+            groupBox7.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox7.Location = new Point(216, 192);
             groupBox7.Name = "groupBox7";
             groupBox7.Size = new Size(185, 100);
@@ -1550,35 +1715,37 @@
             label46.AutoSize = true;
             label46.Location = new Point(6, 71);
             label46.Name = "label46";
-            label46.Size = new Size(48, 20);
+            label46.Size = new Size(48, 18);
             label46.TabIndex = 11;
-            label46.Text = "Count";
+            label46.Text = "COUNT";
             // 
             // label47
             // 
             label47.AutoSize = true;
             label47.Location = new Point(6, 36);
             label47.Name = "label47";
-            label47.Size = new Size(50, 20);
+            label47.Size = new Size(48, 18);
             label47.TabIndex = 10;
-            label47.Text = "Depth";
+            label47.Text = "DEPTH";
             // 
             // CountNo
             // 
+            CountNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             CountNo.Location = new Point(60, 69);
             CountNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             CountNo.Name = "CountNo";
-            CountNo.Size = new Size(119, 27);
+            CountNo.Size = new Size(119, 25);
             CountNo.TabIndex = 9;
             CountNo.TextAlign = HorizontalAlignment.Right;
             CountNo.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // DepthNo
             // 
+            DepthNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             DepthNo.Location = new Point(62, 31);
             DepthNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             DepthNo.Name = "DepthNo";
-            DepthNo.Size = new Size(117, 27);
+            DepthNo.Size = new Size(117, 25);
             DepthNo.TabIndex = 8;
             DepthNo.TextAlign = HorizontalAlignment.Right;
             DepthNo.Value = new decimal(new int[] { 10, 0, 0, 0 });
@@ -1600,9 +1767,10 @@
             // 
             // newDepthNum
             // 
-            newDepthNum.Location = new Point(27, 169);
+            newDepthNum.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            newDepthNum.Location = new Point(40, 155);
             newDepthNum.Name = "newDepthNum";
-            newDepthNum.Size = new Size(150, 27);
+            newDepthNum.Size = new Size(150, 25);
             newDepthNum.TabIndex = 16;
             newDepthNum.TextAlign = HorizontalAlignment.Right;
             newDepthNum.Value = new decimal(new int[] { 5, 0, 0, 0 });
@@ -1610,29 +1778,32 @@
             // label29
             // 
             label29.AutoSize = true;
-            label29.Location = new Point(27, 132);
+            label29.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label29.Location = new Point(44, 126);
             label29.Name = "label29";
-            label29.Size = new Size(120, 20);
+            label29.Size = new Size(144, 18);
             label29.TabIndex = 15;
-            label29.Text = "Enter new depth:";
+            label29.Text = "N E W   D E P T H";
             // 
             // depthLabel
             // 
             depthLabel.AutoSize = true;
+            depthLabel.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             depthLabel.Location = new Point(138, 69);
             depthLabel.Name = "depthLabel";
-            depthLabel.Size = new Size(58, 20);
+            depthLabel.Size = new Size(64, 18);
             depthLabel.TabIndex = 14;
             depthLabel.Text = "label29";
             // 
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new Point(21, 69);
+            label28.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label28.Location = new Point(27, 69);
             label28.Name = "label28";
-            label28.Size = new Size(53, 20);
+            label28.Size = new Size(56, 18);
             label28.TabIndex = 13;
-            label28.Text = "Depth:";
+            label28.Text = "DEPTH:";
             // 
             // label51
             // 
@@ -1644,22 +1815,25 @@
             // 
             // chngDepthBtn
             // 
+            chngDepthBtn.FlatStyle = FlatStyle.Flat;
+            chngDepthBtn.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             chngDepthBtn.Location = new Point(17, 364);
             chngDepthBtn.Name = "chngDepthBtn";
             chngDepthBtn.Size = new Size(198, 27);
             chngDepthBtn.TabIndex = 9;
-            chngDepthBtn.Text = "CHANGE";
+            chngDepthBtn.Text = "C H A N G E";
             chngDepthBtn.UseVisualStyleBackColor = true;
             chngDepthBtn.Click += chngDepthBtn_Click;
             // 
             // label52
             // 
             label52.AutoSize = true;
-            label52.Location = new Point(66, 11);
+            label52.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label52.Location = new Point(9, 11);
             label52.Name = "label52";
-            label52.Size = new Size(102, 20);
+            label52.Size = new Size(208, 18);
             label52.TabIndex = 0;
-            label52.Text = "Change depth";
+            label52.Text = "S E T   N E W   D E P T H";
             // 
             // label30
             // 
@@ -1723,21 +1897,25 @@
             // 
             // DeleteBtnRangeSearch
             // 
+            DeleteBtnRangeSearch.FlatStyle = FlatStyle.Flat;
+            DeleteBtnRangeSearch.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             DeleteBtnRangeSearch.Location = new Point(292, 592);
             DeleteBtnRangeSearch.Name = "DeleteBtnRangeSearch";
             DeleteBtnRangeSearch.Size = new Size(161, 59);
             DeleteBtnRangeSearch.TabIndex = 15;
-            DeleteBtnRangeSearch.Text = "DELETE";
+            DeleteBtnRangeSearch.Text = "D E L E T E";
             DeleteBtnRangeSearch.UseVisualStyleBackColor = true;
             DeleteBtnRangeSearch.Click += DeleteBtnRangeSearch_Click;
             // 
             // EditBtnRangeSearch
             // 
+            EditBtnRangeSearch.FlatStyle = FlatStyle.Flat;
+            EditBtnRangeSearch.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
             EditBtnRangeSearch.Location = new Point(17, 592);
             EditBtnRangeSearch.Name = "EditBtnRangeSearch";
             EditBtnRangeSearch.Size = new Size(168, 59);
             EditBtnRangeSearch.TabIndex = 14;
-            EditBtnRangeSearch.Text = "EDIT";
+            EditBtnRangeSearch.Text = "E D I T";
             EditBtnRangeSearch.UseVisualStyleBackColor = true;
             EditBtnRangeSearch.Click += EditBtnRangeSearch_Click;
             // 
@@ -1757,18 +1935,18 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
             Controls.Add(menupanel);
-            Controls.Add(panelDataEditDel);
+            Controls.Add(panelPlot);
+            Controls.Add(panelProp);
             Controls.Add(panelDepth);
             Controls.Add(panelSeedApp);
-            Controls.Add(panelPlot);
-            Controls.Add(panelSettings);
-            Controls.Add(panelProp);
             Controls.Add(panel1);
+            Controls.Add(panelSearchForProp);
+            Controls.Add(panelDataEditDel);
             Controls.Add(QuadPanel);
+            Controls.Add(panelSettings);
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
-            Controls.Add(panelSearchForProp);
             Name = "App";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Reset Tree";
@@ -1776,10 +1954,13 @@
             menupanel.ResumeLayout(false);
             panelSearchForProp.ResumeLayout(false);
             panelSearchForProp.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)latitudeNum).EndInit();
             ((System.ComponentModel.ISupportInitialize)longitudeNum).EndInit();
             panelGiveRange.ResumeLayout(false);
-            panelGiveRange.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)endPosLat).EndInit();
@@ -1790,6 +1971,8 @@
             ((System.ComponentModel.ISupportInitialize)startPosLong).EndInit();
             panelAddProp.ResumeLayout(false);
             panelAddProp.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)posLatEnd).EndInit();
@@ -1800,6 +1983,8 @@
             ((System.ComponentModel.ISupportInitialize)posLong).EndInit();
             panelAddPlot.ResumeLayout(false);
             panelAddPlot.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)endPosPlotLat).EndInit();
@@ -1830,6 +2015,8 @@
             ((System.ComponentModel.ISupportInitialize)startPosEditPlotX).EndInit();
             panelSettings.ResumeLayout(false);
             panelSettings.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             panelSeedApp.ResumeLayout(false);
             panelSeedApp.PerformLayout();
             groupBox12.ResumeLayout(false);
@@ -1867,7 +2054,6 @@
         private Button giveRangeButton;
         private Button searchPropButton;
         private Panel panelSearchForProp;
-        private Label label3;
         private Button button2;
         private Label label5;
         private NumericUpDown latitudeNum;
@@ -1878,7 +2064,6 @@
         private RadioButton rbProp;
         private Panel panelGiveRange;
         private Button searchRangeButton;
-        private Label label8;
         private GroupBox groupBox2;
         private Label label2;
         private NumericUpDown endPosLat;
@@ -1900,7 +2085,6 @@
         private Label label12;
         private NumericUpDown posLong;
         private Button addBTN;
-        private Label label13;
         private Panel panelAddPlot;
         private GroupBox groupBox5;
         private Label label19;
@@ -1917,7 +2101,6 @@
         private Label label17;
         private NumericUpDown startPosPlotLong;
         private Button PlotAddBtn;
-        private Label label18;
         private GroupBox groupBox6;
         private Label label22;
         private Label label23;
@@ -2009,5 +2192,14 @@
         private Label label54;
         private NumericUpDown editPropStartY;
         private NumericUpDown editPropStartX;
+        private Panel panel2;
+        private Panel panel3;
+        private Label label21;
+        private Panel panel4;
+        private Label label18;
+        private Panel panel5;
+        private Label label13;
+        private Panel panel6;
+        private Label label3;
     }
 }

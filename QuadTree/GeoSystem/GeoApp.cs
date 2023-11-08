@@ -16,8 +16,6 @@ namespace QuadTree.GeoSystem
 
         public GeoApp(MyQuadTree area) 
         {
-            //ked sa vytvori system, vytvori sa area zo zadanych suradnic od pouzivatela
-            //naseeduju sa tu nejake parcely a nehnutelnosti do nich
             _area = area;
             //seed
         }
@@ -262,8 +260,36 @@ namespace QuadTree.GeoSystem
             }
         }
 
+        public void ChangeKeyAttr(Polygon refObj, double x0, double y0, double xk, double yk) 
+        {
+            if (refObj is Property)
+            {
+                ((Property)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
+            }
+            else //is PLOT
+            {
+                ((PlotOfLand)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
+            }
+
+        }
+
+        public void ChangeNonKeyAttr(Polygon refObj, int regNumber, string description) 
+        {
+            if (refObj is Property)
+            {
+                ((Property)refObj).RegisterNumber = regNumber;
+                ((Property)refObj).Description = description;
+            }
+            else
+            {
+                ((PlotOfLand)refObj).RegisterNumber = regNumber;
+                ((PlotOfLand)refObj).Description = description;
+            }
+        } 
+
         public Polygon PickToEdit(Polygon obj) 
         {
+
             return (Polygon)this._area.ShowObject(obj);
         }
 

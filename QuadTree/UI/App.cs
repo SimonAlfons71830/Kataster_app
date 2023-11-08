@@ -18,7 +18,6 @@ namespace QuadTree.UI
     {
         List<Polygon> list = new List<Polygon>();
 
-        private System.Data.DataTable dataObjToRemove = new System.Data.DataTable();
         private System.Data.DataTable dataWithRangeSearch = new System.Data.DataTable();
 
         public bool wasSeeded = false;
@@ -89,15 +88,6 @@ namespace QuadTree.UI
 
             this.HidePanels();
 
-            //setting columns of the grids
-            dataObjToRemove.Columns.Add("Reg.Number", typeof(int));
-            dataObjToRemove.Columns.Add("S_x", typeof(double));
-            dataObjToRemove.Columns.Add("S_y", typeof(double));
-            dataObjToRemove.Columns.Add("E_x", typeof(double));
-            dataObjToRemove.Columns.Add("E_y", typeof(double));
-            dataObjToRemove.Columns.Add("Type");
-            dataObjToRemove.Columns.Add("Name", typeof(string));
-
             //new Grid for interval search
             dataWithRangeSearch.Columns.Add("Reg.Number", typeof(int));
             dataWithRangeSearch.Columns.Add("DESC", typeof(string));
@@ -105,7 +95,7 @@ namespace QuadTree.UI
             dataWithRangeSearch.Columns.Add("X0,Y0", typeof((double, double)));
             dataWithRangeSearch.Columns.Add("Xk,Yk", typeof((double, double)));
 
-            this.redoGrids();
+            //this.redoGrids();
 
             this.QuadPanel.Invalidate();
         }
@@ -126,74 +116,6 @@ namespace QuadTree.UI
             panelDepth.Hide();
             panelSettings.Hide();
         }
-
-        private void redoGrids()
-        {
-            var list = _app.FindInterval((new Coordinates(_app._area._dimension.X0, _app._area._dimension.Y0, 0),
-                new Coordinates(_app._area._dimension.Xk, _app._area._dimension.Yk, 0)));
-
-            dataObjToRemove.Rows.Clear();
-            foreach (var item in list)
-            {
-                DataRow row = dataObjToRemove.NewRow();
-                row[0] = item._registerNumber;
-                if (item is Property)
-                {
-                    row[1] = ((Property)item).Coordinates.x._x;
-                    row[2] = ((Property)item).Coordinates.x._y;
-                    row[3] = ((Property)item).Coordinates.y._x;
-                    row[4] = ((Property)item).Coordinates.y._y;
-                    //QuadTree.GeoSystem.Property
-                    row[5] = ((Property)item).GetType().ToString().Substring(19, 8);
-                    row[6] = ((Property)item)._description;
-                }
-                else
-                {
-                    row[1] = ((PlotOfLand)item).Coordinates.startPos._x;
-                    row[2] = ((PlotOfLand)item).Coordinates.startPos._y;
-                    row[3] = ((PlotOfLand)item).Coordinates.endPos._x;
-                    row[4] = ((PlotOfLand)item).Coordinates.endPos._y;
-                    row[5] = item.GetType().ToString().Substring(19, 10);
-                    row[6] = ((PlotOfLand)item)._description;
-                }
-                dataObjToRemove.Rows.Add(row);
-            }
-
-        }
-
-        //???
-        /*private void button4_Click(object sender, EventArgs e)
-        {
-            int registerNumber = 0;
-            string description = "";
-            (Coordinates start, Coordinates end) coordinates = (new Coordinates(0, 0, 0), new Coordinates(0, 0, 0));
-
-            using (AddProperty propertyForm = new AddProperty())
-            {
-                if (propertyForm.ShowDialog() == DialogResult.OK)
-                {
-                    registerNumber = propertyForm.RegisterNumber;
-                    description = propertyForm.Description;
-                    coordinates = propertyForm.Coordinates;
-                }
-            }
-
-            Property property = new Property(registerNumber, description, coordinates, new List<PlotOfLand>());
-            _app._area.Insert(property);
-
-            //plnenie zoznamu referencii pri pridani nehnutelnosti
-            var pomList = _app._area.IntervalSearch(new Boundaries(property.Coordinates.x.Longitude, property.Coordinates.x.Latitude, property.Coordinates.y.Longitude, property.Coordinates.y.Latitude), true);
-
-            foreach (var pl in pomList)
-            {
-                if (pl is PlotOfLand)
-                {
-                    property.Lands.Add((PlotOfLand)pl);
-                }
-            }
-            this.redoGrids();
-            this.QuadPanel.Invalidate();
-        }*/
 
         //DRAWING ==============================================================================================================================================================
         private void QuadPanel_Paint(object sender, PaintEventArgs e)
@@ -286,9 +208,18 @@ namespace QuadTree.UI
                 if (property is Property)
                 {
                     // Create a string to format the object's details.
-                    string objectDetails = $"PROPERTY\nID: {property._registerNumber}\n" +
-                                          $"Coordinates: ({((Property)property).Coordinates.x.Longitude}, {((Property)property).Coordinates.x.Latitude})\n" +
-                                          $"Description: {((Property)property).Description}\n\n";
+                    string objectDetails = $"PROPERTY: {property._registerNumber}\n" +
+                                          $"Coordinates:\n({((Property)property).Coordinates.x.Longitude}{((Property)property).Coordinates.x.LongHem}," +
+                                          $" {((Property)property).Coordinates.x.Latitude}{((Property)property).Coordinates.x.LatHem})\n" +
+                                          $"Description: {((Property)property).Description}\n";
+                    objectDetails += "Plots:\n";
+
+                    foreach (var plot in ((Property)property)._lands) 
+                    {
+                        objectDetails += $"{plot.RegisterNumber} : {plot.Description}\n";
+                    }
+
+                    objectDetails += "\n";
 
                     // Append the formatted text to the RichTextBox.
                     propInfo.AppendText(objectDetails);
@@ -299,7 +230,16 @@ namespace QuadTree.UI
                     string objectDetails = $"PLOT\nID: {property._registerNumber}\n" +
                                           $"Coordinates: ({((PlotOfLand)property).Coordinates.startPos._x}, {((PlotOfLand)property).Coordinates.startPos._y})\n" +
                                           $"                     ({((PlotOfLand)property).Coordinates.endPos._x}, {((PlotOfLand)property).Coordinates.endPos._y})\n" +
-                                          $"Description: {((PlotOfLand)property).Description}\n\n";
+                                          $"Description: {((PlotOfLand)property).Description}\n";
+
+                    objectDetails += "Properties:\n";
+
+                    foreach (var prop in ((PlotOfLand)property)._properties)
+                    {
+                        objectDetails += $"{prop.RegisterNumber} : {prop.Description}\n";
+                    }
+                    objectDetails += "\n";
+
 
                     // Append the formatted text to the RichTextBox.
                     propInfo.AppendText(objectDetails);
@@ -382,7 +322,7 @@ namespace QuadTree.UI
 
             _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLongEnd.Value, (double)posLatEnd.Value, 0)));
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-            this.redoGrids();
+            //this.redoGrids();
             this.QuadPanel.Invalidate(true);
 
         }
@@ -405,7 +345,7 @@ namespace QuadTree.UI
 
             _app.AddPlot(registerNumber, PlotDesc.Text, (new Coordinates((double)startPosPlotLong.Value, (double)startPosPlotLat.Value, 0), new Coordinates((double)endPosPlotLong.Value, (double)endPosPlotLat.Value, 0)));
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-            this.redoGrids();
+            //this.redoGrids();
             this.QuadPanel.Invalidate(true);
         }
 
@@ -421,52 +361,6 @@ namespace QuadTree.UI
             this.HidePanels();
 
         }
-
-        /*//OLD DELETE
-        private void deleteBtn_Click(object sender, EventArgs e)
-        {
-            if (dataGridObj.SelectedRows.Count > 0)
-            {
-
-
-                // Get the first selected row (if you allow multiple selections, you may iterate through them).
-                DataGridViewRow selectedRow = dataGridObj.SelectedRows[0];
-
-                // Access data from specific cells within the selected row.
-                var regNumb = selectedRow.Cells[0].Value;
-                var startPosX = selectedRow.Cells[1].Value;
-                var startPosY = selectedRow.Cells[2].Value;
-                var endPosX = selectedRow.Cells[3].Value;
-                var endPosY = selectedRow.Cells[4].Value;
-                var typeOfObj = selectedRow.Cells[5].Value.ToString();
-
-
-                if (typeOfObj.Equals("Property"))
-                {
-                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null)))
-                    {
-                        //remove from grid
-                        dataGridObj.Rows.Remove(selectedRow);
-                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-                        //dataGridObj2.Rows.Remove(selectedRow);
-                    }
-
-                }
-                else
-                {
-                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates((double)startPosX, (double)startPosY, 0), new Coordinates((double)endPosX, (double)endPosY, 0)), null)))
-                    {
-                        //removefrom grid
-                        dataGridObj.Rows.Remove(selectedRow);
-                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-                        //dataGridObj2.Rows.Remove(selectedRow);
-                    }
-                }
-
-                this.QuadPanel.Invalidate();
-            }
-
-        }*/
 
         private void showBtn_Click(object sender, EventArgs e)
         {
@@ -491,49 +385,9 @@ namespace QuadTree.UI
             }
         }
 
-        /*private void seedBtn_Click(object sender, EventArgs e)
-        {
-            wasSeeded = true;
-            if (this.checkBoxWantOpt.Checked)
-            {
-                _app._area.wantOptimizing = true;
-            }
-            else
-            {
-                _app._area.wantOptimizing = false;
-            }
-
-            _app.seedApp((int)widthOfTree.Value, (int)LengthOfTree.Value, (int)PropNo.Value, (int)plotNo.Value, max_quad_cap, max_depth);
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-            if (this._app._area.TreeHealth.Value < 20)
-            {
-                MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
-            }
-            if (_app._area.wasOptimalized)
-            {
-                this.improveLBL.Text = _app._area.improvement.ToString();
-
-            }
-            else
-            {
-                this.improveLBL.Text = "NOT\nYET";
-            }
-
-            this.redoGrids();
-            this.QuadPanel.Invalidate();
-        }
-
-        private void editButton_Click(object sender, EventArgs e)
-        {
-            this.redoGrids();
-            this.HidePanels();
-            panelEdit.Show();
-
-        }*/
-
         private void editBtn_Click(object sender, EventArgs e)
         {
-            this.redoGrids();
+            //this.redoGrids();
             if (dataGridEditDelete.SelectedRows.Count > 0)
             {
                 // Get the first selected row (if you allow multiple selections, you may iterate through them).
@@ -783,7 +637,7 @@ namespace QuadTree.UI
 
             _app.seedApp(startX, startY, endX, endY, propNumber, plotNumber, objects_count, max_depth);
 
-            this.redoGrids();
+            //this.redoGrids();
 
             panelSeedApp.Hide();
 
@@ -817,7 +671,7 @@ namespace QuadTree.UI
         {
 
             this._app.ChangeDepth((int)newDepthNum.Value);
-            this.redoGrids();
+            //this.redoGrids();
             healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
             panelDepth.Hide();
             this.QuadPanel.Invalidate();
@@ -844,6 +698,7 @@ namespace QuadTree.UI
                     panelProp.Show();
 
                     //TODO: nepristupovat priamo na GUI k objektu
+
                     originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
 
                     if (originalProp != null)
