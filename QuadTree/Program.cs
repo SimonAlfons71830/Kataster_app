@@ -24,7 +24,7 @@ namespace QuadTree
             var app = new GeoApp(new MyQuadTree(new Boundaries(0,0,0,0),0,0));
             Application.Run(new Test(test,app));
             //Application.Run(new GUI());
-            
+
 
         }
         

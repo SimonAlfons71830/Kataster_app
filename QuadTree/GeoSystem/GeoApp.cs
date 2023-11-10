@@ -260,15 +260,21 @@ namespace QuadTree.GeoSystem
             }
         }
 
-        public void ChangeKeyAttr(Polygon refObj, double x0, double y0, double xk, double yk) 
+        public void ChangeKeyAttr(Polygon refObj, Polygon newObj) 
         {
-            if (refObj is Property)
+            if (refObj is Property && newObj is Property)
             {
-                ((Property)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
+                var regN = ((Property)newObj)._registerNumber;
+                var desc = ((Property)newObj)._description;
+                if (_area.RemoveObject(refObj)) 
+                {
+                    this.AddProperty(regN,desc,((Property)newObj).Coordinates);
+                }
+                //((Property)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
             }
             else //is PLOT
             {
-                ((PlotOfLand)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
+                //((PlotOfLand)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
             }
 
         }
@@ -299,19 +305,15 @@ namespace QuadTree.GeoSystem
                 {
                     if (newObj is PlotOfLand)
                     {
-                        this.ChangeKeyAttr(((PlotOfLand)_refObj), 
-                            ((PlotOfLand)newObj).Coordinates.startPos.Longitude, 
+                        this.ChangeKeyAttr(((PlotOfLand)_refObj), (PlotOfLand)newObj);
+                            /*((PlotOfLand)newObj).Coordinates.startPos.Longitude, 
                             ((PlotOfLand)newObj).Coordinates.startPos.Latitude, 
                             ((PlotOfLand)newObj).Coordinates.endPos.Longitude, 
-                            ((PlotOfLand)newObj).Coordinates.endPos.Latitude);
+                            ((PlotOfLand)newObj).Coordinates.endPos.Latitude);*/
                     }
                     else
                     {
-                        this.ChangeKeyAttr(((Property)_refObj),
-                            ((Property)newObj).Coordinates.x.Longitude,
-                            ((Property)newObj).Coordinates.x.Latitude,
-                            ((Property)newObj).Coordinates.y.Longitude,
-                            ((Property)newObj).Coordinates.y.Latitude);
+                        this.ChangeKeyAttr(((Property)_refObj), ((Property)newObj));
                     }
                     
                     return true;

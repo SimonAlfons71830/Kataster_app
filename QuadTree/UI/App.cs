@@ -479,20 +479,20 @@ namespace QuadTree.UI
                 originalPLOTDescription != descEditPlot.Text;
 
 
-           /* var changed = this._app.EditObject(originalPlot,
-               new PlotOfLand(rn, descEditPlot.Text,
-               (new Coordinates((double)startPosEditPlotX.Value, (double)startPosEditPlotY.Value, 0),
-               new Coordinates((double)endPosEditPlotX.Value, (double)endPosEditPlotY.Value, 0)), null),
-               keyAttrChanged);
+            /* var changed = this._app.EditObject(originalPlot,
+                new PlotOfLand(rn, descEditPlot.Text,
+                (new Coordinates((double)startPosEditPlotX.Value, (double)startPosEditPlotY.Value, 0),
+                new Coordinates((double)endPosEditPlotX.Value, (double)endPosEditPlotY.Value, 0)), null),
+                keyAttrChanged);
 
-            if (changed)
-            {
-                MessageBox.Show("Attributes changed.");
-            }
-            else
-            {
-                MessageBox.Show("Failed changing attributes.");
-            }*/
+             if (changed)
+             {
+                 MessageBox.Show("Attributes changed.");
+             }
+             else
+             {
+                 MessageBox.Show("Failed changing attributes.");
+             }*/
 
 
 
@@ -541,7 +541,7 @@ namespace QuadTree.UI
             bool attrChanged = originalPROPRegisterNumber != rn ||
                 originalPROPDescription != descBoxEditProp.Text;
 
-            /*var changed = this._app.EditObject(originalProp,
+            var changed = this._app.EditObject(originalProp,
                new Property(rn, descBoxEditProp.Text,
                (new Coordinates((double)editPropStartX.Value, (double)editPropStartY.Value, 0),
                new Coordinates((double)editPropEndX.Value, (double)editPropEndY.Value, 0)), null),
@@ -550,13 +550,24 @@ namespace QuadTree.UI
             if (changed)
             {
                 MessageBox.Show("Attributes changed.");
+                dataGridEditDelete.Rows.Remove(selectedRowProp);
+                DataRow newRow = dataWithRangeSearch.NewRow();
+                newRow[0] = rn;
+                newRow[1] = descBoxEditProp.Text;
+                newRow[2] = "Property";
+                newRow[3] = ((double, double))(editPropStartX.Value, editPropStartY.Value);
+                newRow[4] = ((double, double))(editPropEndX.Value, editPropEndY.Value);
+
+                dataWithRangeSearch.Rows.Add(newRow);
+                dataGridEditDelete.Refresh();
+
             }
             else
             {
                 MessageBox.Show("Failed changing attributes.");
-            }*/
+            }
 
-            if (!keyAttrChanged && attrChanged)
+            /*if (!keyAttrChanged && attrChanged)
             {
                 originalProp._description = descBoxEditProp.Text;
                 originalProp._registerNumber = rn;
@@ -583,7 +594,7 @@ namespace QuadTree.UI
 
                     dataGridEditDelete.Refresh();
                 }
-            }
+            }*/
             panelProp.Hide();
         }
 
@@ -738,8 +749,8 @@ namespace QuadTree.UI
 
                     //TODO: nepristupovat priamo na GUI k objektu
 
-                    originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, (string)desc, (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
-                    //originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    //originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, (string)desc, (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
 
                     if (originalProp != null)
                     {

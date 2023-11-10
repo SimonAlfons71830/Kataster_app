@@ -1941,12 +1941,12 @@
             Controls.Add(panel1);
             Controls.Add(panelSearchForProp);
             Controls.Add(panelDataEditDel);
-            Controls.Add(QuadPanel);
             Controls.Add(panelSettings);
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
             Controls.Add(panelPlot);
+            Controls.Add(QuadPanel);
             Name = "App";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Reset Tree";
