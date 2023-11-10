@@ -438,6 +438,7 @@
             latitudeNum.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             latitudeNum.Location = new Point(78, 272);
             latitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            latitudeNum.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             latitudeNum.Name = "latitudeNum";
             latitudeNum.Size = new Size(135, 25);
             latitudeNum.TabIndex = 3;
@@ -459,6 +460,7 @@
             longitudeNum.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             longitudeNum.Location = new Point(79, 191);
             longitudeNum.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            longitudeNum.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             longitudeNum.Name = "longitudeNum";
             longitudeNum.Size = new Size(134, 25);
             longitudeNum.TabIndex = 1;
@@ -526,6 +528,7 @@
             endPosLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosLat.Location = new Point(12, 146);
             endPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            endPosLat.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosLat.Name = "endPosLat";
             endPosLat.Size = new Size(123, 25);
             endPosLat.TabIndex = 9;
@@ -547,6 +550,7 @@
             endPosLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosLong.Location = new Point(12, 78);
             endPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            endPosLong.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosLong.Name = "endPosLong";
             endPosLong.Size = new Size(123, 25);
             endPosLong.TabIndex = 7;
@@ -582,6 +586,7 @@
             startPosLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosLat.Location = new Point(11, 146);
             startPosLat.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            startPosLat.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosLat.Name = "startPosLat";
             startPosLat.Size = new Size(123, 25);
             startPosLat.TabIndex = 9;
@@ -603,6 +608,7 @@
             startPosLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosLong.Location = new Point(11, 78);
             startPosLong.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            startPosLong.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosLong.Name = "startPosLong";
             startPosLong.Size = new Size(123, 25);
             startPosLong.TabIndex = 7;
@@ -686,6 +692,7 @@
             posLatEnd.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLatEnd.Location = new Point(11, 121);
             posLatEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLatEnd.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             posLatEnd.Name = "posLatEnd";
             posLatEnd.Size = new Size(123, 25);
             posLatEnd.TabIndex = 9;
@@ -707,6 +714,7 @@
             posLongEnd.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLongEnd.Location = new Point(11, 53);
             posLongEnd.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLongEnd.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             posLongEnd.Name = "posLongEnd";
             posLongEnd.Size = new Size(123, 25);
             posLongEnd.TabIndex = 7;
@@ -777,6 +785,7 @@
             posLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLat.Location = new Point(11, 121);
             posLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLat.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             posLat.Name = "posLat";
             posLat.Size = new Size(123, 25);
             posLat.TabIndex = 9;
@@ -798,6 +807,7 @@
             posLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             posLong.Location = new Point(11, 53);
             posLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            posLong.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             posLong.Name = "posLong";
             posLong.Size = new Size(123, 25);
             posLong.TabIndex = 7;
@@ -881,6 +891,7 @@
             endPosPlotLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosPlotLat.Location = new Point(11, 121);
             endPosPlotLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosPlotLat.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosPlotLat.Name = "endPosPlotLat";
             endPosPlotLat.Size = new Size(123, 25);
             endPosPlotLat.TabIndex = 9;
@@ -902,6 +913,7 @@
             endPosPlotLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosPlotLong.Location = new Point(11, 53);
             endPosPlotLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endPosPlotLong.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosPlotLong.Name = "endPosPlotLong";
             endPosPlotLong.Size = new Size(123, 25);
             endPosPlotLong.TabIndex = 7;
@@ -972,6 +984,7 @@
             startPosPlotLat.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosPlotLat.Location = new Point(11, 121);
             startPosPlotLat.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosPlotLat.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosPlotLat.Name = "startPosPlotLat";
             startPosPlotLat.Size = new Size(123, 25);
             startPosPlotLat.TabIndex = 9;
@@ -993,6 +1006,7 @@
             startPosPlotLong.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosPlotLong.Location = new Point(11, 53);
             startPosPlotLong.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startPosPlotLong.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosPlotLong.Name = "startPosPlotLong";
             startPosPlotLong.Size = new Size(123, 25);
             startPosPlotLong.TabIndex = 7;
@@ -1064,6 +1078,7 @@
             editPropEndY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropEndY.Location = new Point(81, 64);
             editPropEndY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            editPropEndY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             editPropEndY.Name = "editPropEndY";
             editPropEndY.Size = new Size(125, 25);
             editPropEndY.TabIndex = 4;
@@ -1075,6 +1090,7 @@
             editPropEndX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropEndX.Location = new Point(81, 27);
             editPropEndX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            editPropEndX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             editPropEndX.Name = "editPropEndX";
             editPropEndX.Size = new Size(125, 25);
             editPropEndX.TabIndex = 3;
@@ -1118,6 +1134,7 @@
             editPropStartY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropStartY.Location = new Point(81, 64);
             editPropStartY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            editPropStartY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             editPropStartY.Name = "editPropStartY";
             editPropStartY.Size = new Size(125, 25);
             editPropStartY.TabIndex = 4;
@@ -1129,6 +1146,7 @@
             editPropStartX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             editPropStartX.Location = new Point(81, 27);
             editPropStartX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            editPropStartX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             editPropStartX.Name = "editPropStartX";
             editPropStartX.Size = new Size(125, 25);
             editPropStartX.TabIndex = 3;
@@ -1246,6 +1264,7 @@
             endPosEditPlotY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosEditPlotY.Location = new Point(81, 64);
             endPosEditPlotY.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            endPosEditPlotY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosEditPlotY.Name = "endPosEditPlotY";
             endPosEditPlotY.Size = new Size(125, 25);
             endPosEditPlotY.TabIndex = 4;
@@ -1257,6 +1276,7 @@
             endPosEditPlotX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endPosEditPlotX.Location = new Point(81, 27);
             endPosEditPlotX.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            endPosEditPlotX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endPosEditPlotX.Name = "endPosEditPlotX";
             endPosEditPlotX.Size = new Size(125, 25);
             endPosEditPlotX.TabIndex = 3;
@@ -1300,6 +1320,7 @@
             startPosEditPlotY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosEditPlotY.Location = new Point(81, 64);
             startPosEditPlotY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            startPosEditPlotY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosEditPlotY.Name = "startPosEditPlotY";
             startPosEditPlotY.Size = new Size(125, 25);
             startPosEditPlotY.TabIndex = 4;
@@ -1311,6 +1332,7 @@
             startPosEditPlotX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startPosEditPlotX.Location = new Point(81, 27);
             startPosEditPlotX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            startPosEditPlotX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startPosEditPlotX.Name = "startPosEditPlotX";
             startPosEditPlotX.Size = new Size(125, 25);
             startPosEditPlotX.TabIndex = 3;
@@ -1540,6 +1562,7 @@
             endCoordY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endCoordY.Location = new Point(54, 64);
             endCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endCoordY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endCoordY.Name = "endCoordY";
             endCoordY.Size = new Size(125, 25);
             endCoordY.TabIndex = 4;
@@ -1552,6 +1575,7 @@
             endCoordX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             endCoordX.Location = new Point(54, 25);
             endCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            endCoordX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             endCoordX.Name = "endCoordX";
             endCoordX.Size = new Size(125, 25);
             endCoordX.TabIndex = 3;
@@ -1596,6 +1620,7 @@
             startCoordY.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startCoordY.Location = new Point(54, 64);
             startCoordY.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startCoordY.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startCoordY.Name = "startCoordY";
             startCoordY.Size = new Size(125, 25);
             startCoordY.TabIndex = 4;
@@ -1607,6 +1632,7 @@
             startCoordX.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             startCoordX.Location = new Point(54, 25);
             startCoordX.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            startCoordX.Minimum = new decimal(new int[] { 10000, 0, 0, int.MinValue });
             startCoordX.Name = "startCoordX";
             startCoordX.Size = new Size(125, 25);
             startCoordX.TabIndex = 3;
@@ -1648,7 +1674,7 @@
             // 
             plotNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             plotNo.Location = new Point(54, 64);
-            plotNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            plotNo.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             plotNo.Name = "plotNo";
             plotNo.Size = new Size(125, 25);
             plotNo.TabIndex = 4;
@@ -1659,7 +1685,7 @@
             // 
             PropNo.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PropNo.Location = new Point(55, 27);
-            PropNo.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            PropNo.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             PropNo.Name = "PropNo";
             PropNo.Size = new Size(125, 25);
             PropNo.TabIndex = 3;
@@ -1934,18 +1960,18 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1258, 679);
-            Controls.Add(menupanel);
-            Controls.Add(panelProp);
-            Controls.Add(panelDepth);
             Controls.Add(panelSeedApp);
-            Controls.Add(panel1);
-            Controls.Add(panelSearchForProp);
+            Controls.Add(menupanel);
+            Controls.Add(panelDepth);
             Controls.Add(panelDataEditDel);
+            Controls.Add(panelPlot);
+            Controls.Add(panelSearchForProp);
             Controls.Add(panelSettings);
             Controls.Add(panelAddPlot);
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
-            Controls.Add(panelPlot);
+            Controls.Add(panelProp);
+            Controls.Add(panel1);
             Controls.Add(QuadPanel);
             Name = "App";
             StartPosition = FormStartPosition.CenterParent;
