@@ -567,6 +567,8 @@ namespace QuadTree.UI
                 MessageBox.Show("Failed changing attributes.");
             }
 
+
+            //PICKING THE OBJECT FROM THE STRUCT TO THE FORM
             /*if (!keyAttrChanged && attrChanged)
             {
                 originalProp._description = descBoxEditProp.Text;

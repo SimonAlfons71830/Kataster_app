@@ -274,6 +274,12 @@ namespace QuadTree.GeoSystem
             }
             else //is PLOT
             {
+                var regN = ((PlotOfLand)newObj)._registerNumber;
+                var desc = ((PlotOfLand)newObj)._description;
+                if (_area.RemoveObject(refObj))
+                {
+                    this.AddPlot(regN, desc, ((PlotOfLand)newObj).Coordinates);
+                }
                 //((PlotOfLand)refObj).Coordinates = (new Coordinates(x0, y0, 0), new Coordinates(xk, yk, 0));
             }
 
@@ -533,6 +539,10 @@ namespace QuadTree.GeoSystem
             this._area.SetNewDepth(newDepth);
         }
 
+
+        //TODO: PRESYPANIE VSETKYCH DAT DO NOVEJ STRUKTURY
+        //NASTAVENIE ROZSAHU + VLOZENIE PRVKOV
+        //ZORADIT NEJAKO ?
 
     }
 }
