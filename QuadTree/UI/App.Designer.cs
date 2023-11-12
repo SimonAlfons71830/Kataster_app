@@ -134,6 +134,7 @@
             label40 = new Label();
             label41 = new Label();
             panelSettings = new Panel();
+            checkBoxReinsert = new CheckBox();
             checkBoxWantOpt = new CheckBox();
             changeDepthBtn = new Button();
             seedAppBtn = new Button();
@@ -196,7 +197,6 @@
             DeleteBtnRangeSearch = new Button();
             EditBtnRangeSearch = new Button();
             dataGridEditDelete = new DataGridView();
-            checkBoxReinsert = new CheckBox();
             menupanel.SuspendLayout();
             panelSearchForProp.SuspendLayout();
             panel6.SuspendLayout();
@@ -1430,6 +1430,17 @@
             panelSettings.Size = new Size(310, 679);
             panelSettings.TabIndex = 158;
             // 
+            // checkBoxReinsert
+            // 
+            checkBoxReinsert.AutoSize = true;
+            checkBoxReinsert.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            checkBoxReinsert.Location = new Point(79, 72);
+            checkBoxReinsert.Name = "checkBoxReinsert";
+            checkBoxReinsert.Size = new Size(150, 22);
+            checkBoxReinsert.TabIndex = 166;
+            checkBoxReinsert.Text = "R E I N S E R T";
+            checkBoxReinsert.UseVisualStyleBackColor = true;
+            // 
             // checkBoxWantOpt
             // 
             checkBoxWantOpt.AutoSize = true;
@@ -2088,17 +2099,6 @@
             dataGridEditDelete.Size = new Size(442, 523);
             dataGridEditDelete.TabIndex = 13;
             // 
-            // checkBoxReinsert
-            // 
-            checkBoxReinsert.AutoSize = true;
-            checkBoxReinsert.Font = new Font("Consolas", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            checkBoxReinsert.Location = new Point(79, 72);
-            checkBoxReinsert.Name = "checkBoxReinsert";
-            checkBoxReinsert.Size = new Size(150, 22);
-            checkBoxReinsert.TabIndex = 166;
-            checkBoxReinsert.Text = "R E I N S E R T";
-            checkBoxReinsert.UseVisualStyleBackColor = true;
-            // 
             // App
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -2113,9 +2113,9 @@
             Controls.Add(panelAddProp);
             Controls.Add(panelGiveRange);
             Controls.Add(panelSearchForProp);
-            Controls.Add(panelSeedApp);
             Controls.Add(panelDepth);
             Controls.Add(panelDataEditDel);
+            Controls.Add(panelSeedApp);
             Controls.Add(QuadPanel);
             Name = "App";
             StartPosition = FormStartPosition.CenterParent;

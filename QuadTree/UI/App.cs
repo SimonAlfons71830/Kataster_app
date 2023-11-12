@@ -876,7 +876,7 @@ namespace QuadTree.UI
             {
                 this._app.WithdrawAndOrder(true);
             }
-            
+
 
             if (this._app.improvedWithReinsert)
             {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Design;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,6 +77,7 @@ namespace QuadTree.QTree
                 //check whether the currentQuad needs to be split - (maxQuadCapacity, level, already is split)
                 while (NeedToSplit(current))
                 {
+                    
                     current.splitQuadUpdate(this.findCentroid(current._objects));
                     //every point from the currentQuad must bee removed and reinserted to the correct child of currentQuad
                     Queue<ISpatialObject> reinsertObjects = new Queue<ISpatialObject>(current._objects);
@@ -131,7 +133,7 @@ namespace QuadTree.QTree
                 }
             }*/
             //}
-            if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level > 0 && quad.level < _maxDepth)
+            /*if (quad._objects.Count > MAX_QUAD_CAPACITY && quad.level > 0 && quad.level < _maxDepth)
             {
                 // not in the lowest level of the struct but will be optimized in the second part of optimalization
                 if (!needsToBeImproved.Contains(quad))
@@ -139,7 +141,7 @@ namespace QuadTree.QTree
                     needsToBeImproved.Enqueue(quad);
                 }
                 
-            }
+            }*/
 
             return quad._objects.Count > MAX_QUAD_CAPACITY && quad.level < _maxDepth && quad.getNW() == null;
 
@@ -442,6 +444,7 @@ namespace QuadTree.QTree
             needsToBeImproved.Clear();
             quadsImproved = 0;
             noMoreOpt = false;
+
     }
 
         public void SetNewDepth(int newDepth)
@@ -459,6 +462,7 @@ namespace QuadTree.QTree
             }
             else
             {
+                noMoreOpt = false;
                 // var quadsToShrink = this.GetQuadsAtDepth(newDepth);
                 //tree has to shrink
                 this.Shrink(newDepth);
@@ -549,7 +553,9 @@ namespace QuadTree.QTree
             // maxDepth - je aktualna level stromu
             //zoberiem vsetky objekty z quadov od <maxDept, newDepth-1> //nemusim ist uplne po spodok ak je maxDepth mensia
             //jednotlivym objektom najdem kvad na newdepth a vlozim ich do neho
-
+            improvement = 0;
+            quadsImproved = 0;
+            TreeHealth.Value = 0;
 
             List<ISpatialObject> reinsertObj = new List<ISpatialObject>();
             Queue<Quad> quadsAtDesiredDepth = GetQuadsAtDepth(desiredDepth);
@@ -600,7 +606,10 @@ namespace QuadTree.QTree
 
                             if (pomQ._objects.Count > MAX_QUAD_CAPACITY)
                             {
-                                TreeHealth.CalculateNewHealthObjCountInQuad(pomQ._objects.Count, MAX_QUAD_CAPACITY);
+                                if (TreeHealth.Value > 0)
+                                {
+                                    TreeHealth.CalculateNewHealthObjCountInQuad(pomQ._objects.Count, MAX_QUAD_CAPACITY);
+                                }
                             }
                         }
                     }
