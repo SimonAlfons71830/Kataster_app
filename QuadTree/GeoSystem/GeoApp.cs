@@ -264,7 +264,7 @@ namespace QuadTree.GeoSystem
 
             if (this.getHealtOfStruct() < 62 && this._area.wantOptimizing)
             {
-                this._area.Optimize();
+                this.OptimizeStruct();
             }
         }
 
@@ -618,7 +618,11 @@ namespace QuadTree.GeoSystem
         }
 
         public void OptimizeStruct() {
-            this._area.Optimize();
+            while (!this._area.noMoreOpt)
+            {
+                this._area.Optimize();
+            }
+            
         }
     }
 }

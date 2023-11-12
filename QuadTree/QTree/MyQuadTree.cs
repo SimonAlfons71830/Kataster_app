@@ -13,6 +13,8 @@ namespace QuadTree.QTree
     {
         public Health TreeHealth { get; set; } = new Health();
         public bool wasOptimalized = false;
+        public bool noMoreOpt = false;
+
         public double improvement = 0;
         public Queue<Quad> needsToBeImproved = new Queue<Quad>();
         public bool wantOptimizing = false;
@@ -439,6 +441,7 @@ namespace QuadTree.QTree
             improvement = 0;
             needsToBeImproved.Clear();
             quadsImproved = 0;
+            noMoreOpt = false;
     }
 
         public void SetNewDepth(int newDepth)
@@ -653,6 +656,11 @@ namespace QuadTree.QTree
             var oldHealth = TreeHealth.Value;
             
             Queue<Quad> quadsToBeOptimized = this.GetQuadsAtDepth(maxDepth);
+            var QuadsToImprove = quadsToBeOptimized.Where(quad => quad._objects.Count > MAX_QUAD_CAPACITY).ToList();
+            if (QuadsToImprove.Count == 0)
+            {
+                noMoreOpt = true;
+            }
 
             while (quadsToBeOptimized.Count > 0)
             {
@@ -679,8 +687,8 @@ namespace QuadTree.QTree
                         (rQuad ?? quad)._objects.Add(rObject);
                     }
 
-                    //podarilo sa opracit tento quad - > zvysi sa health
-                    if (quad._objects.Count < MAX_QUAD_CAPACITY)
+                    //podarilo sa opravit tento quad - > zvysi sa health
+                    if (quad._objects.Count <= MAX_QUAD_CAPACITY)
                     {
                         TreeHealth.ReverseHealth(quad._objects.Count, MAX_QUAD_CAPACITY);
                         quadsImproved++;

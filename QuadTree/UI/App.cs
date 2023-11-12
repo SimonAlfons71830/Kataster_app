@@ -858,7 +858,7 @@ namespace QuadTree.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.HealtPanelUpdate();
+            //this.HealtPanelUpdate();
 
             //var objects = this._app.FindInterval((new Coordinates(this._app._area._dimension.X0, this._app._area._dimension.Y0, 0), new Coordinates(this._app._area._dimension.Xk, this._app._area._dimension.Yk, 0))).Count;
             //manually optimizing struct
@@ -868,7 +868,11 @@ namespace QuadTree.UI
             //withdrawal of the objects, sorting them from the largest and inserting again
             //input is increaing the size of the area to +10 percent of the original size
             // will optimize like this only if new struct has better health than original
-            this._app.WithdrawAndOrder(true);
+            if (checkBoxReinsert.Checked)
+            {
+                this._app.WithdrawAndOrder(true);
+            }
+            
 
             if (this._app.improvedWithReinsert)
             {
