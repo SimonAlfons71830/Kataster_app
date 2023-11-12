@@ -467,7 +467,9 @@ namespace QuadTree.UI
 
         private void editbtnPlot_Click(object sender, EventArgs e)
         {
-            if (startPosEditPlotX.Value > endPosEditPlotX.Value || startPosEditPlotY.Value > endPosEditPlotY.Value)
+            if (startPosEditPlotX.Value > endPosEditPlotX.Value || startPosEditPlotY.Value > endPosEditPlotY.Value ||
+                (double)startPosEditPlotX.Value < this._app._area._dimension.X0 || (double)endPosEditPlotX.Value > this._app._area._dimension.Xk ||
+                (double)startPosEditPlotY.Value < this._app._area._dimension.Y0 || (double)endPosEditPlotY.Value > this._app._area._dimension.Yk)
             {
                 MessageBox.Show("Wrong key attributes.");
                 return;
@@ -536,7 +538,9 @@ namespace QuadTree.UI
         //NEW EDIT PROP BUTTON
         private void editBTNProp_Click(object sender, EventArgs e)
         {
-            if (editPropStartX.Value > editPropEndX.Value || editPropStartY.Value > editPropEndY.Value)
+            if (editPropStartX.Value > editPropEndX.Value || editPropStartY.Value > editPropEndY.Value ||
+                (double)editPropStartX.Value < this._app._area._dimension.X0 || (double)editPropEndX.Value > this._app._area._dimension.Xk ||
+                (double)editPropStartY.Value < this._app._area._dimension.Y0 || (double)editPropEndY.Value > this._app._area._dimension.Yk)
             {
                 MessageBox.Show("Wrong key attributes.");
                 return;

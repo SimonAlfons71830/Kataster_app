@@ -274,7 +274,7 @@ namespace QuadTree.GeoSystem
             {
                 var regN = ((Property)newObj)._registerNumber;
                 var desc = ((Property)newObj)._description;
-                if (_area.RemoveObject(refObj)) 
+                if (this.RemoveObj(refObj)) //_area.RemoveObject(refObj)
                 {
                     this.AddProperty(regN,desc,((Property)newObj).Coordinates);
                 }
@@ -284,7 +284,7 @@ namespace QuadTree.GeoSystem
             {
                 var regN = ((PlotOfLand)newObj)._registerNumber;
                 var desc = ((PlotOfLand)newObj)._description;
-                if (_area.RemoveObject(refObj))
+                if (this.RemoveObj(refObj))//_area.RemoveObject(refObj)
                 {
                     this.AddPlot(regN, desc, ((PlotOfLand)newObj).Coordinates);
                 }
