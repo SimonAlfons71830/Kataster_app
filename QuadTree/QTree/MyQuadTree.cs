@@ -695,15 +695,15 @@ namespace QuadTree.QTree
             //try to split them again
             //maybe try sorting the object according to their size
 
-            //var QuadsToImprove = needsToBeImproved.ToList();
+            /*//var QuadsToImprove = needsToBeImproved.ToList();
             var QuadsToImprove = needsToBeImproved.Where(quad => quad._objects.Count > MAX_QUAD_CAPACITY).ToList();
             needsToBeImproved.Clear();
             QuadsToImprove.Sort((quad1, quad2) => quad2.level.CompareTo(quad1.level));
             var quadsToBeImproved = new Queue<Quad>(QuadsToImprove);
 
 
-            while (quadsToBeImproved.Count > 0) 
-            { 
+            while (quadsToBeImproved.Count > 0)
+            {
                 var current = quadsToBeImproved.Dequeue();
                 //collect all its child quads objects and resplit again
                 List<ISpatialObject> objectsFromCurrent = new List<ISpatialObject>();
@@ -711,7 +711,8 @@ namespace QuadTree.QTree
                 Queue<Quad> quadsToCollectObj = new Queue<Quad>();
                 quadsToCollectObj.Enqueue(current);
 
-                while (quadsToCollectObj.Count > 0) {
+                while (quadsToCollectObj.Count > 0)
+                {
 
                     var quad = quadsToCollectObj.Dequeue();
                     objectsFromCurrent.AddRange(quad._objects);
@@ -731,7 +732,7 @@ namespace QuadTree.QTree
                 current._northWest = null;
                 current._southEast = null;
 
-                
+
                 //now insert the objects from the list to current and continue until no object is left in list
                 //forget the depth 
 
@@ -750,7 +751,7 @@ namespace QuadTree.QTree
                     //ak je uz podeleny najde potomka kde objekt patri
                     while (current.getNE() != null)
                     {
-                        var subquad = obj.FindQuad(current);
+                        var subquad = obj.FindQuadUpdate(current);
 
                         if (subquad != null)
                         {
@@ -774,9 +775,9 @@ namespace QuadTree.QTree
                         List<ISpatialObject> reinsertList = new List<ISpatialObject>(current._objects);
                         current._objects.Clear();
 
-                        while (reinsertList.Count > 0) 
-                        { 
-                            var subquad = reinsertList.ElementAt(0).FindQuad(current);
+                        while (reinsertList.Count > 0)
+                        {
+                            var subquad = reinsertList.ElementAt(0).FindQuadUpdate(current);
                             if (subquad != null)
                             {
                                 subquad._objects.Add(reinsertList.ElementAt(0));
@@ -789,13 +790,14 @@ namespace QuadTree.QTree
                         }
                     }
 
-                    if (oldCurrent._objects.Count < MAX_QUAD_CAPACITY)
-                    {
-                        quadsImproved++;
-                        this.TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
-                    }
+                    
                 }
-            }
+                if (oldCurrent._objects.Count < MAX_QUAD_CAPACITY)
+                {
+                    quadsImproved++;
+                    this.TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
+                }
+            }*/
 
             improvement += TreeHealth.Value - oldHealth;
         }

@@ -190,7 +190,7 @@ namespace QuadTree.GeoSystem
         public void seedApp(double startX, double startY, double endX, double endY, int numberOfProp, int numberOfPlot, int max_quad_cap, int max_depth) 
         {
             _area.ResetTree(_area._root);
-
+            this.Reset();
 
             //10-1000 N -> (>0)
             //30 - 15000 E -> (>0)
@@ -550,7 +550,7 @@ namespace QuadTree.GeoSystem
 
         //TODO: PRESYPANIE VSETKYCH DAT DO NOVEJ STRUKTURY
         //NASTAVENIE ROZSAHU + VLOZENIE PRVKOV
-        //ZORADIT NEJAKO ?
+        //ZORADENIE
 
         public void WithdrawAndOrder(bool increaseSize) 
         {
@@ -614,6 +614,11 @@ namespace QuadTree.GeoSystem
         public void Reset() 
         {
             this._area.ResetTree(this._area._root);
+            improvedWithReinsert = false;
+        }
+
+        public void OptimizeStruct() {
+            this._area.Optimize();
         }
     }
 }

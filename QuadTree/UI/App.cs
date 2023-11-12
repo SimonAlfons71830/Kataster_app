@@ -467,6 +467,12 @@ namespace QuadTree.UI
 
         private void editbtnPlot_Click(object sender, EventArgs e)
         {
+            if (startPosEditPlotX.Value > endPosEditPlotX.Value || startPosEditPlotY.Value > endPosEditPlotY.Value)
+            {
+                MessageBox.Show("Wrong key attributes.");
+                return;
+            }
+
             bool keyAttrChanged =
                 (decimal)originalPLOTXCoordinateStart != startPosEditPlotX.Value ||
                 (decimal)originalPLOTYCoordinateStart != startPosEditPlotY.Value ||
@@ -530,6 +536,11 @@ namespace QuadTree.UI
         //NEW EDIT PROP BUTTON
         private void editBTNProp_Click(object sender, EventArgs e)
         {
+            if (editPropStartX.Value > editPropEndX.Value || editPropStartY.Value > editPropEndY.Value)
+            {
+                MessageBox.Show("Wrong key attributes.");
+                return;
+            }
             //zmena klucoveho atributu
             bool keyAttrChanged = (decimal)originalPROPXCoordinateStart != editPropStartX.Value ||
                 (decimal)originalPROPYCoordinateStart != editPropStartY.Value ||
@@ -688,6 +699,7 @@ namespace QuadTree.UI
             _app.setOptimalization(checkBoxWantOpt.Checked);
 
             _app.seedApp(startX, startY, endX, endY, propNumber, plotNumber, objects_count, max_depth);
+            this.reinsert_lbl.Text = "";
 
             //this.redoGrids();
 
@@ -846,10 +858,26 @@ namespace QuadTree.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.HidePanels();
             this.HealtPanelUpdate();
 
+            //var objects = this._app.FindInterval((new Coordinates(this._app._area._dimension.X0, this._app._area._dimension.Y0, 0), new Coordinates(this._app._area._dimension.Xk, this._app._area._dimension.Yk, 0))).Count;
+            //manually optimizing struct
+            this._app.OptimizeStruct();
+            //var objects2 = this._app.FindInterval((new Coordinates(this._app._area._dimension.X0, this._app._area._dimension.Y0, 0), new Coordinates(this._app._area._dimension.Xk, this._app._area._dimension.Yk, 0))).Count;
+
+            //withdrawal of the objects, sorting them from the largest and inserting again
+            //input is increaing the size of the area to +10 percent of the original size
+            // will optimize like this only if new struct has better health than original
             this._app.WithdrawAndOrder(true);
+
+            if (this._app.improvedWithReinsert)
+            {
+                reinsert_lbl.Text = "YES";
+            }
+            else
+            {
+                reinsert_lbl.Text = "NO";
+            }
 
             this.HealtPanelUpdate();
             this.QuadPanel.Invalidate();
