@@ -68,18 +68,18 @@ namespace QuadTree.UI
             int num_prop = 100;
             int num_plot = 100;
 
-            _app._area.wantOptimizing = checkBoxWantOpt.Checked;
+            _app.setOptimalization(checkBoxWantOpt.Checked);
             _app.seedApp(0, 0, 500, 500, num_prop, num_plot, max_quad_cap, max_depth);
 
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.HealtPanelUpdate();
 
-            if (this._app._area.TreeHealth.Value < 20)
+            if (this._app.getHealtOfStruct() < 20)
             {
                 MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
             }
             if (_app._area.wasOptimalized)
             {
-                this.improveLBL.Text = _app._area.improvement.ToString();
+                this.improveLBL.Text = _app.getImprovement().ToString();
             }
             else
             {
@@ -199,7 +199,7 @@ namespace QuadTree.UI
         //standalone search
         private void button2_Click_1(object sender, EventArgs e)
         {
-            coordinatesIS = (new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0), new Coordinates((double)longitudeNum.Value + 1, (double)latitudeNum.Value + 1, 0));
+            coordinatesIS = (new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0), new Coordinates((double)longitudeNum.Value, (double)latitudeNum.Value, 0));
             list = _app.FindOBJInterval(coordinatesIS, true, rbProp.Checked);
 
             propInfo.Clear();
@@ -321,7 +321,7 @@ namespace QuadTree.UI
             }
 
             _app.AddProperty(registerNumber, description.Text, (new Coordinates((double)posLong.Value, (double)posLat.Value, 0), new Coordinates((double)posLongEnd.Value, (double)posLatEnd.Value, 0)));
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.HealtPanelUpdate();
             //this.redoGrids();
             this.QuadPanel.Invalidate(true);
 
@@ -344,7 +344,7 @@ namespace QuadTree.UI
             }
 
             _app.AddPlot(registerNumber, PlotDesc.Text, (new Coordinates((double)startPosPlotLong.Value, (double)startPosPlotLat.Value, 0), new Coordinates((double)endPosPlotLong.Value, (double)endPosPlotLat.Value, 0)));
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.HealtPanelUpdate();
             //this.redoGrids();
             this.QuadPanel.Invalidate(true);
         }
@@ -519,7 +519,7 @@ namespace QuadTree.UI
                     newRow[4] = ((double, double))(endPosEditPlotX.Value, endPosEditPlotY.Value);
 
                     dataWithRangeSearch.Rows.Add(newRow);
-                    healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                    this.HealtPanelUpdate();
                     dataGridEditDelete.Refresh();
                 }
             }
@@ -633,7 +633,7 @@ namespace QuadTree.UI
                 fileExt = Path.GetExtension(filepath);
 
                 this._app.ReadProperties(filepath);
-                healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                this.HealtPanelUpdate();
                 MessageBox.Show("Import of Properties is completed.");
 
             }
@@ -647,7 +647,7 @@ namespace QuadTree.UI
                 fileExt = Path.GetExtension(filepathPoi);
 
                 this._app.ReadPlots(filepathPoi);
-                healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                this.HealtPanelUpdate();
                 MessageBox.Show("Import of Plots is completed.");
             }
 
@@ -659,7 +659,7 @@ namespace QuadTree.UI
         {
             panelDepth.Hide();
             panelSeedApp.Hide();
-            this._app._area.ResetTree(this._app._area._root);
+            this._app.Reset();
             this.QuadPanel.Invalidate();
         }
 
@@ -685,7 +685,7 @@ namespace QuadTree.UI
             int propNumber = (int)PropNo.Value;
             int plotNumber = (int)plotNo.Value;
 
-            _app._area.wantOptimizing = checkBoxWantOpt.Checked;
+            _app.setOptimalization(checkBoxWantOpt.Checked);
 
             _app.seedApp(startX, startY, endX, endY, propNumber, plotNumber, objects_count, max_depth);
 
@@ -694,8 +694,8 @@ namespace QuadTree.UI
             panelSeedApp.Hide();
 
             //HEALTH
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
-            if (this._app._area.TreeHealth.Value < 20)
+            this.HealtPanelUpdate();
+            if (this._app.getHealtOfStruct() < 40)
             {
                 MessageBox.Show("Consider increasing DEPTH or OBJECT COUNT in quad.");
             }
@@ -716,7 +716,7 @@ namespace QuadTree.UI
         {
             panelSeedApp.Hide();
             panelDepth.Show();
-            depthLabel.Text = this._app._area.maxDepth.ToString();
+            depthLabel.Text = this._app.getDepthOfStruct().ToString();
         }
 
         private void chngDepthBtn_Click(object sender, EventArgs e)
@@ -724,7 +724,7 @@ namespace QuadTree.UI
 
             this._app.ChangeDepth((int)newDepthNum.Value);
             //this.redoGrids();
-            healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+            this.HealtPanelUpdate();
             panelDepth.Hide();
             this.QuadPanel.Invalidate();
         }
@@ -826,7 +826,7 @@ namespace QuadTree.UI
                     {
                         //remove from grid
                         dataGridEditDelete.Rows.Remove(selectedRow);
-                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                        this.HealtPanelUpdate();
                     }
 
                 }
@@ -836,12 +836,36 @@ namespace QuadTree.UI
                     {
                         //removefrom grid
                         dataGridEditDelete.Rows.Remove(selectedRow);
-                        healthLBL.Text = this._app._area.TreeHealth.Value.ToString();
+                        this.HealtPanelUpdate();
                     }
                 }
 
                 this.QuadPanel.Invalidate();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.HidePanels();
+            this.HealtPanelUpdate();
+
+            this._app.WithdrawAndOrder(true);
+
+            this.HealtPanelUpdate();
+            this.QuadPanel.Invalidate();
+        }
+
+        private void HealtPanelUpdate()
+        {
+            this.healthLBL.Text = this._app.getHealtOfStruct().ToString();
+            this.QuadsImprovedLBL.Text = this._app._area.quadsImproved.ToString();
+            this.improveLBL.Text = this._app.getImprovement().ToString();
+            this.yes_noLBL.Text = this._app.getHealtOfStruct() >= 62 ? "YES" : "NO";
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

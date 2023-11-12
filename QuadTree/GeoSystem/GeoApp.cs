@@ -1,6 +1,7 @@
 ﻿using QuadTree.QTree;
 using QuadTree.Structures;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.Xml;
@@ -13,6 +14,7 @@ namespace QuadTree.GeoSystem
     {
         public MyQuadTree _area;
         private Random _random = new Random();
+        public bool improvedWithReinsert = false;
 
         public GeoApp(MyQuadTree area) 
         {
@@ -242,7 +244,7 @@ namespace QuadTree.GeoSystem
                 }
 
                 //pri generovani plotOfLand -> zadavam rozmer a suradnice sa prepocitaju
-                //rozmer = 0.001;
+                rozmer = 10;
 
                 var startPosGen = new MyPoint(
                     _random.NextDouble() * (this._area._dimension.Xk - rozmer) + this._area._dimension.X0,
@@ -257,6 +259,12 @@ namespace QuadTree.GeoSystem
                 string desc = listofPlotNames.ElementAt(_random.Next(listofPlotNames.Count - 1));
 
                 this.AddPlot(numberOfProp + i, desc, (new Coordinates(startPosGen._x, startPosGen._y, 0), new Coordinates(endPosGen._x, endPosGen._y, 0)));
+            }
+
+
+            if (this.getHealtOfStruct() < 62 && this._area.wantOptimizing)
+            {
+                this._area.Optimize();
             }
         }
 
@@ -544,5 +552,68 @@ namespace QuadTree.GeoSystem
         //NASTAVENIE ROZSAHU + VLOZENIE PRVKOV
         //ZORADIT NEJAKO ?
 
+        public void WithdrawAndOrder(bool increaseSize) 
+        {
+            var oldHealth = this._area.TreeHealth.Value;
+            var objects = this._area.IntervalSearch(this._area._dimension, true);
+            var polygons = objects.OfType<Polygon>().ToList();
+
+            //sort according to size
+            polygons.Sort();
+
+            MyQuadTree newArea = null;
+            if (increaseSize)
+            {
+                //widen and lenghten to 10 percent of original size
+                double tenPercentX = (this._area._dimension.Xk - this._area._dimension.X0) * 0.1;
+                double tenPercentY = (this._area._dimension.Yk - this._area._dimension.Y0) * 0.1;
+
+                Boundaries newBoundaries = new Boundaries(this._area._dimension.X0 - (tenPercentX / 2), this._area._dimension.Y0 - (tenPercentY / 2),
+                    this._area._dimension.Xk + (tenPercentX / 2), this._area._dimension.Yk + (tenPercentY / 2));
+                newArea = new MyQuadTree(newBoundaries, this._area.maxDepth, this._area.MAX_QUAD_CAPACITY);
+            }
+            else
+            {
+                newArea = new MyQuadTree(this._area._dimension, this._area.maxDepth, this._area.MAX_QUAD_CAPACITY);
+            }
+            
+
+            foreach (var obj in polygons)
+            {
+                newArea.Insert(obj);
+            }
+
+            if (newArea.TreeHealth.Value > this._area.TreeHealth.Value)
+            {
+                this._area = newArea;
+                this._area.improvement += this._area.TreeHealth.Value - oldHealth;
+                improvedWithReinsert = true;
+            }
+        }
+
+        public double getHealtOfStruct()
+        {
+            return this._area.TreeHealth.Value;
+        }
+
+        public double getImprovement()
+        {
+            return this._area.improvement;
+        }
+
+        public int getDepthOfStruct()
+        {
+            return this._area.maxDepth;
+        }
+
+        public void setOptimalization(bool optimalize) 
+        {
+            this._area.wantOptimizing = optimalize;
+        }
+
+        public void Reset() 
+        {
+            this._area.ResetTree(this._area._root);
+        }
     }
 }

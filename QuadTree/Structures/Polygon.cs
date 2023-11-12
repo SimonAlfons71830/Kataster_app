@@ -10,7 +10,7 @@ using QuadTree.QTree;
 
 namespace QuadTree.Structures
 {
-    public class Polygon: IEquatable<Polygon>, ISpatialObject
+    public class Polygon: IEquatable<Polygon>, ISpatialObject, IComparable<Polygon>
     {
         public (MyPoint startP, MyPoint endP) _borders;
         public int _registerNumber { get; set; }
@@ -263,6 +263,14 @@ namespace QuadTree.Structures
                     }
                 }
             }
+        }
+
+        public int CompareTo(Polygon? other)
+        {
+            var sizeThis = (this._borders.endP._x - this._borders.startP._x) * (this._borders.endP._y - this._borders.startP._y);
+            var sizeOther = (other._borders.endP._x - other._borders.startP._x) * (other._borders.endP._y - other._borders.startP._y);
+
+            return sizeOther.CompareTo(sizeThis);
         }
     }
 }
