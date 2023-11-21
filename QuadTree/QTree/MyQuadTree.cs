@@ -325,7 +325,7 @@ namespace QuadTree.QTree
                                     TreeHealth.ReverseHealth(current._objects.Count, MAX_QUAD_CAPACITY);
                                 }
                             }
-                            //this.Rejoin(current, parent);
+                            //this.Rejoin(current, _parent);
                             this.RejoinUpdate(pathToObject);
 
                             return true;

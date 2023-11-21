@@ -353,7 +353,7 @@ namespace QuadTree.QTree
             if (objectDelete != null)
             {
                 Quad current = _root;
-                Quad parent = null;
+                Quad _parent = null;
                 while (current != null)
                 {
                     foreach (var _obj in current._objects)
@@ -362,9 +362,9 @@ namespace QuadTree.QTree
                         {
                             current._objects.Remove(_obj);
 
-                            if (parent != null)
+                            if (_parent != null)
                             {
-                                //this.Rejoin(current, parent);
+                                //this.Rejoin(current, _parent);
                                 this.RejoinUpdate(pathToObject);
                             }
                             
@@ -374,7 +374,7 @@ namespace QuadTree.QTree
                         }
                     }
                     //not in the current -> search childQuad
-                    parent = current;
+                    _parent = current;
                     current = objectDelete.FindQuad(current);
                     pathToObject.Add(current);
                 }
@@ -388,13 +388,13 @@ namespace QuadTree.QTree
 
         }*/
 
-        /*public void Rejoin(Quad current, Quad parent)
+        /*public void Rejoin(Quad current, Quad _parent)
         {
             //joining of the split quad
             if (current.getNW() == null)
             {
                 Queue<Quad> parentQuads = new Queue<Quad>();
-                parentQuads.Enqueue(parent);
+                parentQuads.Enqueue(_parent);
                 var count = 0;
                 List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
 
@@ -417,12 +417,12 @@ namespace QuadTree.QTree
                 }
                 if (count <= MAX_QUAD_CAPACITY)
                 {
-                    parent._southWest = null;
-                    parent._northEast = null;
-                    parent._northWest = null;
-                    parent._southEast = null;
+                    _parent._southWest = null;
+                    _parent._northEast = null;
+                    _parent._northWest = null;
+                    _parent._southEast = null;
 
-                    parent._objects = objectsToReinsert;
+                    _parent._objects = objectsToReinsert;
                 }
 
             }
@@ -483,7 +483,7 @@ namespace QuadTree.QTree
                         {
                             current._objects.Remove(_obj);
                             this._objectsCount--;
-                            //this.Rejoin(current, parent);
+                            //this.Rejoin(current, _parent);
                             this.Rejoin(pathToObjectQ);
                             
                             
@@ -606,14 +606,14 @@ namespace QuadTree.QTree
             while (pathToObject.Count >= 2)
             {
                 var current = pathToObject.ElementAt(pathToObject.Count - 1);
-                var parent = pathToObject.ElementAt(pathToObject.Count - 2);
+                var _parent = pathToObject.ElementAt(pathToObject.Count - 2);
 
                 //joining of the split quad
                 if (current.getNW() == null)
                 {
                     //spocitam objekty parentovych potomkov
                     Queue<Quad> parentQuads = new Queue<Quad>();
-                    parentQuads.Enqueue(parent);
+                    parentQuads.Enqueue(_parent);
                     var count = 0;
                     List<ISpatialObject> objectsToReinsert = new List<ISpatialObject>();
 
@@ -638,12 +638,12 @@ namespace QuadTree.QTree
                     }
                     if (count <= MAX_QUAD_CAPACITY)
                     {
-                        parent._southWest = null;
-                        parent._northEast = null;
-                        parent._northWest = null;
-                        parent._southEast = null;
+                        _parent._southWest = null;
+                        _parent._northEast = null;
+                        _parent._northWest = null;
+                        _parent._southEast = null;
 
-                        parent._objects = objectsToReinsert;
+                        _parent._objects = objectsToReinsert;
                     }
 
                     pathToObject.RemoveAt(pathToObject.Count - 1);

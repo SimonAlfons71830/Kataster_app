@@ -69,7 +69,7 @@ namespace QuadTree.UI
             int num_plot = 100;
 
             _app.setOptimalization(checkBoxWantOpt.Checked);
-            _app.seedApp(0, 0, 500, 500, num_prop, num_plot, max_quad_cap, max_depth);
+            _app.seedApp(0, 0, 100, 100, num_prop, num_plot, max_quad_cap, max_depth);
 
             this.HealtPanelUpdate();
 

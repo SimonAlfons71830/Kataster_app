@@ -54,7 +54,7 @@ namespace QuadTree.QTree
         /// </summary>
         /// <remarks>
         /// This method divides the current Quad into four child Quads, each covering a distinct quadrant
-        /// within the boundaries of the parent Quad. The Quad is split into the following child Quads:
+        /// within the boundaries of the _parent Quad. The Quad is split into the following child Quads:
         /// - North-West (Top-left) Quadrant
         /// - North-East (Top-right) Quadrant
         /// - South-East (Bottom-right) Quadrant
