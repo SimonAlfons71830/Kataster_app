@@ -51,6 +51,11 @@ namespace QuadTree.GeoSystem
             Properties_ids = properties_ids.Take(MAX_RECORDS_OF_PROP).ToList();
         }
 
+        public PlotOfLand() :
+            this(0, "", (new Coordinates(0, 0, -1), new Coordinates(0, 0, -1)), new List<int>())
+        { 
+                //new instance
+        }
         private string ShortenDesc(string desc)
         {
             if (desc.Length <= MAX_DESC_LENGTH)
@@ -72,11 +77,6 @@ namespace QuadTree.GeoSystem
         public bool MyEquals(Property other)
         {
             return this.RegisterNumber.Equals(other.RegisterNumber);
-        }
-
-        public void fromByteArray(byte[] byteArray)
-        {
-            throw new NotImplementedException();
         }
 
         public BitArray getHash()
@@ -101,12 +101,62 @@ namespace QuadTree.GeoSystem
 
         public byte[] toByteArray()
         {
-            throw new NotImplementedException();
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                writer.Write(_registerNumber);
+
+                byte[] descriptionBytes = Encoding.Default.GetBytes(_description);
+                writer.Write((byte)descriptionBytes.Length);  // Store the length of the description
+                writer.Write(descriptionBytes);
+
+                writer.Write(_coordinates.startPos.Longitude);
+                writer.Write(_coordinates.startPos.Latitude);
+                writer.Write(_coordinates.endPos.Longitude);
+                writer.Write(_coordinates.endPos.Latitude);
+
+                // Write the number of properties_ids and then each element
+                writer.Write(_properties_ids.Count);
+                foreach (int propertyId in _properties_ids)
+                {
+                    writer.Write(propertyId);
+                }
+
+                // Get the byte array from the stream
+                return stream.ToArray();
+            }
+        }
+
+        public void fromByteArray(byte[] byteArray)
+        {
+            using (MemoryStream stream = new MemoryStream(byteArray))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                _registerNumber = reader.ReadInt32();
+
+                byte descriptionLength = reader.ReadByte();
+                byte[] descriptionBytes = reader.ReadBytes(descriptionLength);
+                _description = Encoding.Default.GetString(descriptionBytes);
+
+                double startLongitude = reader.ReadDouble();
+                double startLatitude = reader.ReadDouble();
+                double endLongitude = reader.ReadDouble();
+                double endLatitude = reader.ReadDouble();
+                _coordinates = (new Coordinates(startLongitude, startLatitude,-1), new Coordinates(endLongitude, endLatitude,-1));
+
+                int propertiesCount = reader.ReadInt32();
+                _properties_ids = new List<int>(propertiesCount);
+                for (int i = 0; i < propertiesCount; i++)
+                {
+                    int propertyId = reader.ReadInt32();
+                    _properties_ids.Add(propertyId);
+                }
+            }
         }
 
         public Property createInstanceOfClass()
         {
-            throw new NotImplementedException();
+            return new Property();
         }
     }
 }
