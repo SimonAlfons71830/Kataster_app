@@ -9,11 +9,11 @@ namespace QuadTree.Trie
     internal class Node
     {
         private bool _isLeaf = false;
-        private InternalNode _parent;
+        private InternalNode? _parent;
 
         public Node()
-        { 
-           
+        {
+            _parent = null;
         }
 
         public bool IsLeaf

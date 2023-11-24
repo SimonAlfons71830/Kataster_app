@@ -515,7 +515,7 @@ namespace QuadTree.UI
             }
             else if (keyAttrChanged)
             {
-                if (_app.RemoveObj(new PlotOfLand(originalPlot.RegisterNumber, originalPlot.Description, originalPlot.Coordinates, null)))
+                if (_app.RemoveObj(new PlotOfLand(originalPlot.RegisterNumber, originalPlot.Description, originalPlot.Coordinates, properties: null)))
                 {
                     dataGridEditDelete.Rows.Remove(selectedRowProp);
                     _app.AddPlot(rn, descEditPlot.Text, (new Coordinates((double)startPosEditPlotX.Value, (double)startPosEditPlotY.Value, 0), new Coordinates((double)endPosEditPlotX.Value, (double)endPosEditPlotY.Value, 0)));
@@ -559,7 +559,7 @@ namespace QuadTree.UI
             var changed = this._app.EditObject(originalProp,
                new Property(rn, descBoxEditProp.Text,
                (new Coordinates((double)editPropStartX.Value, (double)editPropStartY.Value, 0),
-               new Coordinates((double)editPropEndX.Value, (double)editPropEndY.Value, 0)), null),
+               new Coordinates((double)editPropEndX.Value, (double)editPropEndY.Value, 0)), lands : null),
                keyAttrChanged);
 
             if (changed)
@@ -768,7 +768,7 @@ namespace QuadTree.UI
                     //TODO: nepristupovat priamo na GUI k objektu
 
                     //originalProp = (Property)_app.PickToEdit(new Property((int)regNumb, (string)desc, (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
-                    originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    originalProp = this._app.PickAttrProp(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), lands : null));
 
                     if (originalProp != null)
                     {
@@ -795,7 +795,7 @@ namespace QuadTree.UI
                     panelProp.Hide();
                     panelPlot.Show();
 
-                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
+                    originalPlot = (PlotOfLand)_app.PickToEdit(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), properties: null));
                     //originalPlot = this._app.PickAttrPlot(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null));
 
 
@@ -838,7 +838,7 @@ namespace QuadTree.UI
 
                 if (typeOfObj.Equals("Property"))
                 {
-                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null)))
+                    if (_app.RemoveObj(new Property((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), lands : null)))
                     {
                         //remove from grid
                         dataGridEditDelete.Rows.Remove(selectedRow);
@@ -848,7 +848,7 @@ namespace QuadTree.UI
                 }
                 else
                 {
-                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), null)))
+                    if (_app.RemoveObj(new PlotOfLand((int)regNumb, "", (new Coordinates(startPos.Item1, startPos.Item2, 0), new Coordinates(endPos.Item1, endPos.Item2, 0)), properties: null)))
                     {
                         //removefrom grid
                         dataGridEditDelete.Rows.Remove(selectedRow);

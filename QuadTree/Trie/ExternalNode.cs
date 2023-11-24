@@ -11,11 +11,12 @@ namespace QuadTree.Trie
         private int _countOfRecords;
         private int _index;
 
-        public ExternalNode()
+        //parent?
+        public ExternalNode(int countOfRec, int index)
         {
             IsLeaf = true;
-            this._countOfRecords = 0;
-            this._index = -1; //?
+            this._countOfRecords = countOfRec;
+            this._index = index;
         }
 
         public int CountOfRecords
@@ -29,5 +30,9 @@ namespace QuadTree.Trie
             get { return _index; }
             set { _index = value; }
         }
+
+        //is left sons
+        //get brother
+
     }
 }

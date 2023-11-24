@@ -14,6 +14,8 @@ namespace QuadTree.Trie
         public InternalNode()
         {
             IsLeaf = false;
+            LeftNode = null;
+            RightNode = null;
         }
 
         public Node LeftNode
@@ -28,5 +30,6 @@ namespace QuadTree.Trie
             set { _rightNode = value; }
         }
 
+        //insert left/right?
     }
 }

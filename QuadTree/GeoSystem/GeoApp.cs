@@ -367,7 +367,7 @@ namespace QuadTree.GeoSystem
             Property _refProp = (Property)this._area.ShowObject(obj);
 
             //just attributes for form
-            Property pomProp = new Property(_refProp.RegisterNumber, _refProp.Description, _refProp.Coordinates, null);
+            Property pomProp = new Property(_refProp.RegisterNumber, _refProp.Description, _refProp.Coordinates, lands : null);
 
             return pomProp;
         }
@@ -377,7 +377,7 @@ namespace QuadTree.GeoSystem
             PlotOfLand _refPlot = (PlotOfLand)this._area.ShowObject(obj);
 
             //just attributes for form
-            PlotOfLand pomPlot = new PlotOfLand(_refPlot.RegisterNumber, _refPlot.Description, _refPlot.Coordinates, null);
+            PlotOfLand pomPlot = new PlotOfLand(_refPlot.RegisterNumber, _refPlot.Description, _refPlot.Coordinates, properties : null);
 
             return pomPlot;
         }
