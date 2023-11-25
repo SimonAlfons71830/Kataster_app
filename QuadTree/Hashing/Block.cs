@@ -28,27 +28,70 @@ namespace QuadTree.Hashing
 
             for (int i = 0; i < _bf; i++)
             {
+                //??
                 var record = (T)Activator.CreateInstance(_type);
+                //(T)Activator.CreateInstance<T>().createInstanceOfClass()
                 this._records.Add(record) ;
             }
 
             _validRecordsCount = 0;
         }
 
+        public bool Insert(T record) 
+        {
+            if (_validRecordsCount < _bf)
+            {
+                _records.Add(record);
+                _validRecordsCount++;
+                return true;
+            }
+            return false; //full
+        }
+
+
 
         public void fromByteArray(byte[] byteArray)
         {
-            throw new NotImplementedException();
+            using (MemoryStream stream = new MemoryStream(byteArray))
+            using (BinaryReader reader = new BinaryReader(stream, Encoding.Default, true))
+            {
+                _validRecordsCount = reader.ReadInt32();
+                _records.Clear();
+
+                //?? test
+                for (int i = 0; i < _bf; i++)
+                {
+                    T record = Activator.CreateInstance<T>();
+                    record.fromByteArray(reader.ReadBytes(record.getSize()));
+                    _records.Add(record);
+                }
+            }
         }
 
         public int getSize()
         {
-            throw new NotImplementedException();
+            //type size * _blockFactor + _validRecordsCount
+            //return (T)Activator.CreateInstance(_type).getSize() * _bf + sizeof(int);
+            return Activator.CreateInstance<T>().getSize() * _bf + sizeof(int);
+            //throw new NotImplementedException();
         }
 
         public byte[] toByteArray()
         {
-            throw new NotImplementedException();
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                writer.Write(_validRecordsCount);
+
+                foreach (T record in _records) 
+                { 
+                    //records has own method implemented
+                    writer.Write(record.toByteArray());
+                }
+
+                // Get the byte array from the stream
+                return stream.ToArray();
+            }
         }
     }
 }

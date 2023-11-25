@@ -27,5 +27,7 @@ namespace QuadTree.Trie
             get { return _parent; }
             set { _parent = value; }
         }
+
+
     }
 }
