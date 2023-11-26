@@ -31,6 +31,11 @@ namespace QuadTree
 
             var hashing = new DynamicHashing<Property>("hashFile", 2);
             hashing.Insert(prop);
+
+            hashing.Insert(new Property(11000, "Property1", (new Coordinates(0, 0, -1), new Coordinates(100, 100, -1)), list_of_lands));
+            hashing.Insert(new Property(11000, "Property2", (new Coordinates(20, 20, -1), new Coordinates(100, 100, -1)), list_of_lands));
+            hashing.Insert(new Property(11000, "Property3", (new Coordinates(50, 0, -1), new Coordinates(100, 100, -1)), list_of_lands));
+            
             hashing.Find(prop);
 
             // To customize application configuration such as set high DPI settings or default font,

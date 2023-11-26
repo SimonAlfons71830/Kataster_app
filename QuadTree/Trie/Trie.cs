@@ -32,7 +32,7 @@ namespace QuadTree.Trie
         /// </summary>
         /// <param name="bitset"></param>
         /// <returns></returns>
-        public ExternalNode? getExternalNode(BitArray bitset) 
+        public ExternalNode? getExternalNode(BitArray bitset, out int level) 
         {
             Node pomNode = Root;
             //go through bitset and according to actual data go right or left
@@ -43,6 +43,7 @@ namespace QuadTree.Trie
                     //if type is external node it is at the end
                     if (pomNode is ExternalNode)
                     {
+                        level = i;
                         return (ExternalNode?)pomNode;
                     }
                     else
@@ -54,6 +55,7 @@ namespace QuadTree.Trie
                 {
                     if (pomNode is ExternalNode)
                     {
+                        level = i;
                         return (ExternalNode)pomNode;
                     }
                     else
@@ -62,6 +64,7 @@ namespace QuadTree.Trie
                     }
                 }
             }
+            level = -1;
             return null;
         }
 

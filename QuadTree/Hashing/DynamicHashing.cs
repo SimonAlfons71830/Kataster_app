@@ -57,7 +57,7 @@ namespace QuadTree.Hashing
                             A.externý vrchol E transformuj na interný a vytvor
                             mu dvoch synov – externé vrcholy; káždému z
                             týchto externých vrcholov alokuj blok(zatiaľ iba
-                            v operačnej pamäti).
+                            v operačnej pamäti). 
                             B.presuň záznamy z preplneného bloku a nový
                             záznam do ľavého alebo pravého bloku použijúc
                             ďalší bit bitového reťazca(zväčšenie hĺbky D
@@ -76,7 +76,8 @@ namespace QuadTree.Hashing
             //get hash value from data
             var hashData = data.getHash();
             //seek corresonding file position using trie
-            var node = _trie.getExternalNode(hashData);
+            var level = -1;
+            var node = _trie.getExternalNode(hashData, out level);
             if (node != null)
             {
                 //exists
@@ -103,8 +104,9 @@ namespace QuadTree.Hashing
                     {
                         if (existingBlock.Insert(data))
                         {
+                            
                             //return from FindBlockByHash alongside with Block? not to search again for it in trie
-                            var index = _trie.getExternalNode(hashData).Index;
+                            var index = _trie.getExternalNode(hashData, out level).Index;
                             //write back to file on the same address
                             WriteBlockBackToFile(index, existingBlock);
                             node.CountOfRecords++;
@@ -120,99 +122,169 @@ namespace QuadTree.Hashing
                     }
                 }
 
-                //records in node exceeds blockfactor
-                var pomArr = new List<T>();
+
+
+
+                //=============================preplnenie=============================
 
                 if (((ExternalNode)node).CountOfRecords >= this._blockFactor)
                 {
+                    //need a level of current hash
+                    //level;
+
                     //preplnenie
                     //externý vrchol transformuj na interný a vytvor mu dvoch synov
                     //káždému z týchto externých vrcholov alokuj blok
                     //(zatiaľ iba v operačnej pamäti).
-                    
+
                     //data
                     //node Parent : y
                     //node CountOfRecords
                     //node Index (adress)
                     //node isLeaf : y
 
-                    InternalNode newNode = new InternalNode();
-                    //reset parent
-                    newNode.Parent = node.Parent;
-                    node.Parent = null;
-                    //Parents reference to his son changed (left/right)?
-                    if (node.Parent!.LeftNode == node) //is left (TODO: check when parent is null!!!)
-                    {
-                        newNode.Parent.LeftNode = newNode;
-                    }
-                    else
-                    {
-                        newNode.Parent.RightNode = newNode;
-                    }
-                    newNode.IsLeaf = false;
-
-                    //create sons
-                    var Left = new ExternalNode(0,-1);
-                    var Right = new ExternalNode(0, -1);
-                    newNode.LeftNode = Left;
-                    newNode.RightNode = Right;
-                    Left.Parent = newNode;
-                    Right.Parent = newNode;
-
-                    //alocate new blocks for each sons
-                    var blockL = new Block<T>(this._blockFactor);
-                    var blockR = new Block<T>(this._blockFactor);
-
+                    //get a full block
                     var block = this.FindBlockByHash(hashData);
-                    
-                    foreach(var record in block.Records) 
+                    // level of the current node < data hash count 
+                    bool end = false;
+                    while (level < hashData.Count)
                     {
-                        var hash = record.getHash();
-                        if (record.getHash().Count > node.Index) //??
+                        if (end) 
                         {
-                            if (hash[node.Index]) // ak je to 1 idem doprava
-                            {
-                                Right.CountOfRecords++;
-                            }
-                            else
-                            {
-                                //((ExternalNode)newNode.LeftNode).CountOfRecords++;
-                                Left.CountOfRecords++;
-                            }
+                            //end the cycle
+                            return;
                         }
-                    }
-
-                    //???
-                    if (node.Index < hashData.Count)
-                    {
-                        if (hashData[node.Index])
+                        //=====A
+                        InternalNode newNode = new InternalNode();
+                        //reset parent
+                        newNode.Parent = node.Parent;
+                        
+                        //Parents reference to his son changed (left/right)?
+                        if (node.Parent!.LeftNode == node) //is left (TODO: check when parent is null!!!)
                         {
-                            Right.CountOfRecords++;
+                            newNode.Parent.LeftNode = newNode;
                         }
                         else
                         {
-                            Left.CountOfRecords++;
+                            newNode.Parent.RightNode = newNode;
                         }
+                        newNode.IsLeaf = false;
+                        node.Parent = null;
+                        //create sons
+                        var Left = new ExternalNode(0, -1);
+                        var Right = new ExternalNode(0, -1);
+                        newNode.LeftNode = Left;
+                        newNode.RightNode = Right;
+                        Left.Parent = newNode;
+                        Right.Parent = newNode;
+
+                        //alocate new blocks for each sons
+                        var blockL = new Block<T>(this._blockFactor);
+                        var blockR = new Block<T>(this._blockFactor);
+
+
+
+                        //=====B
+                        //B.presuň záznamy z preplneného bloku a nový
+                        //záznam do ľavého alebo pravého bloku použijúc
+                        //ďalší bit bitového reťazca(zväčšenie hĺbky D
+                        //súboru).
+                        //Ak do jedného z blokov nepadnú
+                        //žiadne záznamy, dealokuj ho – jeho dvojča
+                        //ostáva preplnené(zapíše sa do súboru), situáciu
+                        //rieš opakovaním od bodu A.
+                        bool rightContinue = false;
+                        bool leftContinue = false;
+
+                        //for each record from the block records
+                        foreach (var record in block.Records)
+                        {
+                            var hash = record.getHash();
+                            if (hash.Count > level)
+                            {
+                                if (hash[level]) // ak je to 1 idem doprava podla hashu a levelu na ktorom sa ma nachadzat novy syn
+                                {
+                                    if (!blockR.Insert(record))
+                                    {
+                                        rightContinue = true;
+                                    }//else podaril sa insert
+                                    //Right.CountOfRecords++;
+                                }
+                                else
+                                {
+                                    if (!blockL.Insert(record))
+                                    {
+                                        leftContinue = true;
+                                    }
+                                    //((ExternalNode)newNode.LeftNode).CountOfRecords++;
+                                    //Left.CountOfRecords++;
+                                }
+                            }
+                        }
+
+                        //TODO: while cyclus
+                        // kontrola ci right a left node maju dodrzany BF
+                        //ak nie tak opakuj a nastav ako existing block lavy a pravy
+
+                        if (!rightContinue && !leftContinue)
+                        {
+                            end = true;
+                            Left.CountOfRecords = blockL.ValidRecordsCount;
+                            Right.CountOfRecords = blockR.ValidRecordsCount;
+
+                            if (Right.CountOfRecords > 0)
+                            {
+                                //find free index (now just add at the end of the file)
+                                var newIndex = _file.Length;
+                                _file.SetLength(_file.Length + blockR.getSize());
+                                Right.Index = (int)newIndex;
+
+                                this.WriteBlockBackToFile(Right.Index, blockR);
+                                //write to file
+                            }
+                            else
+                            {
+                                Right.Index = -1;
+                            }
+
+                            if (Left.CountOfRecords > 0)
+                            {
+                                var newIndex = _file.Length;
+                                _file.SetLength(_file.Length + blockL.getSize());
+                                Left.Index = (int)newIndex;
+
+                                this.WriteBlockBackToFile(Left.Index, blockL);
+                                //writeToFile
+                            }
+                            else
+                            {
+                                Left.Index = -1;
+                            }
+                        }
+                        else
+                        {
+                            //continue cycle with node that has full block
+                            if (rightContinue)
+                            {
+                                node = Right;
+                            }
+                            else if (leftContinue) 
+                            {
+                                node = Left;
+                            }
+
+                            level++;
+                        }
+
+                        
+
+                        //presuň záznamy z preplneného bloku a nový
+                        //záznam do ľavého alebo pravého bloku použijúc
+                        //ďalší bit bitového reťazca(zväčšenie hĺbky D súboru).
+                        //Ak do jedného z blokov nepadnú žiadne záznamy,
+                        //dealokuj ho – jeho dvojča ostáva preplnené(zapíše sa do súboru),
+                        //situáciu rieš opakovaním od bodu A - znovu preplnenie.
                     }
-
-                    //TODO: while cyclus
-                    // kontrola ci right a left node maju dodrzany BF
-                    //ak nie tak opakuj a nastav ako existing block lavy a pravy
-
-
-
-
-
-                    //var block = ReadBlockFromFile(node.Index);
-
-
-
-                    //presuň záznamy z preplneného bloku a nový
-                    //záznam do ľavého alebo pravého bloku použijúc
-                    //ďalší bit bitového reťazca(zväčšenie hĺbky D súboru).
-                    //Ak do jedného z blokov nepadnú žiadne záznamy,
-                    //dealokuj ho – jeho dvojča ostáva preplnené(zapíše sa do súboru),
-                    //situáciu rieš opakovaním od bodu A - znovu preplnenie.
                 }
                 
             }
@@ -223,7 +295,8 @@ namespace QuadTree.Hashing
 
         public Block<T> FindBlockByHash(BitArray hash) 
         {
-            var node = _trie.getExternalNode(hash);
+            var levelnot = -1;
+            var node = _trie.getExternalNode(hash,out levelnot);
             if (node != null)
             {
                 //nacitat block z file a returnut ho
@@ -261,8 +334,8 @@ namespace QuadTree.Hashing
             //Vypočítaj I = hd(K)(prvých D bitov hodnoty hešovacejfunkcie),
             //Pomocou adresára(trie) sprístupni blok P[i],
             //3.V bloku P[i] nájdi záznam s kľúčom K.
-
-            var pom = _trie.getExternalNode(data.getHash());
+            var levelPom = -1;
+            var pom = _trie.getExternalNode(data.getHash(), out levelPom);
 
             if (pom.CountOfRecords == 0)
             {
