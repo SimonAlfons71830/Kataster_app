@@ -13,7 +13,12 @@ namespace QuadTree.Trie
 
         public Trie()
         {
-            Root = new InternalNode(); 
+            Root = new InternalNode(); //cant switch from internal to external so 2 ext nodes will be created
+            Root.RightNode = new ExternalNode(0, -1);
+            Root.RightNode.Parent = Root;
+
+            Root.LeftNode = new ExternalNode(0, -1);
+            Root.LeftNode.Parent = Root;
         }
 
         public InternalNode Root
@@ -29,31 +34,31 @@ namespace QuadTree.Trie
         /// <returns></returns>
         public ExternalNode? getExternalNode(BitArray bitset) 
         {
-            var pomNode = Root;
+            Node pomNode = Root;
             //go through bitset and according to actual data go right or left
             for (int i = 0; i < bitset.Count; i++)
             {
                 if (bitset[i]) // == 1
                 {
                     //if type is external node it is at the end
-                    if (pomNode.RightNode is ExternalNode)
+                    if (pomNode is ExternalNode)
                     {
-                        return (ExternalNode)pomNode.RightNode;
+                        return (ExternalNode?)pomNode;
                     }
                     else
                     {
-                        pomNode = (InternalNode)pomNode.RightNode;
+                        pomNode = ((InternalNode)pomNode).RightNode;
                     }
                 }
                 else // == 0 leftNode
                 {
-                    if (pomNode.LeftNode is ExternalNode)
+                    if (pomNode is ExternalNode)
                     {
-                        return (ExternalNode)pomNode.LeftNode;
+                        return (ExternalNode)pomNode;
                     }
                     else
                     {
-                        pomNode = (InternalNode)pomNode.LeftNode;
+                        pomNode = ((InternalNode)pomNode).LeftNode;
                     }
                 }
             }

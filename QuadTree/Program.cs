@@ -1,4 +1,5 @@
 using QuadTree.GeoSystem;
+using QuadTree.Hashing;
 using QuadTree.QTree;
 using QuadTree.Structures;
 using QuadTree.test;
@@ -28,6 +29,10 @@ namespace QuadTree
             var prop2 = new Property();
             prop2.fromByteArray(bytearr);
 
+            var hashing = new DynamicHashing<Property>("hashFile", 2);
+            hashing.Insert(prop);
+            hashing.Find(prop);
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
@@ -36,7 +41,7 @@ namespace QuadTree
             Application.Run(new Test(test,app));
             //Application.Run(new GUI());
 
-
+           
         }
         
 

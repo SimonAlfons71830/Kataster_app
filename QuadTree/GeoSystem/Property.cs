@@ -49,7 +49,7 @@ namespace QuadTree.GeoSystem
         }
 
         public Property()
-            : this(0, "", (new Coordinates(0, 0, -1), new Coordinates(0, 0, -1)), new List<PlotOfLand>())
+            : this(0, "", (new Coordinates(0, 0, -1), new Coordinates(0, 0, -1)), new List<int>())
         {
             //empty inicialization constructor
         }
@@ -95,11 +95,12 @@ namespace QuadTree.GeoSystem
             //registerNumber - int
             size += sizeof(int);
             //description - length of string + 1 for null terminator
-            size += Encoding.Default.GetByteCount(_description) + 1;
+            //size += Encoding.Default.GetByteCount(_description) + 1;
+            size += MAX_DESC_LENGTH + 1; //11 bytov za 11 characterov + 1 null terminator
             //coordinates - 2 doubles
-            size += 2 * sizeof(double);
+            size += 4 * sizeof(double);
             //size of properties in list (int)
-            size += sizeof(int) + _lands_ids.Count * sizeof(int);
+            size += sizeof(int) + MAX_RECORDS_OF_PLOTS * sizeof(int);
             return size;
         }
 

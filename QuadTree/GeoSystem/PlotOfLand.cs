@@ -91,11 +91,12 @@ namespace QuadTree.GeoSystem
             //registerNumber - int
             size += sizeof(int);
             //description - length of string + 1 for null terminator
-            size += Encoding.Default.GetByteCount(_description) + 1;
-            //coordinates - 2 doubles
-            size += 2 * sizeof(double);
+            //size += Encoding.Default.GetByteCount(_description) + 1;
+            size += MAX_DESC_LENGTH + 1;
+            //coordinates - 4 doubles
+            size += 4 * sizeof(double);
             //size of properties in list (int)
-            size += sizeof(int) + _properties_ids.Count * sizeof(int);
+            size += sizeof(int) + MAX_RECORDS_OF_PROP * sizeof(int);
             return size;
         }
 

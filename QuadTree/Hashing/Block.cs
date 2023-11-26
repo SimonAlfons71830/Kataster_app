@@ -19,6 +19,8 @@ namespace QuadTree.Hashing
         //number of blocks for the AL
         private int _bf;
 
+        public List<T> Records { get => _records; set => _records = value; }
+        public int ValidRecordsCount { get => _validRecordsCount; set => _validRecordsCount = value; }
 
         public Block(int blockFactor) 
         {
@@ -41,7 +43,8 @@ namespace QuadTree.Hashing
         {
             if (_validRecordsCount < _bf)
             {
-                _records.Add(record);
+                //_records.elementAt(_validRecordsCoutn) = record;
+                _records[_validRecordsCount] = record;
                 _validRecordsCount++;
                 return true;
             }
@@ -72,7 +75,8 @@ namespace QuadTree.Hashing
         {
             //type size * _blockFactor + _validRecordsCount
             //return (T)Activator.CreateInstance(_type).getSize() * _bf + sizeof(int);
-            return Activator.CreateInstance<T>().getSize() * _bf + sizeof(int);
+            var size = Activator.CreateInstance<T>().getSize() * _bf + sizeof(int);
+            return size;
             //throw new NotImplementedException();
         }
 

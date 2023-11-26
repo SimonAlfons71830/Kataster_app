@@ -10,6 +10,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Reflection.Metadata;
 using System.Collections;
 using System.Security.Policy;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace QuadTree.Hashing
 {
@@ -120,6 +121,7 @@ namespace QuadTree.Hashing
                 }
 
                 //records in node exceeds blockfactor
+                var pomArr = new List<T>();
 
                 if (((ExternalNode)node).CountOfRecords >= this._blockFactor)
                 {
@@ -161,17 +163,47 @@ namespace QuadTree.Hashing
                     var blockL = new Block<T>(this._blockFactor);
                     var blockR = new Block<T>(this._blockFactor);
 
-
+                    var block = this.FindBlockByHash(hashData);
                     
-                    
+                    foreach(var record in block.Records) 
+                    {
+                        var hash = record.getHash();
+                        if (record.getHash().Count > node.Index) //??
+                        {
+                            if (hash[node.Index]) // ak je to 1 idem doprava
+                            {
+                                Right.CountOfRecords++;
+                            }
+                            else
+                            {
+                                //((ExternalNode)newNode.LeftNode).CountOfRecords++;
+                                Left.CountOfRecords++;
+                            }
+                        }
+                    }
+
+                    //???
+                    if (node.Index < hashData.Count)
+                    {
+                        if (hashData[node.Index])
+                        {
+                            Right.CountOfRecords++;
+                        }
+                        else
+                        {
+                            Left.CountOfRecords++;
+                        }
+                    }
+
+                    //TODO: while cyclus
+                    // kontrola ci right a left node maju dodrzany BF
+                    //ak nie tak opakuj a nastav ako existing block lavy a pravy
 
 
 
 
 
-
-
-                    var block = ReadBlockFromFile(node.Index);
+                    //var block = ReadBlockFromFile(node.Index);
 
 
 
@@ -223,6 +255,43 @@ namespace QuadTree.Hashing
 
 
         //find
+        
+        public T Find (T data)
+        {
+            //Vypočítaj I = hd(K)(prvých D bitov hodnoty hešovacejfunkcie),
+            //Pomocou adresára(trie) sprístupni blok P[i],
+            //3.V bloku P[i] nájdi záznam s kľúčom K.
+
+            var pom = _trie.getExternalNode(data.getHash());
+
+            if (pom.CountOfRecords == 0)
+            {
+                //not any records in block
+                return default(T);
+            }
+            else
+            {
+                //vieme ze existuje zaznam, mozeme hladat zo suboru
+                var block = this.FindBlockByHash(data.getHash());
+                for (int i = 0; i < block.Records.Count; i++)
+                {
+                    if (i < block.ValidRecordsCount)
+                    {
+                        if (data.MyEquals(block.Records.ElementAt(i)))
+                        {
+                            return block.Records.ElementAt(i);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item is not in file");
+                    }
+                }
+                //not found
+                return default(T);
+            }
+
+        }
         //delete
 
     }
